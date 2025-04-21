@@ -73,6 +73,11 @@ const AddBoarding = () => {
         toast.success("Boarding place added successfully!");
         setShowForm(false);
         setType("");
+
+        console.log("📢 Dispatching 'boardingAdded' event");
+
+        const event = new Event("boardingAdded");
+        window.dispatchEvent(event);
       }
     } catch (error) {
       console.error("Error adding boarding:", error);

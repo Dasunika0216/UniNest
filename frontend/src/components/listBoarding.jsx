@@ -27,7 +27,20 @@ const ListBoarding = () => {
   };
 
   useEffect(() => {
-    fetchBoarding();
+    fetchBoarding(); // initial fetch
+  
+    const handleBoardingAdded = () => {
+      console.log("📥 'boardingAdded' event received – fetching new data");
+      fetchBoarding(); // re-fetch when boarding is added
+    };
+  
+    // 👂 Listen to event
+    window.addEventListener("boardingAdded", handleBoardingAdded);
+  
+    // ✅ Clean up listener when component unmounts
+    return () => {
+      window.removeEventListener("boardingAdded", handleBoardingAdded);
+    };
   }, []);
 
   return (
@@ -44,6 +57,7 @@ const ListBoarding = () => {
               <p><strong>💰 Cost:</strong> Rs. {boarding.cost}</p>
               <p><strong>🛏️ Available Beds:</strong> {boarding.availableCount}</p>
               <p><strong>📝 Description:</strong> {boarding.description}</p>
+              <p><strong>📝 Facilities:</strong> {boarding.facilities}</p>
             </div>
           ))}
         </div>
