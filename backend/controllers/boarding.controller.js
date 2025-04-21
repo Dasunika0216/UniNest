@@ -2,16 +2,17 @@ import boardingModel from "../models/boarding.model.js";
 import jwt from "jsonwebtoken";
 
 const addBoarding = async (req, res) => {
-  console.log("FILES RECEIVED:", req.files);
-  console.log("BODY RECEIVED:", req.body);
-
   try {
+    console.log("FILES RECEIVED:", req.files);
+    console.log("BODY RECEIVED:", req.body);
+
+    // Authorization check
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ success: false, message: "Unauthorized! Login again" });
     }
+
     const token = authHeader.split(" ")[1];
-    
     if (!token) {
       return res.status(401).json({ success: false, message: "Unauthorized! Login again" });
     }
@@ -25,6 +26,7 @@ const addBoarding = async (req, res) => {
 
     const hostId = decoded.id;
 
+    // Destructuring the request body for boarding details
     const {
       address,
       cost,
@@ -34,8 +36,18 @@ const addBoarding = async (req, res) => {
       facilities,
     } = req.body;
 
-    const images = req.files?.map((file) => file.path) || [];
+    // Ensure images are uploaded
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, message: "No images uploaded" });
+    }
 
+    // Map through the uploaded files to get the Cloudinary URLs
+    const images = req.files.map((file) => {
+      console.log("Cloudinary file object:", file);
+      return file?.path || file?.url || null; // In case of Cloudinary response
+    }).filter(Boolean); // Filter out any null values
+
+    // Create the boarding details object
     const boardingDetails = {
       hostId,
       address,
@@ -47,19 +59,26 @@ const addBoarding = async (req, res) => {
       images,
     };
 
+    // Create and save the new boarding instance to the database
     const newBoarding = new boardingModel(boardingDetails);
     await newBoarding.save();
 
+    // Send success response
     res.status(200).json({
       success: true,
       message: "Boarding place added successfully",
       data: newBoarding,
     });
+
   } catch (error) {
     console.error("Error adding boarding:", error);
+    console.error("Stack Trace:", error.stack);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export default addBoarding;
+
 
 const listBoarding = async (req, res) => {
   try {

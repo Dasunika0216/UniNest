@@ -14,6 +14,8 @@ const AddBoarding = () => {
     description: "",
     images: []
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -34,9 +36,34 @@ const AddBoarding = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "images") {
-      setFormData((prev) => ({ ...prev, images: files }));
+      const validImages = Array.from(files).filter((file) =>
+        file.type.startsWith("image/")
+      );
+      setFormData((prev) => ({ ...prev, images: validImages }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const uploadImageToCloudinary = async () => {
+    setUploading(true);
+    const data = new FormData();
+    data.append("file", imageFile);
+    data.append("upload_preset", "boardingimages");
+    data.append("folder", "boardingimages");
+
+    try {
+      const res = await axios.post("https://api.cloudinary.com/v1_1/dnykpks6n/image/upload", data);
+      setUploading(false);
+      return res.data.secure_url;
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      setUploading(false);
+      return null;
     }
   };
 
@@ -55,8 +82,15 @@ const AddBoarding = () => {
       .map((facility) => facility.trim())
       .forEach((f) => data.append("facilities", f));
 
-    for (let img of formData.images) {
-      data.append("images", img);
+    // Handle image upload to Cloudinary
+    if (imageFile) {
+      const imageUrl = await uploadImageToCloudinary();
+      if (imageUrl) {
+        data.append("images", imageUrl);
+      } else {
+        toast.error("Image upload failed. Please try again.");
+        return;
+      }
     }
 
     try {
@@ -191,14 +225,17 @@ const AddBoarding = () => {
                   required
                   style={{ ...inputStyle, resize: "vertical" }}
                 ></textarea>
+                
+                {/* Image upload section */}
                 <input
                   type="file"
                   name="images"
-                  multiple
                   accept="image/*"
-                  onChange={handleChange}
+                  onChange={handleImageChange}
                   style={inputStyle}
                 />
+
+                {uploading && <p>Uploading image...</p>}
 
                 <div
                   style={{
