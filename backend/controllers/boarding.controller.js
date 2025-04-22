@@ -2,16 +2,17 @@ import boardingModel from "../models/boarding.model.js";
 import jwt from "jsonwebtoken";
 
 const addBoarding = async (req, res) => {
-  console.log("FILES RECEIVED:", req.files);
-  console.log("BODY RECEIVED:", req.body);
-
   try {
+    console.log("FILES RECEIVED:", req.files);
+    console.log("BODY RECEIVED:", req.body);
+
+    // Authorization check
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ success: false, message: "Unauthorized! Login again" });
     }
+
     const token = authHeader.split(" ")[1];
-    
     if (!token) {
       return res.status(401).json({ success: false, message: "Unauthorized! Login again" });
     }
@@ -25,6 +26,7 @@ const addBoarding = async (req, res) => {
 
     const hostId = decoded.id;
 
+    // Destructuring the request body for boarding details
     const {
       address,
       cost,
@@ -34,8 +36,19 @@ const addBoarding = async (req, res) => {
       facilities,
     } = req.body;
 
-    const images = req.files?.map((file) => file.path) || [];
+    // Handle images from the request body (as URLs)
+    let images = req.body["images[]"] || req.body.images || [];
 
+    if (!Array.isArray(images)) {
+      images = [images]; // Convert to array if only one image was sent
+    }
+
+    if (images.length === 0) {
+      return res.status(400).json({ success: false, message: "No images provided" });
+    }
+
+
+    // Create the boarding details object
     const boardingDetails = {
       hostId,
       address,
@@ -47,19 +60,26 @@ const addBoarding = async (req, res) => {
       images,
     };
 
+    // Create and save the new boarding instance to the database
     const newBoarding = new boardingModel(boardingDetails);
     await newBoarding.save();
 
+    // Send success response
     res.status(200).json({
       success: true,
       message: "Boarding place added successfully",
       data: newBoarding,
     });
+
   } catch (error) {
     console.error("Error adding boarding:", error);
+    console.error("Stack Trace:", error.stack);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export default addBoarding;
+
 
 const listBoarding = async (req, res) => {
   try {
@@ -91,5 +111,38 @@ const listBoarding = async (req, res) => {
   }
 };
 
+// DELETE a boarding
+const deleteBoarding = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await boardingModel.findByIdAndDelete(id);
 
-export { addBoarding, listBoarding };
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Boarding not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Boarding deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+// UPDATE a boarding
+const updateBoarding = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedBoarding = await boardingModel.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedBoarding) {
+      return res.status(404).json({ success: false, message: "Boarding not found" });
+    }
+
+    res.status(200).json({ success: true, data: updatedBoarding });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+
+export { addBoarding, listBoarding, deleteBoarding, updateBoarding, };

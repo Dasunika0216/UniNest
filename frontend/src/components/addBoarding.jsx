@@ -14,6 +14,8 @@ const AddBoarding = () => {
     description: "",
     images: []
   });
+  const [imageFiles, setImageFiles] = useState([]);
+  const [uploading, setUploading] = useState(false);
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -34,10 +36,40 @@ const AddBoarding = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "images") {
-      setFormData((prev) => ({ ...prev, images: files }));
+      const validImages = Array.from(files).filter((file) =>
+        file.type.startsWith("image/")
+      );
+      setImageFiles(validImages); // Save all selected image files
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  // Upload each image to Cloudinary and return the URL
+  const uploadImagesToCloudinary = async () => {
+    setUploading(true);
+    const uploadedUrls = [];
+    for (const file of imageFiles) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "boardingimages");
+      data.append("folder", "boardingimages");
+
+      try {
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dnykpks6n/image/upload",
+          data
+        );
+        uploadedUrls.push(res.data.secure_url); // Save each image URL
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        toast.error("Image upload failed. Please try again.");
+        setUploading(false);
+        return null;
+      }
+    }
+    setUploading(false);
+    return uploadedUrls; // Return all image URLs
   };
 
   const handleSubmit = async (e) => {
@@ -55,17 +87,32 @@ const AddBoarding = () => {
       .map((facility) => facility.trim())
       .forEach((f) => data.append("facilities", f));
 
-    for (let img of formData.images) {
-      data.append("images", img);
+    // Handle image uploads to Cloudinary
+    if (imageFiles.length > 0) {
+      const imageUrls = await uploadImagesToCloudinary();
+      if (imageUrls) {
+        imageUrls.forEach((url) => data.append("images[]", url)); // ✅
+      } else {
+        toast.error("Image upload failed. Please try again.");
+        return;
+      }
     }
 
     try {
-      const response = await axios.post("http://localhost:5500/api/boarding/add-boarding", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ': ' + pair[1]);
+      }
+      
+      const response = await axios.post(
+        "http://localhost:5500/api/boarding/add-boarding",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      });
+      );
 
       console.log(response.data);
 
@@ -73,11 +120,22 @@ const AddBoarding = () => {
         toast.success("Boarding place added successfully!");
         setShowForm(false);
         setType("");
+
+        console.log("📢 Dispatching 'boardingAdded' event");
+
+        const event = new Event("boardingAdded");
+        window.dispatchEvent(event);
       }
     } catch (error) {
       console.error("Error adding boarding:", error);
-      toast.error("Failed to add boarding. Please try again.");
+      if (error.response) {
+        console.error("Backend responded with:", error.response.data);
+        toast.error(error.response.data.message || "Failed to add boarding.");
+      } else {
+        toast.error("Failed to add boarding. Please try again.");
+      }
     }
+    
   };
 
   return (
@@ -191,14 +249,18 @@ const AddBoarding = () => {
                   required
                   style={{ ...inputStyle, resize: "vertical" }}
                 ></textarea>
+
+                {/* Image upload section */}
                 <input
                   type="file"
                   name="images"
-                  multiple
                   accept="image/*"
+                  multiple
                   onChange={handleChange}
                   style={inputStyle}
                 />
+
+                {uploading && <p>Uploading images...</p>}
 
                 <div
                   style={{

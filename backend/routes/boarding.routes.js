@@ -1,10 +1,24 @@
 import express from 'express';
-import { addBoarding, listBoarding } from '../controllers/boarding.controller.js';
+import {
+  addBoarding,
+  listBoarding,
+  deleteBoarding,
+  updateBoarding
+} from '../controllers/boarding.controller.js';
 import upload from '../middleware/upload.middleware.js';
 
 const boardingRouter = express.Router();
 
+// Create
 boardingRouter.post('/add-boarding', upload.array('images'), addBoarding);
+
+// Read
 boardingRouter.get('/list-boarding', listBoarding);
+
+// 🆕 Update
+boardingRouter.put('/:id', updateBoarding); // PUT /api/boarding/:id
+
+// 🆕 Delete
+boardingRouter.delete('/:id', deleteBoarding); // DELETE /api/boarding/:id
 
 export default boardingRouter;
