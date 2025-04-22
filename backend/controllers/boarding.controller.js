@@ -111,5 +111,38 @@ const listBoarding = async (req, res) => {
   }
 };
 
+// DELETE a boarding
+const deleteBoarding = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await boardingModel.findByIdAndDelete(id);
 
-export { addBoarding, listBoarding };
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Boarding not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Boarding deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+// UPDATE a boarding
+const updateBoarding = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedBoarding = await boardingModel.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedBoarding) {
+      return res.status(404).json({ success: false, message: "Boarding not found" });
+    }
+
+    res.status(200).json({ success: true, data: updatedBoarding });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+
+export { addBoarding, listBoarding, deleteBoarding, updateBoarding, };
