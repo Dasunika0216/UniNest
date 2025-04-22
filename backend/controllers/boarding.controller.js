@@ -36,16 +36,17 @@ const addBoarding = async (req, res) => {
       facilities,
     } = req.body;
 
-    // Ensure images are uploaded
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, message: "No images uploaded" });
+    // Handle images from the request body (as URLs)
+    let images = req.body["images[]"] || req.body.images || [];
+
+    if (!Array.isArray(images)) {
+      images = [images]; // Convert to array if only one image was sent
     }
 
-    // Map through the uploaded files to get the Cloudinary URLs
-    const images = req.files.map((file) => {
-      console.log("Cloudinary file object:", file);
-      return file?.path || file?.url || null; // In case of Cloudinary response
-    }).filter(Boolean); // Filter out any null values
+    if (images.length === 0) {
+      return res.status(400).json({ success: false, message: "No images provided" });
+    }
+
 
     // Create the boarding details object
     const boardingDetails = {

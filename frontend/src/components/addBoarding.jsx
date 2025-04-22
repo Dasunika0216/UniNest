@@ -14,7 +14,7 @@ const AddBoarding = () => {
     description: "",
     images: []
   });
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const toggleForm = () => {
@@ -39,32 +39,37 @@ const AddBoarding = () => {
       const validImages = Array.from(files).filter((file) =>
         file.type.startsWith("image/")
       );
-      setFormData((prev) => ({ ...prev, images: validImages }));
+      setImageFiles(validImages); // Save all selected image files
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-
-  const uploadImageToCloudinary = async () => {
+  // Upload each image to Cloudinary and return the URL
+  const uploadImagesToCloudinary = async () => {
     setUploading(true);
-    const data = new FormData();
-    data.append("file", imageFile);
-    data.append("upload_preset", "boardingimages");
-    data.append("folder", "boardingimages");
+    const uploadedUrls = [];
+    for (const file of imageFiles) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "boardingimages");
+      data.append("folder", "boardingimages");
 
-    try {
-      const res = await axios.post("https://api.cloudinary.com/v1_1/dnykpks6n/image/upload", data);
-      setUploading(false);
-      return res.data.secure_url;
-    } catch (err) {
-      console.error("Image upload failed:", err);
-      setUploading(false);
-      return null;
+      try {
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/dnykpks6n/image/upload",
+          data
+        );
+        uploadedUrls.push(res.data.secure_url); // Save each image URL
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        toast.error("Image upload failed. Please try again.");
+        setUploading(false);
+        return null;
+      }
     }
+    setUploading(false);
+    return uploadedUrls; // Return all image URLs
   };
 
   const handleSubmit = async (e) => {
@@ -82,11 +87,11 @@ const AddBoarding = () => {
       .map((facility) => facility.trim())
       .forEach((f) => data.append("facilities", f));
 
-    // Handle image upload to Cloudinary
-    if (imageFile) {
-      const imageUrl = await uploadImageToCloudinary();
-      if (imageUrl) {
-        data.append("images", imageUrl);
+    // Handle image uploads to Cloudinary
+    if (imageFiles.length > 0) {
+      const imageUrls = await uploadImagesToCloudinary();
+      if (imageUrls) {
+        imageUrls.forEach((url) => data.append("images[]", url)); // ✅
       } else {
         toast.error("Image upload failed. Please try again.");
         return;
@@ -94,12 +99,20 @@ const AddBoarding = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5500/api/boarding/add-boarding", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ': ' + pair[1]);
+      }
+      
+      const response = await axios.post(
+        "http://localhost:5500/api/boarding/add-boarding",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      });
+      );
 
       console.log(response.data);
 
@@ -110,8 +123,14 @@ const AddBoarding = () => {
       }
     } catch (error) {
       console.error("Error adding boarding:", error);
-      toast.error("Failed to add boarding. Please try again.");
+      if (error.response) {
+        console.error("Backend responded with:", error.response.data);
+        toast.error(error.response.data.message || "Failed to add boarding.");
+      } else {
+        toast.error("Failed to add boarding. Please try again.");
+      }
     }
+    
   };
 
   return (
@@ -225,17 +244,18 @@ const AddBoarding = () => {
                   required
                   style={{ ...inputStyle, resize: "vertical" }}
                 ></textarea>
-                
+
                 {/* Image upload section */}
                 <input
                   type="file"
                   name="images"
                   accept="image/*"
-                  onChange={handleImageChange}
+                  multiple
+                  onChange={handleChange}
                   style={inputStyle}
                 />
 
-                {uploading && <p>Uploading image...</p>}
+                {uploading && <p>Uploading images...</p>}
 
                 <div
                   style={{
