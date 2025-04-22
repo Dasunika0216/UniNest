@@ -104,7 +104,7 @@ const ListBoarding = () => {
                   <p><strong>💰 Cost:</strong> Rs. {boarding.cost}</p>
                   <p><strong>🛏️ Available Beds:</strong> {boarding.availableCount}</p>
                   <p><strong>📝 Description:</strong> {boarding.description}</p>
-                  <p><strong>🛠️ Facilities:</strong> {boarding.facilities}</p>
+                  <p><strong>🧰 Facilities:</strong> {boarding.facilities.join(", ")}</p>
                   <button className="boarding-btn btn-edit" onClick={() => {
                     setEditingId(boarding._id);
                     setEditData(boarding);
