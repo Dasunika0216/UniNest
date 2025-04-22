@@ -44,6 +44,7 @@ const ListBoarding = () => {
               <p><strong>💰 Cost:</strong> Rs. {boarding.cost}</p>
               <p><strong>🛏️ Available Beds:</strong> {boarding.availableCount}</p>
               <p><strong>📝 Description:</strong> {boarding.description}</p>
+              <p><strong>🧰 Facilities:</strong> {boarding.facilities.join(", ")}</p>
             </div>
           ))}
         </div>
