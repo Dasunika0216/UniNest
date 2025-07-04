@@ -132,14 +132,47 @@ const deleteBoarding = async (req, res) => {
 const updateBoarding = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedBoarding = await boardingModel.findByIdAndUpdate(id, req.body, { new: true });
+    const {
+      address,
+      cost,
+      type,
+      availableCount,
+      description,
+      facilities,
+      newImages = [],
+      removedImages = []
+    } = req.body;
 
-    if (!updatedBoarding) {
+    // Fetch existing document
+    const boarding = await boardingModel.findById(id);
+    if (!boarding) {
       return res.status(404).json({ success: false, message: "Boarding not found" });
     }
 
-    res.status(200).json({ success: true, data: updatedBoarding });
+    // Remove images from DB
+    if (Array.isArray(removedImages)) {
+      boarding.images = boarding.images.filter(img => !removedImages.includes(img));
+    }
+
+    // Add new images (Cloudinary URLs)
+    if (Array.isArray(newImages)) {
+      boarding.images.push(...newImages);
+    }
+
+    // Update other fields
+    if (address !== undefined) boarding.address = address;
+    if (cost !== undefined) boarding.cost = cost;
+    if (type !== undefined) boarding.type = type;
+    if (availableCount !== undefined) boarding.availableCount = availableCount;
+    if (description !== undefined) boarding.description = description;
+    if (facilities !== undefined) boarding.facilities = facilities;
+
+    await boarding.save();
+
+    res.status(200).json({ success: true, message: "Boarding updated", data: boarding });
+
   } catch (err) {
+    console.error("Error updating boarding:", err);
     res.status(500).json({ success: false, message: "Server error", error: err.message });
   }
 };

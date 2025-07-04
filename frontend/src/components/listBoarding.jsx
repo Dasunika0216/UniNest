@@ -5,6 +5,8 @@ const ListBoarding = () => {
   const [boardings, setBoardings] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({});
+  const [newImages, setNewImages] = useState([]);
+  const [removedImages, setRemovedImages] = useState([]);
 
   const fetchBoarding = async () => {
     try {
@@ -13,7 +15,6 @@ const ListBoarding = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
       if (response.data.success) {
         setBoardings(response.data.data);
       }
@@ -24,14 +25,10 @@ const ListBoarding = () => {
 
   useEffect(() => {
     fetchBoarding();
-
     const handleBoardingAdded = () => {
-      console.log("📥 'boardingAdded' event received – fetching new data");
       fetchBoarding();
     };
-
     window.addEventListener("boardingAdded", handleBoardingAdded);
-
     return () => {
       window.removeEventListener("boardingAdded", handleBoardingAdded);
     };
@@ -62,15 +59,30 @@ const ListBoarding = () => {
   };
 
   const handleEditSubmit = async (id) => {
+    const formData = new FormData();
+    formData.append('address', editData.address || '');
+    formData.append('cost', editData.cost || '');
+    formData.append('availableCount', editData.availableCount || '');
+    formData.append('description', editData.description || '');
+    formData.append('facilities', editData.facilities || '');
+    formData.append('removedImages', JSON.stringify(removedImages));
+
+    newImages.forEach((file) => {
+      formData.append('newImages', file);
+    });
+
     try {
-      const response = await axios.put(`http://localhost:5500/api/boarding/${id}`, editData, {
+      const response = await axios.put(`http://localhost:5500/api/boarding/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
 
       if (response.data.success) {
         setEditingId(null);
+        setNewImages([]);
+        setRemovedImages([]);
         fetchBoarding();
       }
     } catch (error) {
@@ -85,31 +97,76 @@ const ListBoarding = () => {
         <p className="boarding-empty">No boarding places found.</p>
       ) : (
         <div className="boarding-grid">
-          {boardings.map((boarding, index) => (
-            <div key={index} className="boarding-card">
+          {boardings.map((boarding) => (
+            <div key={boarding._id} className="boarding-card">
               {editingId === boarding._id ? (
                 <>
-                  <input className="boarding-input" name="address" value={editData.address} onChange={handleEditChange} placeholder="Address" />
-                  <input className="boarding-input" name="cost" value={editData.cost} onChange={handleEditChange} placeholder="Cost" />
-                  <input className="boarding-input" name="availableCount" value={editData.availableCount} onChange={handleEditChange} placeholder="Available Beds" />
-                  <input className="boarding-input" name="description" value={editData.description} onChange={handleEditChange} placeholder="Description" />
-                  <input className="boarding-input" name="facilities" value={editData.facilities} onChange={handleEditChange} placeholder="Facilities" />
+                  <input name="address" className="boarding-input" value={editData.address || ''} onChange={handleEditChange} placeholder="Address" />
+                  <input name="cost" className="boarding-input" value={editData.cost || ''} onChange={handleEditChange} placeholder="Cost" />
+                  <input name="availableCount" className="boarding-input" value={editData.availableCount || ''} onChange={handleEditChange} placeholder="Available Beds" />
+                  <input name="description" className="boarding-input" value={editData.description || ''} onChange={handleEditChange} placeholder="Description" />
+                  <input name="facilities" className="boarding-input" value={editData.facilities || ''} onChange={handleEditChange} placeholder="Facilities" />
+
+                  <div className="boarding-images">
+                    {editData.images?.map((img, i) => (
+                      <div key={i} style={{ position: 'relative' }}>
+                        <img src={img} alt={`Boarding ${i}`} className="boarding-img" />
+                        <button
+                          style={{
+                            position: 'absolute', top: 5, right: 5,
+                            backgroundColor: 'red', color: 'white',
+                            border: 'none', borderRadius: '50%',
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => {
+                            setEditData(prev => ({
+                              ...prev,
+                              images: prev.images.filter(image => image !== img)
+                            }));
+                            setRemovedImages(prev => [...prev, img]);
+                          }}
+                        >✖</button>
+                      </div>
+                    ))}
+                  </div>
+
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => setNewImages(Array.from(e.target.files))}
+                  />
+
                   <button className="boarding-btn btn-save" onClick={() => handleEditSubmit(boarding._id)}>💾 Save</button>
                   <button className="boarding-btn btn-cancel" onClick={() => setEditingId(null)}>❌ Cancel</button>
                 </>
               ) : (
                 <>
                   <h3 className="boarding-type">{boarding.type}</h3>
+                  <div className="boarding-images">
+                    {boarding.images?.map((img, i) => (
+                      <img key={i} src={img} alt={`Boarding ${i}`} className="boarding-img" />
+                    ))}
+                  </div>
                   <p><strong>🏠 Address:</strong> {boarding.address}</p>
                   <p><strong>💰 Cost:</strong> Rs. {boarding.cost}</p>
                   <p><strong>🛏️ Available Beds:</strong> {boarding.availableCount}</p>
                   <p><strong>📝 Description:</strong> {boarding.description}</p>
-                  <p><strong>🧰 Facilities:</strong> {boarding.facilities.join(", ")}</p>
+                  <p><strong>🧰 Facilities:</strong> {boarding.facilities}</p>
                   <button className="boarding-btn btn-edit" onClick={() => {
                     setEditingId(boarding._id);
-                    setEditData(boarding);
-                  }}>✏️ Edit</button>
-                  <button className="boarding-btn btn-delete" onClick={() => handleDelete(boarding._id)}>❌ Delete</button>
+                    setEditData({
+                      address: boarding.address || '',
+                      cost: boarding.cost || '',
+                      availableCount: boarding.availableCount || '',
+                      description: boarding.description || '',
+                      facilities: boarding.facilities || '',
+                      images: boarding.images || []
+                    });
+                    setNewImages([]);
+                    setRemovedImages([]);
+                  }}>Edit</button>
+                  <button className="boarding-btn btn-delete" onClick={() => handleDelete(boarding._id)}>Delete</button>
                 </>
               )}
             </div>
@@ -144,14 +201,13 @@ const ListBoarding = () => {
         }
 
         .boarding-card {
-        border: 1px solid #eee;
-        border-radius: 12px;
-        padding: 1.5rem;
-        background-color: #fff; /* ✅ white background for visibility */
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+          border: 1px solid #eee;
+          border-radius: 12px;
+          padding: 1.5rem;
+          background-color: #fff;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
 
         .boarding-card:hover {
           transform: translateY(-3px);
@@ -163,6 +219,21 @@ const ListBoarding = () => {
           font-weight: 600;
           color: #a17f1a;
           margin-bottom: 0.5rem;
+        }
+
+        .boarding-img {
+          width: 100%;
+          max-height: 200px;
+          object-fit: cover;
+          margin-bottom: 0.5rem;
+          border-radius: 8px;
+        }
+
+        .boarding-images {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          margin-bottom: 0.8rem;
         }
 
         .boarding-input {
