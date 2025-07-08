@@ -191,7 +191,7 @@ const FindBoarding = () => {
                       <span className="text-sm text-gray-500">Available: </span>
                       <span className="text-sm font-semibold text-gray-700 ml-1">
                         {boarding.availableCount}{" "}
-                        {boarding.availableCount === 1 ? "room" : "rooms"}
+                        {boarding.availableCount === 1 ? "bed" : "beds"}
                       </span>
                     </div>
 
@@ -219,7 +219,10 @@ const FindBoarding = () => {
                     )}
 
                     {/* Action Button */}
-                    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
+                    <button
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200"
+                      onClick={() => navigate('/view-boarding', { state: { boarding } })}
+                    >
                       View Details
                     </button>
                   </div>

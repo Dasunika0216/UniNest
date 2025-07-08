@@ -8,6 +8,7 @@ import SignIn from './components/sign-in.jsx';
 import Home from './pages/Home.jsx';
 import HostProfile from './pages/HostProfile.jsx';
 import FindBoarding from './pages/FindBoarding.jsx';
+import ViewBoarding from './pages/ViewBoarding.jsx';
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/host-profile" element={<HostProfile />} />
         <Route path="/find-boarding" element={<FindBoarding />} />
+        <Route path="/view-boarding" element={<ViewBoarding />} />
+
       </Routes>
       <ToastContainer
         position="top-right"
