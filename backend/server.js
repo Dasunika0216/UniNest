@@ -26,7 +26,6 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/hosts', hostRouter);
 app.use('/api/v1/boardings', boardingRouter);
 
-
 app.use(errorMiddleware);
 
 app.get('/', (req,res) => {

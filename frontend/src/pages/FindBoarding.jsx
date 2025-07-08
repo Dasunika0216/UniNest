@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FindBoarding = () => {
   const [type, setType] = useState("Annex");
@@ -20,6 +21,7 @@ const FindBoarding = () => {
   ];
   const [boardings, setBoardings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleFacilityChange = (facility) => {
     setFacilities((prev) =>
@@ -45,6 +47,15 @@ const FindBoarding = () => {
 
   return (
     <div className="p-6 bg-[#fdfde3] min-h-screen">
+      {/* Top bar with Become a Host button */}
+      <div className="flex justify-end mb-4">
+        <button
+          className="bg-green-600 text-white font-semibold px-6 py-2 rounded shadow hover:bg-green-700 transition-colors duration-200"
+          onClick={() => navigate('/sign-up')}
+        >
+          Become a Host
+        </button>
+      </div>
       {/* Horizontal filter bar - centered */}
       <div className="flex justify-center">
         <div className="flex space-x-8 mb-8 border-b pb-2">
