@@ -14,7 +14,7 @@ const HostProfile = () => {
   const fetchHostProfile = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5500/api/user/host-profile",
+        "http://localhost:5500/api/v1/auth/host-profile",
         {},
         { headers: { token: localStorage.getItem("token") } }
       );

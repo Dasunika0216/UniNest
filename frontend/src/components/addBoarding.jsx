@@ -97,8 +97,12 @@ const AddBoarding = () => {
     }
 
     try {
+      for (let pair of data.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+
       const response = await axios.post(
-        "http://localhost:5500/api/boarding/add-boarding",
+        "http://localhost:5500/api/v1/boardings/add-boarding",
         data,
         {
           headers: {
@@ -140,8 +144,11 @@ const AddBoarding = () => {
           cursor: "pointer",
           fontSize: "1rem",
           marginBottom: "1rem",
-          transition: "background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
-          boxShadow: isHovered ? "0px 4px 12px rgba(0, 0, 0, 0.2)" : "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          transition:
+            "background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
+          boxShadow: isHovered
+            ? "0px 4px 12px rgba(0, 0, 0, 0.2)"
+            : "0px 4px 8px rgba(0, 0, 0, 0.1)",
           transform: isHovered ? "scale(1.05)" : "scale(1)",
         }}
         onMouseEnter={() => setIsHovered(true)}
@@ -180,10 +187,17 @@ const AddBoarding = () => {
               fontFamily: "Arial, sans-serif",
             }}
           >
-            <h2 style={{ textAlign: "center", color: "#333" }}>Add Boarding Place</h2>
+            <h2 style={{ textAlign: "center", color: "#333" }}>
+              Add Boarding Place
+            </h2>
 
             {!type ? (
-              <select value={type} onChange={handleTypeSelect} required style={inputStyle}>
+              <select
+                value={type}
+                onChange={handleTypeSelect}
+                required
+                style={inputStyle}
+              >
                 <option value="">Select Type</option>
                 <option value="Annex">Annex</option>
                 <option value="Homestay">Homestay</option>
@@ -203,7 +217,9 @@ const AddBoarding = () => {
                 <input
                   type="number"
                   name="cost"
-                  placeholder={type === "Annex" ? "Cost per Annex" : "Cost per Bed"}
+                  placeholder={
+                    type === "Annex" ? "Cost per Annex" : "Cost per Bed"
+                  }
                   value={formData.cost}
                   onChange={handleChange}
                   required

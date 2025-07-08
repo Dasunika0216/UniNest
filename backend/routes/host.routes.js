@@ -13,6 +13,7 @@ hostRouter.post('/', (req,res) => res.send({'message': 'CREATE new host'}));
 
 hostRouter.put('/:id', (req,res) => res.send({'message': `UPDATE host with id ${req.params.id}`}));
 
-hostRouter.delete('/:id', (req,res) => res.send({'message': `DELETE host with id ${req.params.id}`}));
+hostRouter.delete('/:id', (req,res) => res.send({'message': `DELETE host with id ${req.params.id}`}));  
+
 
 export default hostRouter;
