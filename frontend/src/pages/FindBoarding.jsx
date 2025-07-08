@@ -102,27 +102,42 @@ const FindBoarding = () => {
                       src={boarding.images[0]}
                       alt={`${boarding.type} at ${boarding.address}`}
                       className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.nextSibling.style.display = "flex";
+                      }}
                     />
-                  ) : (
-                    <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                      <div className="text-center text-gray-500">
-                        <svg
-                          className="mx-auto h-12 w-12 text-gray-400 mb-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <span className="text-sm">No Image</span>
-                      </div>
+                  ) : null}
+
+                  {/* Fallback for no image or failed to load */}
+                  <div
+                    className={`w-full h-48 bg-gray-200 flex items-center justify-center ${
+                      boarding.images && boarding.images.length > 0
+                        ? "hidden"
+                        : "flex"
+                    }`}
+                  >
+                    <div className="text-center text-gray-500">
+                      <svg
+                        className="mx-auto h-12 w-12 text-gray-400 mb-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-sm">
+                        {boarding.images && boarding.images.length > 0
+                          ? "Image failed to load"
+                          : "No Image"}
+                      </span>
                     </div>
-                  )}
+                  </div>
 
                   {/* Content */}
                   <div className="p-4">
