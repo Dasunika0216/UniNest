@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
+import BecomeHostButton from '../components/BecomeHostButton';
 
 const ViewBoarding = () => {
   const location = useLocation();
@@ -23,11 +24,7 @@ const ViewBoarding = () => {
     <div className="p-8 max-w-5xl mx-auto">
       {/* Top bar with Become a Host button */}
       <div className="flex justify-end mb-4">
-        <button
-          className="bg-green-600 text-white font-semibold px-6 py-2 rounded shadow hover:bg-green-700 transition-colors duration-200"
-        >
-          Become a Host
-        </button>
+        <BecomeHostButton />
       </div>
       {/* Images display */}
       {images.length <= 1 ? (
