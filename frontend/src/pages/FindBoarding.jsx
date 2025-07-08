@@ -180,7 +180,7 @@ const FindBoarding = () => {
                       <span className="text-sm text-gray-500">Available: </span>
                       <span className="text-sm font-semibold text-gray-700 ml-1">
                         {boarding.availableCount}{" "}
-                        {boarding.availableCount === 1 ? "room" : "rooms"}
+                        {boarding.availableCount === 1 ? "bed" : "beds"}
                       </span>
                     </div>
 
