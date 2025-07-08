@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const ListBoarding = () => {
   const [boardings, setBoardings] = useState([]);
@@ -8,11 +8,14 @@ const ListBoarding = () => {
 
   const fetchBoarding = async () => {
     try {
-      const response = await axios.get("http://localhost:5500/api/boarding/list-boarding", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:5500/api/v1/boardings/list-boarding",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         setBoardings(response.data.data);
@@ -38,15 +41,20 @@ const ListBoarding = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to remove this boarding place?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to remove this boarding place?"
+    );
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(`http://localhost:5500/api/boarding/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5500/api/v1/boardings/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         setBoardings((prev) => prev.filter((b) => b._id !== id));
@@ -63,11 +71,15 @@ const ListBoarding = () => {
 
   const handleEditSubmit = async (id) => {
     try {
-      const response = await axios.put(`http://localhost:5500/api/boarding/${id}`, editData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.put(
+        `http://localhost:5500/api/v1/boardings/${id}`,
+        editData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         setEditingId(null);
@@ -89,27 +101,89 @@ const ListBoarding = () => {
             <div key={index} className="boarding-card">
               {editingId === boarding._id ? (
                 <>
-                  <input className="boarding-input" name="address" value={editData.address} onChange={handleEditChange} placeholder="Address" />
-                  <input className="boarding-input" name="cost" value={editData.cost} onChange={handleEditChange} placeholder="Cost" />
-                  <input className="boarding-input" name="availableCount" value={editData.availableCount} onChange={handleEditChange} placeholder="Available Beds" />
-                  <input className="boarding-input" name="description" value={editData.description} onChange={handleEditChange} placeholder="Description" />
-                  <input className="boarding-input" name="facilities" value={editData.facilities} onChange={handleEditChange} placeholder="Facilities" />
-                  <button className="boarding-btn btn-save" onClick={() => handleEditSubmit(boarding._id)}>💾 Save</button>
-                  <button className="boarding-btn btn-cancel" onClick={() => setEditingId(null)}>❌ Cancel</button>
+                  <input
+                    className="boarding-input"
+                    name="address"
+                    value={editData.address}
+                    onChange={handleEditChange}
+                    placeholder="Address"
+                  />
+                  <input
+                    className="boarding-input"
+                    name="cost"
+                    value={editData.cost}
+                    onChange={handleEditChange}
+                    placeholder="Cost"
+                  />
+                  <input
+                    className="boarding-input"
+                    name="availableCount"
+                    value={editData.availableCount}
+                    onChange={handleEditChange}
+                    placeholder="Available Beds"
+                  />
+                  <input
+                    className="boarding-input"
+                    name="description"
+                    value={editData.description}
+                    onChange={handleEditChange}
+                    placeholder="Description"
+                  />
+                  <input
+                    className="boarding-input"
+                    name="facilities"
+                    value={editData.facilities}
+                    onChange={handleEditChange}
+                    placeholder="Facilities"
+                  />
+                  <button
+                    className="boarding-btn btn-save"
+                    onClick={() => handleEditSubmit(boarding._id)}
+                  >
+                    💾 Save
+                  </button>
+                  <button
+                    className="boarding-btn btn-cancel"
+                    onClick={() => setEditingId(null)}
+                  >
+                    ❌ Cancel
+                  </button>
                 </>
               ) : (
                 <>
                   <h3 className="boarding-type">{boarding.type}</h3>
-                  <p><strong>🏠 Address:</strong> {boarding.address}</p>
-                  <p><strong>💰 Cost:</strong> Rs. {boarding.cost}</p>
-                  <p><strong>🛏️ Available Beds:</strong> {boarding.availableCount}</p>
-                  <p><strong>📝 Description:</strong> {boarding.description}</p>
-                  <p><strong>🧰 Facilities:</strong> {boarding.facilities.join(", ")}</p>
-                  <button className="boarding-btn btn-edit" onClick={() => {
-                    setEditingId(boarding._id);
-                    setEditData(boarding);
-                  }}>✏️ Edit</button>
-                  <button className="boarding-btn btn-delete" onClick={() => handleDelete(boarding._id)}>❌ Delete</button>
+                  <p>
+                    <strong>🏠 Address:</strong> {boarding.address}
+                  </p>
+                  <p>
+                    <strong>💰 Cost:</strong> Rs. {boarding.cost}
+                  </p>
+                  <p>
+                    <strong>🛏️ Available Beds:</strong>{" "}
+                    {boarding.availableCount}
+                  </p>
+                  <p>
+                    <strong>📝 Description:</strong> {boarding.description}
+                  </p>
+                  <p>
+                    <strong>🧰 Facilities:</strong>{" "}
+                    {boarding.facilities.join(", ")}
+                  </p>
+                  <button
+                    className="boarding-btn btn-edit"
+                    onClick={() => {
+                      setEditingId(boarding._id);
+                      setEditData(boarding);
+                    }}
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    className="boarding-btn btn-delete"
+                    onClick={() => handleDelete(boarding._id)}
+                  >
+                    ❌ Delete
+                  </button>
                 </>
               )}
             </div>

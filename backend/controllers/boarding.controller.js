@@ -144,5 +144,29 @@ const updateBoarding = async (req, res) => {
   }
 };
 
+console.log("filterBoarding");
+const filterBoarding = async (req,res) => {
+  try{
+    const filter = {};
 
-export { addBoarding, listBoarding, deleteBoarding, updateBoarding, };
+    //filter by type if provided
+    if(req.query.type){
+      filter.type = req.query.type;
+    }
+
+    //filter by facilities if provided
+    if(req.query.facilities){
+      filter.facilities = { $all: req.query.facilities.split(',')};
+    }
+
+    //can add more filters if we want
+
+    const boardings = await boardingModel.find(filter);
+
+    res.json({success: true, data: boardings});
+}catch(error){
+  res.status(500).json({success: false, message: error.message});
+}
+};
+
+export { addBoarding, listBoarding, deleteBoarding, updateBoarding, filterBoarding };

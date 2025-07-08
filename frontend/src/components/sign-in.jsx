@@ -14,10 +14,13 @@ function SignIn() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5500/api/user/sign-in", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:5500/api/v1/auth/sign-in",
+        {
+          email,
+          password,
+        }
+      );
 
       if (res.data.success) {
         setToken(res.data.data.token);
