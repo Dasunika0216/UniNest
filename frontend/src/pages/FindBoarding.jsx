@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const FindBoarding = () => {
-  const [type, setType] = useState("Annexes");
+  const [type, setType] = useState("Annex");
   const typeOptions = [
     { label: "Annexes", value: "Annex" },
     { label: "Hostels", value: "Hostel" },
