@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    boardingAddressForApproval: '',
-    boardingImageForApproval: ''
+    username: "",
+    email: "",
+    password: "",
+    boardingAddressForApproval: "",
+    boardingImageForApproval: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -35,7 +35,10 @@ function SignUp() {
     data.append("folder", "imagesPendingApproval");
 
     try {
-      const res = await axios.post("https://api.cloudinary.com/v1_1/dnykpks6n/image/upload", data);
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dnykpks6n/image/upload",
+        data
+      );
       setUploading(false);
       return res.data.secure_url;
     } catch (err) {
@@ -49,7 +52,7 @@ function SignUp() {
     e.preventDefault();
 
     if (!imageFile) {
-      setMessage('Please select an image to upload.');
+      setMessage("Please select an image to upload.");
       return;
     }
 
@@ -61,11 +64,14 @@ function SignUp() {
 
     const updatedFormData = {
       ...formData,
-      boardingImageForApproval: uploadedImageUrl
+      boardingImageForApproval: uploadedImageUrl,
     };
 
     try {
-      const res = await axios.post('http://localhost:5500/api/user/sign-up', updatedFormData);
+      const res = await axios.post(
+        "http://localhost:5500/api/v1/auth/sign-up",
+        updatedFormData
+      );
       if (res.data.success) {
         toast.success("Sign-up successful!");
         setMessage("Sign-up successful!");
@@ -74,7 +80,7 @@ function SignUp() {
       }
     } catch (err) {
       console.error(err);
-      setMessage(err.response?.data?.message || 'Sign up failed!');
+      setMessage(err.response?.data?.message || "Sign up failed!");
     }
   };
 
@@ -114,17 +120,61 @@ function SignUp() {
         fontFamily: "Segoe UI, sans-serif",
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#2d2d2d", marginBottom: "1.5rem" }}>
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#2d2d2d",
+          marginBottom: "1.5rem",
+        }}
+      >
         Host Sign Up
       </h2>
       <form onSubmit={handleSignUp}>
-        <input type="text" name="username" placeholder="Username" onChange={handleChange} required style={sharedInputStyle} />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required style={sharedInputStyle} />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required style={sharedInputStyle} />
-        <input type="text" name="boardingAddressForApproval" placeholder="Boarding Address" onChange={handleChange} required style={sharedInputStyle} />
-        <input type="file" accept="image/*" onChange={handleImageChange} required style={sharedInputStyle} />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+          style={sharedInputStyle}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          required
+          style={sharedInputStyle}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+          style={sharedInputStyle}
+        />
+        <input
+          type="text"
+          name="boardingAddressForApproval"
+          placeholder="Boarding Address"
+          onChange={handleChange}
+          required
+          style={sharedInputStyle}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          required
+          style={sharedInputStyle}
+        />
 
-        {uploading && <p style={{ marginBottom: "1rem", color: "#444" }}>Uploading image...</p>}
+        {uploading && (
+          <p style={{ marginBottom: "1rem", color: "#444" }}>
+            Uploading image...
+          </p>
+        )}
 
         <button
           type="submit"
@@ -138,10 +188,18 @@ function SignUp() {
       </form>
 
       {message && (
-        <p style={{ textAlign: "center", marginTop: "1rem", color: "#e74c3c" }}>{message}</p>
+        <p style={{ textAlign: "center", marginTop: "1rem", color: "#e74c3c" }}>
+          {message}
+        </p>
       )}
 
-      <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.95rem" }}>
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "1.5rem",
+          fontSize: "0.95rem",
+        }}
+      >
         Already have an account?{" "}
         <Link
           to="/sign-in"
