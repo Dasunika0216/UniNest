@@ -156,6 +156,9 @@ const ListBoarding = () => {
                     <strong>🏠 Address:</strong> {boarding.address}
                   </p>
                   <p>
+                    <strong>🚻 Gender:</strong> For {boarding.gender}
+                  </p>
+                  <p>
                     <strong>💰 Cost:</strong> Rs. {boarding.cost}
                   </p>
                   <p>
@@ -167,7 +170,7 @@ const ListBoarding = () => {
                   </p>
                   <p>
                     <strong>🧰 Facilities:</strong>{" "}
-                    {boarding.facilities.join(", ")}
+                    {boarding.facilities && boarding.facilities.length > 0 ? boarding.facilities.join(", ") : "Not Given"}
                   </p>
                   <button
                     className="boarding-btn btn-edit"
