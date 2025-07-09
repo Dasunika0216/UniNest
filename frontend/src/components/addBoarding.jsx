@@ -174,7 +174,7 @@ const AddBoarding = () => {
           backgroundColor: isHovered ? "#c5ab6f" : "#d4bf95",
           color: "black",
           border: "none",
-          borderRadius: "8px",
+          borderRadius: "9999px",
           cursor: "pointer",
           fontSize: "1rem",
           marginBottom: "1rem",
@@ -733,22 +733,34 @@ const AddBoarding = () => {
                   </button>
                   <button
                     type="submit"
-                    disabled={!(formData.description && imageFiles.length > 0)}
+                    disabled={uploading || !(formData.description && imageFiles.length > 0)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: formData.description && imageFiles.length > 0 ? "#d4bf95" : "#e0e0e0",
-                      color: formData.description && imageFiles.length > 0 ? "#222" : "#888",
+                      backgroundColor: uploading
+                        ? "#e0e0e0"
+                        : formData.description && imageFiles.length > 0
+                        ? "#d4bf95"
+                        : "#e0e0e0",
+                      color: uploading
+                        ? "#888"
+                        : formData.description && imageFiles.length > 0
+                        ? "#222"
+                        : "#888",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
-                      cursor: formData.description && imageFiles.length > 0 ? "pointer" : "not-allowed",
+                      cursor: uploading
+                        ? "not-allowed"
+                        : formData.description && imageFiles.length > 0
+                        ? "pointer"
+                        : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
                       boxShadow: formData.description && imageFiles.length > 0 ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
                     }}
                   >
-                    Submit
+                    {uploading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </>
