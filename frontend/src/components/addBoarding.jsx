@@ -165,6 +165,58 @@ const AddBoarding = () => {
       </button>
 
       {showForm && (
+        <>
+          <style>{`
+            @media (max-width: 700px) {
+              .responsive-modal {
+                max-width: 98vw !important;
+                width: 99vw !important;
+                padding: 1.1rem 0.3rem 1.1rem 0.3rem !important;
+                border-radius: 18px !important;
+                margin: 1.2rem !important;
+                box-shadow: 0 6px 32px 0 rgba(180,160,80,0.13), 0 1px 4px 0 rgba(0,0,0,0.10) !important;
+                background: linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%) !important;
+              }
+              .responsive-card-row {
+                flex-direction: column !important;
+                gap: 1.2rem !important;
+                align-items: stretch !important;
+              }
+              .responsive-card-row button {
+                min-width: 0 !important;
+                max-width: 100% !important;
+                min-height: 120px !important;
+                padding: 0.8rem 0.5rem 0.8rem 0.5rem !important;
+                border-radius: 22px !important;
+                box-shadow: 0 2px 12px rgba(180,160,80,0.10), 0 1px 4px rgba(0,0,0,0.08) !important;
+                margin-bottom: 0.7rem !important;
+                border: 1.5px solid #e0e0e0 !important;
+              }
+              .responsive-card-row img {
+                width: 60px !important;
+                height: 60px !important;
+                border-radius: 50% !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.10) !important;
+              }
+              .responsive-card-row span {
+                font-size: 1.08rem !important;
+                font-weight: 600 !important;
+                margin-top: 0.2rem !important;
+              }
+              .responsive-modal .button-row {
+                flex-direction: column !important;
+                gap: 0.8rem !important;
+                align-items: center !important;
+              }
+              .responsive-modal .button-row button {
+                width: 90vw !important;
+                max-width: 340px !important;
+                font-size: 1.08rem !important;
+                padding: 1.1rem 0 !important;
+                border-radius: 14px !important;
+              }
+            }
+          `}</style>
         <div
           style={{
             position: "fixed",
@@ -172,9 +224,9 @@ const AddBoarding = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(220, 220, 220, 0.25)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
+              backgroundColor: "rgba(220, 220, 220, 0.25)",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -183,136 +235,141 @@ const AddBoarding = () => {
         >
           <form
             onSubmit={handleSubmit}
+              className="responsive-modal"
             style={{
-              background: "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)",
-              padding: "2.8rem 2.8rem 2.2rem 2.8rem",
-              width: "99%",
-              maxWidth: "1100px",
+                background: "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)",
+                padding: "2.8rem 2.8rem 2.2rem 2.8rem",
+                width: "99%",
+                maxWidth: "1100px",
               display: "flex",
               flexDirection: "column",
               gap: "1.2rem",
-              boxShadow: "0 12px 48px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.08)",
-              border: "1.5px solid #f3e7c9",
-              borderRadius: "38px",
-              fontFamily: "'Segoe UI', Arial, sans-serif",
-            }}
-          >
-            <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
-              What kind of place will you host?
+                boxShadow: "0 12px 48px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.08)",
+                border: "1.5px solid #f3e7c9",
+                borderRadius: "38px",
+                fontFamily: "'Segoe UI', Arial, sans-serif",
+              }}
+            >
+              <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
+                What kind of place will you host?
             </h2>
 
-            {step === 1 && (
-              <>
-                <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "2.5rem",
-                  margin: "2.5rem 0 1.5rem 0",
-                  width: "100%",
-                  maxWidth: "900px",
-                  alignSelf: "center",
-                }}>
-                  {[
-                    { name: "Annex", img: "/annex.jpg" },
-                    { name: "Homestay", img: "/homestay.jpg" },
-                    { name: "Hotel", img: "/hotel.jpg" },
-                  ].map((option) => {
-                    const isSelected = type === option.name;
-                    return (
-                      <button
-                        key={option.name}
-                        type="button"
-                        onClick={() => setType(option.name)}
-                        style={{
-                          flex: 1,
-                          minWidth: "210px",
-                          maxWidth: "250px",
-                          minHeight: "320px",
-                          background: isSelected ? "#fdf7ea" : "#f7f8fa",
-                          border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
-                          borderRadius: "22px",
-                          color: "#222",
-                          fontWeight: 700,
-                          fontSize: "1.18rem",
-                          boxShadow: isSelected ? "0 8px 32px rgba(212,191,149,0.13)" : "0 2px 12px rgba(0,0,0,0.06)",
-                          cursor: "pointer",
-                          transition: "all 0.22s cubic-bezier(.4,2,.6,1)",
-                          outline: isSelected ? "2px solid #d4bf95" : "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "1.3rem",
-                          padding: "2.2rem 1.2rem 1.2rem 1.2rem",
-                          transform: isSelected ? "scale(1.06)" : "scale(1)",
-                          boxSizing: "border-box",
-                        }}
-                        onMouseEnter={e => {
-                          if (!isSelected) e.currentTarget.style.transform = "scale(1.04)";
-                        }}
-                        onMouseLeave={e => {
-                          if (!isSelected) e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <img src={option.img} alt={option.name} style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "50%", boxShadow: "0 4px 18px rgba(0,0,0,0.13)", marginBottom: "0.7rem", border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0", background: "#fff" }} />
-                        <span style={{ fontWeight: 700, fontSize: "1.18rem", letterSpacing: "-0.5px" }}>{option.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "2.5rem",
-                  marginTop: "2.2rem",
-                }}>
-                  <button
-                    type="button"
-                    disabled={!type}
-                    onClick={() => setStep(2)}
-                    style={{
-                      padding: "0.9rem 3.2rem",
-                      backgroundColor: type ? "#d4bf95" : "#e0e0e0",
-                      color: type ? "#222" : "#888",
-                      border: "none",
-                      borderRadius: "16px",
-                      fontWeight: 700,
-                      fontSize: "1.18rem",
-                      cursor: type ? "pointer" : "not-allowed",
-                      transition: "all 0.2s",
-                      minWidth: "180px",
-                      boxShadow: type ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
-                    }}
+              {step === 1 && (
+                <>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "2.5rem",
+                    margin: "2.5rem 0 1.5rem 0",
+                    width: "100%",
+                    maxWidth: "900px",
+                    alignSelf: "center",
+                  }}
+                  className="responsive-card-row"
                   >
-                    Next
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowForm(false);
-                      setType("");
-                      setStep(1);
-                    }}
-                    style={{
-                      padding: "0.9rem 3.2rem",
-                      backgroundColor: "#bdc3c7",
-                      color: "#2c3e50",
-                      border: "none",
-                      borderRadius: "16px",
-                      fontWeight: 700,
-                      fontSize: "1.18rem",
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      minWidth: "180px",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                    }}
+                    {[
+                      { name: "Annex", img: "/annex.jpg" },
+                      { name: "Homestay", img: "/homestay.jpg" },
+                      { name: "Hotel", img: "/hotel.jpg" },
+                    ].map((option) => {
+                      const isSelected = type === option.name;
+                      return (
+                        <button
+                          key={option.name}
+                          type="button"
+                          onClick={() => setType(option.name)}
+                          style={{
+                            flex: 1,
+                            minWidth: "210px",
+                            maxWidth: "250px",
+                            minHeight: "320px",
+                            background: isSelected ? "#fdf7ea" : "#f7f8fa",
+                            border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
+                            borderRadius: "22px",
+                            color: "#222",
+                            fontWeight: 700,
+                            fontSize: "1.18rem",
+                            boxShadow: isSelected ? "0 8px 32px rgba(212,191,149,0.13)" : "0 2px 12px rgba(0,0,0,0.06)",
+                            cursor: "pointer",
+                            transition: "all 0.22s cubic-bezier(.4,2,.6,1)",
+                            outline: isSelected ? "2px solid #d4bf95" : "none",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "1.3rem",
+                            padding: "2.2rem 1.2rem 1.2rem 1.2rem",
+                            transform: isSelected ? "scale(1.06)" : "scale(1)",
+                            boxSizing: "border-box",
+                          }}
+                          onMouseEnter={e => {
+                            if (!isSelected) e.currentTarget.style.transform = "scale(1.04)";
+                          }}
+                          onMouseLeave={e => {
+                            if (!isSelected) e.currentTarget.style.transform = "scale(1)";
+                          }}
+                        >
+                          <img src={option.img} alt={option.name} style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "50%", boxShadow: "0 4px 18px rgba(0,0,0,0.13)", marginBottom: "0.7rem", border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0", background: "#fff" }} />
+                          <span style={{ fontWeight: 700, fontSize: "1.18rem", letterSpacing: "-0.5px" }}>{option.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "2.5rem",
+                    marginTop: "2.2rem",
+                  }}
+                  className="button-row"
                   >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            )}
-            {step === 2 && (
+                    <button
+                      type="button"
+                      disabled={!type}
+                      onClick={() => setStep(2)}
+                      style={{
+                        padding: "0.9rem 3.2rem",
+                        backgroundColor: type ? "#d4bf95" : "#e0e0e0",
+                        color: type ? "#222" : "#888",
+                        border: "none",
+                        borderRadius: "16px",
+                        fontWeight: 700,
+                        fontSize: "1.18rem",
+                        cursor: type ? "pointer" : "not-allowed",
+                        transition: "all 0.2s",
+                        minWidth: "180px",
+                        boxShadow: type ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
+                      }}
+                    >
+                      Next
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowForm(false);
+                        setType("");
+                        setStep(1);
+                      }}
+                      style={{
+                        padding: "0.9rem 3.2rem",
+                        backgroundColor: "#bdc3c7",
+                        color: "#2c3e50",
+                        border: "none",
+                        borderRadius: "16px",
+                        fontWeight: 700,
+                        fontSize: "1.18rem",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        minWidth: "180px",
+                        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              )}
+              {step === 2 && (
               <>
                 <input
                   type="text"
@@ -404,7 +461,7 @@ const AddBoarding = () => {
                     onClick={() => {
                       setShowForm(false);
                       setType("");
-                      setStep(1);
+                        setStep(1);
                     }}
                     style={cancelButtonStyle}
                     onMouseEnter={(e) => {
@@ -423,6 +480,7 @@ const AddBoarding = () => {
             )}
           </form>
         </div>
+        </>
       )}
     </>
   );
