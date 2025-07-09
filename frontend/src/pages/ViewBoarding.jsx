@@ -83,30 +83,7 @@ const ViewBoarding = () => {
                   )}
                 </div>
               ))}
-              {/* If less than 4 side images, fill empty spots */}
-              {Array.from({ length: Math.max(0, 4 - sideImages.length) }).map(
-                (_, idx) => (
-                  <div
-                    key={`empty-${idx}`}
-                    className="aspect-square rounded bg-gray-100"
-                  />
-                )
-              )}
             </div>
-//           {/* Side images grid */}
-//           <div className="grid grid-cols-2 grid-rows-2 gap-2 w-64 min-w-64">
-//             {sideImages.map((img, idx) => (
-//               <div key={idx} className="relative aspect-square rounded overflow-hidden bg-gray-200">
-//                 <img src={img} alt={`Boarding ${idx + 2}`} className="w-full h-full object-cover" />
-//                 {/* Overlay for extra images */}
-//                 {idx === 3 && extraCount > 0 && (
-//                   <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white text-lg font-bold">
-//                     +{extraCount} <span className="text-sm font-normal">More\nPhotos</span>
-//                   </div>
-//                 )}
-//               </div>
-//             ))}
-
           </div>
         )}
         {/* Type and Cost */}
