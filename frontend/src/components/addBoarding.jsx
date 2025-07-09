@@ -439,7 +439,7 @@ const AddBoarding = () => {
                 <input
                   type="number"
                   name="cost"
-                  placeholder="Cost"
+                  placeholder={type === "Annex" ? "Cost per annex" : "Cost per bed"}
                   value={formData.cost}
                   onChange={handleChange}
                   required
@@ -457,7 +457,7 @@ const AddBoarding = () => {
                 <input
                   type="number"
                   name="availableCount"
-                  placeholder="Number of Beds"
+                  placeholder="Number of Available Beds"
                   value={formData.availableCount}
                   onChange={handleChange}
                   required
