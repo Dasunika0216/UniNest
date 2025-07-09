@@ -97,6 +97,11 @@ const AddBoarding = () => {
     });
   };
 
+  // Remove image by index
+  const handleRemoveImage = (idx) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== idx));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Token:", localStorage.getItem("token"));
@@ -657,6 +662,45 @@ const AddBoarding = () => {
                     resize: "vertical",
                   }}
                 />
+                {/* Image previews with remove option */}
+                {imageFiles.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.2rem" }}>
+                    {imageFiles.map((file, idx) => (
+                      <div key={idx} style={{ position: "relative", width: 90, height: 90, borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.10)", background: "#f7f7f7" }}>
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`preview-${idx}`}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveImage(idx)}
+                          style={{
+                            position: "absolute",
+                            top: 2,
+                            right: 2,
+                            background: "rgba(255,255,255,0.85)",
+                            border: "none",
+                            borderRadius: "50%",
+                            width: 22,
+                            height: 22,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontWeight: 700,
+                            fontSize: 16,
+                            color: "#c0392b",
+                            cursor: "pointer",
+                            boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
+                          }}
+                          aria-label="Remove image"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <input
                   type="file"
                   name="images"

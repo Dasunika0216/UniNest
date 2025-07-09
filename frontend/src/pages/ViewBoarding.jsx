@@ -68,10 +68,6 @@ const ViewBoarding = () => {
                 )}
               </div>
             ))}
-            {/* If less than 4 side images, fill empty spots */}
-            {Array.from({ length: Math.max(0, 4 - sideImages.length) }).map((_, idx) => (
-              <div key={`empty-${idx}`} className="aspect-square rounded bg-gray-100" />
-            ))}
           </div>
         </div>
       )}
