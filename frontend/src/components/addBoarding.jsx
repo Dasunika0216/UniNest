@@ -108,10 +108,7 @@ const AddBoarding = () => {
     data.append("cost", formData.cost);
     data.append("availableCount", formData.availableCount);
     data.append("description", formData.description);
-    formData.facilities
-      .split(",")
-      .map((facility) => facility.trim())
-      .forEach((f) => data.append("facilities", f));
+    formData.facilities.forEach((f) => data.append("facilities", f));
 
     // Handle image uploads to Cloudinary
     if (imageFiles.length > 0) {
@@ -276,8 +273,8 @@ const AddBoarding = () => {
                 border: "1.5px solid #f3e7c9",
                 borderRadius: "38px",
                 fontFamily: "'Segoe UI', Arial, sans-serif",
-              }}
-            >
+            }}
+          >
               {step === 1 && (
                 <>
                   <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
@@ -457,6 +454,24 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 />
+                <input
+                  type="number"
+                  name="availableCount"
+                  placeholder="Number of Beds"
+                  value={formData.availableCount}
+                  onChange={handleChange}
+                  required
+                  min="1"
+                  style={{
+                    padding: "0.8rem",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    fontSize: "1rem",
+                    outline: "none",
+                    width: "100%",
+                    marginBottom: "1.2rem",
+                  }}
+                />
                 <div className="button-row" style={{ display: "flex", justifyContent: "center", gap: "2.5rem", marginTop: "1.2rem" }}>
                   <button
                     type="button"
@@ -480,18 +495,19 @@ const AddBoarding = () => {
                   <button
                     type="button"
                     onClick={() => setStep(3)}
+                    disabled={!(formData.gender && formData.address && formData.cost && formData.availableCount)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: "#d4bf95",
-                      color: "#222",
+                      backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount ? "#d4bf95" : "#e0e0e0",
+                      color: formData.gender && formData.address && formData.cost && formData.availableCount ? "#222" : "#888",
                       border: "none",
                       borderRadius: "16px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
-                      cursor: "pointer",
+                      cursor: formData.gender && formData.address && formData.cost && formData.availableCount ? "pointer" : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
-                      boxShadow: "0 2px 12px rgba(212,191,149,0.13)",
+                      boxShadow: formData.gender && formData.address && formData.cost && formData.availableCount ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
                     }}
                   >
                     Next
@@ -614,6 +630,81 @@ const AddBoarding = () => {
                     }}
                   >
                     Next
+                  </button>
+                </div>
+              </>
+            )}
+            {step === 4 && (
+              <>
+                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                  Add a description and images
+                </h2>
+                <textarea
+                  name="description"
+                  placeholder="Add a short description about your boarding place..."
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                  required
+                  style={{
+                    padding: "0.9rem",
+                    borderRadius: "10px",
+                    border: "1px solid #ccc",
+                    fontSize: "1.08rem",
+                    outline: "none",
+                    width: "100%",
+                    marginBottom: "1.5rem",
+                    resize: "vertical",
+                  }}
+                />
+                <input
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  onChange={handleChange}
+                  style={{
+                    marginBottom: "1.5rem",
+                  }}
+                />
+                <div className="button-row" style={{ display: "flex", justifyContent: "center", gap: "2.5rem", marginTop: "1.2rem" }}>
+                  <button
+                    type="button"
+                    onClick={() => setStep(3)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: "#bdc3c7",
+                      color: "#2c3e50",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!(formData.description && imageFiles.length > 0)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: formData.description && imageFiles.length > 0 ? "#d4bf95" : "#e0e0e0",
+                      color: formData.description && imageFiles.length > 0 ? "#222" : "#888",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: formData.description && imageFiles.length > 0 ? "pointer" : "not-allowed",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: formData.description && imageFiles.length > 0 ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
+                    }}
+                  >
+                    Submit
                   </button>
                 </div>
               </>
