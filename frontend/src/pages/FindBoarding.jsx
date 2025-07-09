@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import BecomeHostButton from '../components/BecomeHostButton';
 
 const FindBoarding = () => {
   const [type, setType] = useState("Annex");
@@ -20,6 +22,7 @@ const FindBoarding = () => {
   ];
   const [boardings, setBoardings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleFacilityChange = (facility) => {
     setFacilities((prev) =>
@@ -45,6 +48,10 @@ const FindBoarding = () => {
 
   return (
     <div className="p-6 bg-[#fdfde3] min-h-screen">
+      {/* Top bar with Become a Host button */}
+      <div className="flex justify-end mb-4">
+        <BecomeHostButton />
+      </div>
       {/* Horizontal filter bar - centered */}
       <div className="flex justify-center">
         <div className="flex space-x-8 mb-8 border-b pb-2">
@@ -208,7 +215,10 @@ const FindBoarding = () => {
                     )}
 
                     {/* Action Button */}
-                    <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
+                    <button
+                      className="w-full bg-yellow-700 text-white py-2 px-4 rounded hover:bg-yellow-800 transition-colors duration-200"
+                      onClick={() => navigate('/view-boarding', { state: { boarding } })}
+                    >
                       View Details
                     </button>
                   </div>

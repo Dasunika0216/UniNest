@@ -176,13 +176,13 @@ const ListBoarding = () => {
                       setEditData(boarding);
                     }}
                   >
-                    ✏️ Edit
+                     Edit
                   </button>
                   <button
                     className="boarding-btn btn-delete"
                     onClick={() => handleDelete(boarding._id)}
                   >
-                    ❌ Delete
+                     Delete
                   </button>
                 </>
               )}
