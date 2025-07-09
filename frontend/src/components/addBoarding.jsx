@@ -9,9 +9,10 @@ const AddBoarding = () => {
   const [step, setStep] = useState(1); // 1: type select, 2: form
   const [formData, setFormData] = useState({
     address: "",
+    gender: "",
     cost: "",
     availableCount: "",
-    facilities: "",
+    facilities: [],
     description: "",
     images: [],
   });
@@ -26,9 +27,10 @@ const AddBoarding = () => {
     setType(e.target.value);
     setFormData({
       address: "",
+      gender: "",
       cost: "",
       availableCount: "",
-      facilities: "",
+      facilities: [],
       description: "",
       images: [],
     });
@@ -73,6 +75,28 @@ const AddBoarding = () => {
     return uploadedUrls; // Return all image URLs
   };
 
+  const facilityOptions = [
+    { label: "WiFi", img: "/wifi.jpg" },
+    { label: "AC", img: "/ac.jpg" },
+    { label: "Laundry", img: "/laundry.jpg" },
+    { label: "Parking", img: "/parking.jpg" },
+    { label: "Meals", img: "/meals.jpg" },
+    { label: "Kitchen", img: "/kitchen.jpg" },
+    { label: "Study Area", img: "/study.jpg" },
+  ];
+
+  const handleFacilityChange = (facility) => {
+    setFormData((prev) => {
+      const exists = prev.facilities.includes(facility);
+      return {
+        ...prev,
+        facilities: exists
+          ? prev.facilities.filter((f) => f !== facility)
+          : [...prev.facilities, facility],
+      };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Token:", localStorage.getItem("token"));
@@ -80,6 +104,7 @@ const AddBoarding = () => {
     const data = new FormData();
     data.append("type", type);
     data.append("address", formData.address);
+    data.append("gender", formData.gender);
     data.append("cost", formData.cost);
     data.append("availableCount", formData.availableCount);
     data.append("description", formData.description);
@@ -215,6 +240,9 @@ const AddBoarding = () => {
                 padding: 1.1rem 0 !important;
                 border-radius: 14px !important;
               }
+              .responsive-card-row {
+                grid-template-columns: repeat(2, 1fr) !important;
+              }
             }
           `}</style>
         <div
@@ -250,12 +278,12 @@ const AddBoarding = () => {
                 fontFamily: "'Segoe UI', Arial, sans-serif",
               }}
             >
-              <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
-                What kind of place will you host?
-            </h2>
-
               {step === 1 && (
                 <>
+                  <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
+                    What kind of place will you host?
+            </h2>
+
                   <div style={{
                     display: "flex",
                     justifyContent: "center",
@@ -371,6 +399,9 @@ const AddBoarding = () => {
               )}
               {step === 2 && (
               <>
+                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                  Enter Boarding Details
+                </h2>
                 <input
                   type="text"
                   name="address"
@@ -378,102 +409,211 @@ const AddBoarding = () => {
                   value={formData.address}
                   onChange={handleChange}
                   required
-                  style={inputStyle}
+                  style={{
+                    padding: "0.8rem",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    fontSize: "1rem",
+                    outline: "none",
+                    width: "100%",
+                    marginBottom: "1.2rem",
+                  }}
                 />
+                 <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                  style={{
+                    padding: "0.8rem",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    fontSize: "1rem",
+                    outline: "none",
+                    width: "100%",
+                    marginBottom: "1.2rem",
+                  }}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Girls">Girls</option>
+                  <option value="Boys">Boys</option>
+                  <option value="Any">Any</option>
+                </select>
                 <input
                   type="number"
                   name="cost"
-                  placeholder={
-                    type === "Annex" ? "Cost per Annex" : "Cost per Bed"
-                  }
+                  placeholder="Cost"
                   value={formData.cost}
                   onChange={handleChange}
                   required
                   min="0"
-                  style={inputStyle}
-                />
-                <input
-                  type="number"
-                  name="availableCount"
-                  placeholder="Number of Beds"
-                  value={formData.availableCount}
-                  onChange={handleChange}
-                  required
-                  min="0"
-                  style={inputStyle}
-                />
-                <textarea
-                  name="facilities"
-                  placeholder="Facilities (comma-separated)"
-                  value={formData.facilities}
-                  onChange={handleChange}
-                  rows="2"
-                  required
-                  style={{ ...inputStyle, resize: "vertical" }}
-                ></textarea>
-                <textarea
-                  name="description"
-                  placeholder="Description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows="3"
-                  required
-                  style={{ ...inputStyle, resize: "vertical" }}
-                ></textarea>
-
-                {/* Image upload section */}
-                <input
-                  type="file"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  onChange={handleChange}
-                  style={inputStyle}
-                />
-
-                {uploading && <p>Uploading images...</p>}
-
-                <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "1rem",
-                    marginTop: "1rem",
+                    padding: "0.8rem",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    fontSize: "1rem",
+                    outline: "none",
+                    width: "100%",
+                    marginBottom: "1.2rem",
                   }}
-                >
-                  <button
-                    type="submit"
-                    style={submitButtonStyle}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = "#bfae7f";
-                      e.target.style.transform = "scale(1.05)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = "#d4bf95";
-                      e.target.style.transform = "scale(1)";
-                    }}
-                  >
-                    Submit
-                  </button>
-
+                />
+                <div className="button-row" style={{ display: "flex", justifyContent: "center", gap: "2.5rem", marginTop: "1.2rem" }}>
                   <button
                     type="button"
-                    onClick={() => {
-                      setShowForm(false);
-                      setType("");
-                        setStep(1);
-                    }}
-                    style={cancelButtonStyle}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = "#95a5a6";
-                      e.target.style.transform = "scale(1.05)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = "#bdc3c7";
-                      e.target.style.transform = "scale(1)";
+                    onClick={() => setStep(1)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: "#bdc3c7",
+                      color: "#2c3e50",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
                     }}
                   >
-                    Cancel
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep(3)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: "#d4bf95",
+                      color: "#222",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: "0 2px 12px rgba(212,191,149,0.13)",
+                    }}
+                  >
+                    Next
+                  </button>
+                </div>
+              </>
+            )}
+            {step === 3 && (
+              <>
+                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                  Add facilities available at your place
+                </h2>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(4, 1fr)",
+                    gap: "2.2rem",
+                    margin: "1.5rem auto",
+                    justifyItems: "center",
+                    width: "95%",
+                    maxWidth: "900px",
+                    maxHeight: "340px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {facilityOptions.map((facility) => {
+                    const selected = formData.facilities.includes(facility.label);
+                    return (
+                      <button
+                        key={facility.label}
+                        type="button"
+                        onClick={() => handleFacilityChange(facility.label)}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "1.5rem 0.7rem 1.1rem 0.7rem",
+                          borderRadius: "22px",
+                          border: selected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
+                          background: selected
+                            ? "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)"
+                            : "linear-gradient(135deg, #f7f8fa 0%, #fff 100%)",
+                          boxShadow: selected
+                            ? "0 8px 32px 0 rgba(180,160,80,0.13), 0 2px 8px 0 rgba(0,0,0,0.08)"
+                            : "0 2px 8px 0 rgba(0,0,0,0.06)",
+                          cursor: "pointer",
+                          transition: "all 0.22s cubic-bezier(.4,2,.6,1)",
+                          outline: selected ? "2px solid #d4bf95" : "none",
+                          minHeight: "220px",
+                          minWidth: "140px",
+                          maxWidth: "210px",
+                          margin: "0 auto",
+                        }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.transform = "scale(1.07)";
+                          e.currentTarget.style.boxShadow = "0 12px 32px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.10)";
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.transform = "scale(1)";
+                          e.currentTarget.style.boxShadow = selected
+                            ? "0 8px 32px 0 rgba(180,160,80,0.13), 0 2px 8px 0 rgba(0,0,0,0.08)"
+                            : "0 2px 8px 0 rgba(0,0,0,0.06)";
+                        }}
+                      >
+                        <img
+                          src={facility.img}
+                          alt={facility.label}
+                          style={{
+                            width: "120px",
+                            height: "120px",
+                            objectFit: "cover",
+                            borderRadius: "18px",
+                            marginBottom: "0.9rem",
+                            border: selected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
+                            background: "#fff",
+                            boxShadow: selected ? "0 2px 12px #d4bf95" : "0 1px 4px rgba(0,0,0,0.07)",
+                          }}
+                        />
+                        <span style={{ fontWeight: 600, fontSize: "1.13rem", color: selected ? "#bfae7f" : "#222", marginTop: "0.3rem" }}>{facility.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="button-row" style={{ display: "flex", justifyContent: "center", gap: "2.5rem", marginTop: "1.2rem" }}>
+                  <button
+                    type="button"
+                    onClick={() => setStep(2)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: "#bdc3c7",
+                      color: "#2c3e50",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep(4)}
+                    style={{
+                      padding: "0.9rem 3.2rem",
+                      backgroundColor: "#d4bf95",
+                      color: "#222",
+                      border: "none",
+                      borderRadius: "16px",
+                      fontWeight: 700,
+                      fontSize: "1.18rem",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      minWidth: "180px",
+                      boxShadow: "0 2px 12px rgba(212,191,149,0.13)",
+                    }}
+                  >
+                    Next
                   </button>
                 </div>
               </>
