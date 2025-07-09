@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AddBoarding from "../components/addBoarding";
 import ListBoarding from "../components/listBoarding";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const HostProfile = () => {
   const [name, setName] = useState("");
@@ -47,7 +49,8 @@ const HostProfile = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-[#fdfde3]">
+      <Navbar />
       <div
         style={{
           display: "flex",
@@ -285,7 +288,8 @@ const HostProfile = () => {
           </div>
         </div>
       )}
-    </>
+      <Footer />
+    </div>
   );
 };
 
