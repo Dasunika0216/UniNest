@@ -8,7 +8,7 @@ const boardingSchema = new mongoose.Schema({
   type: { type: String, required: true },
   availableCount: { type: Number, required: true },
   description: { type: String, required: true },
-  facilities: { type: String, required: true }, // added field
+  facilities: [{ type: String }], // Changed to array of strings
   images: [{ type: String }] // Cloudinary image URLs
 }, { minimize: false });
 

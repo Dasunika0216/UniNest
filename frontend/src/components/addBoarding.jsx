@@ -20,6 +20,21 @@ const AddBoarding = () => {
   const [uploading, setUploading] = useState(false);
 
   const toggleForm = () => {
+    if (showForm) {
+      // Reset form when closing
+      setFormData({
+        address: "",
+        gender: "",
+        cost: "",
+        availableCount: "",
+        facilities: [],
+        description: "",
+        images: [],
+      });
+      setImageFiles([]);
+      setType("");
+      setStep(1);
+    }
     setShowForm(!showForm);
   };
 

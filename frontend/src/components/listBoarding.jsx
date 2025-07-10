@@ -68,37 +68,54 @@ const ListBoarding = () => {
   };
 
   const handleEditSubmit = async (id) => {
-    const formData = new FormData();
-    formData.append('address', editData.address || '');
-    formData.append('cost', editData.cost || '');
-    formData.append('availableCount', editData.availableCount || '');
-    formData.append('description', editData.description || '');
-    formData.append('facilities', editData.facilities || '');
-    formData.append('removedImages', JSON.stringify(removedImages));
+    // Basic validation
+    if (!editData.address || !editData.cost || !editData.availableCount) {
+      alert('Please fill in all required fields (Address, Cost, and Available Beds)');
+      return;
+    }
 
-    newImages.forEach((file) => {
-      formData.append('newImages', file);
-    });
+    const requestData = {
+      address: editData.address || '',
+      cost: editData.cost || '',
+      availableCount: editData.availableCount || '',
+      description: editData.description || '',
+      facilities: editData.facilities || [],
+      removedImages: removedImages,
+      newImages: newImages
+    };
+
+    console.log("Sending update request for ID:", id);
+    console.log("Request data:", requestData);
 
     try {
       const response = await axios.put(
         `http://localhost:5500/api/v1/boardings/${id}`,
-        editData,
+        requestData,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+            'Content-Type': 'application/json'
           },
         }
       );
 
+      console.log("Update response:", response.data);
+
       if (response.data.success) {
         setEditingId(null);
+        setEditData({});
         setNewImages([]);
         setRemovedImages([]);
-        fetchBoarding();
+        fetchBoarding(); // Refresh the list
+        alert('Boarding updated successfully!');
       }
     } catch (error) {
-      console.log("Error updating boarding:", error);
+      console.error("Error updating boarding:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(`Failed to update boarding: ${error.response.data.message}`);
+      } else {
+        alert('Failed to update boarding. Please try again.');
+      }
     }
   };
 
@@ -129,30 +146,37 @@ const ListBoarding = () => {
                   <input
                     className="boarding-input"
                     name="address"
-                    value={editData.address}
+                    value={editData.address || ''}
                     onChange={handleEditChange}
-                    placeholder="Address"
+                    placeholder="Address *"
+                    required
                   />
                   <input
                     className="boarding-input"
                     name="cost"
-                    value={editData.cost}
+                    value={editData.cost || ''}
                     onChange={handleEditChange}
-                    placeholder="Cost"
+                    placeholder="Cost *"
+                    type="number"
+                    required
                   />
                   <input
                     className="boarding-input"
                     name="availableCount"
-                    value={editData.availableCount}
+                    value={editData.availableCount || ''}
                     onChange={handleEditChange}
-                    placeholder="Available Beds"
+                    placeholder="Available Beds *"
+                    type="number"
+                    required
                   />
-                  <input
+                  <textarea
                     className="boarding-input"
                     name="description"
-                    value={editData.description}
+                    value={editData.description || ''}
                     onChange={handleEditChange}
                     placeholder="Description"
+                    rows="3"
+                    style={{ resize: 'vertical' }}
                   />
                   {/* Facilities Dropdown and Tags (no Add button, add on select) */}
                   <div style={{ marginBottom: '10px' }}>
@@ -188,7 +212,8 @@ const ListBoarding = () => {
                             background: "#eee",
                             borderRadius: "8px",
                             padding: "4px 10px",
-                            margin: "0 6px 6px 0"
+                            margin: "0 6px 6px 0",
+                            fontSize: "0.9rem"
                           }}
                         >
                           {fac}
@@ -198,7 +223,9 @@ const ListBoarding = () => {
                               background: "none",
                               border: "none",
                               color: "#e74c3c",
-                              cursor: "pointer"
+                              cursor: "pointer",
+                              fontSize: "1.1rem",
+                              fontWeight: "bold"
                             }}
                             onClick={() => {
                               setEditData(prev => ({
@@ -213,18 +240,27 @@ const ListBoarding = () => {
                       ))}
                     </div>
                   </div>
-                  <button
-                    className="boarding-btn btn-save"
-                    onClick={() => handleEditSubmit(boarding._id)}
-                  >
-                    💾 Save
-                  </button>
-                  <button
-                    className="boarding-btn btn-cancel"
-                    onClick={() => setEditingId(null)}
-                  >
-                    ❌ Cancel
-                  </button>
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+                    <button
+                      className="boarding-btn btn-save"
+                      onClick={() => handleEditSubmit(boarding._id)}
+                      style={{ flex: 1 }}
+                    >
+                      💾 Save Changes
+                    </button>
+                    <button
+                      className="boarding-btn btn-cancel"
+                      onClick={() => {
+                        setEditingId(null);
+                        setEditData({});
+                        setNewImages([]);
+                        setRemovedImages([]);
+                      }}
+                      style={{ flex: 1 }}
+                    >
+                      ❌ Cancel
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
@@ -340,6 +376,17 @@ const ListBoarding = () => {
           border-radius: 8px;
           border: 1px solid #ccc;
           font-size: 0.95rem;
+          transition: border-color 0.2s ease;
+        }
+
+        .boarding-input:focus {
+          outline: none;
+          border-color: #f1c40f;
+          box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+        }
+
+        .boarding-input[required] {
+          border-left: 3px solid #e74c3c;
         }
 
         .boarding-btn {
@@ -349,7 +396,7 @@ const ListBoarding = () => {
           border: none;
           font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.2s;
+          transition: all 0.2s ease;
         }
 
         .btn-edit {
@@ -359,6 +406,7 @@ const ListBoarding = () => {
 
         .btn-edit:hover {
           background-color: #d4ac0d;
+          transform: translateY(-1px);
         }
 
         .btn-save {
@@ -368,6 +416,7 @@ const ListBoarding = () => {
 
         .btn-save:hover {
           background-color: #27ae60;
+          transform: translateY(-1px);
         }
 
         .btn-cancel {
@@ -377,6 +426,7 @@ const ListBoarding = () => {
 
         .btn-cancel:hover {
           background-color: #7f8c8d;
+          transform: translateY(-1px);
         }
 
         .btn-delete {
@@ -386,6 +436,7 @@ const ListBoarding = () => {
 
         .btn-delete:hover {
           background-color: #c0392b;
+          transform: translateY(-1px);
         }
       `}</style>
     </div>
