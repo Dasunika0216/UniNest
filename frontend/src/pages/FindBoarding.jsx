@@ -47,6 +47,60 @@ const FindBoarding = () => {
       .finally(() => setLoading(false));
   }, [type, facilities]);
 
+  // Listen for boarding updates
+  useEffect(() => {
+    const handleBoardingUpdate = () => {
+      setLoading(true);
+      const params = { type };
+      if (facilities.length > 0) {
+        params.facilities = facilities.join(",");
+      }
+      axios
+        .get("http://localhost:5500/api/v1/boardings/filter-boarding", {
+          params,
+        })
+        .then((res) => setBoardings(res.data?.data || []))
+        .finally(() => setLoading(false));
+    };
+
+    // Listen for boarding updates
+    window.addEventListener("boardingAdded", handleBoardingUpdate);
+    window.addEventListener("boardingUpdated", handleBoardingUpdate);
+    window.addEventListener("boardingDeleted", handleBoardingUpdate);
+
+    return () => {
+      window.removeEventListener("boardingAdded", handleBoardingUpdate);
+      window.removeEventListener("boardingUpdated", handleBoardingUpdate);
+      window.removeEventListener("boardingDeleted", handleBoardingUpdate);
+    };
+  }, [type, facilities]);
+
+  // Periodic refresh every 30 seconds as backup
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!loading) {
+        const params = { type };
+        if (facilities.length > 0) {
+          params.facilities = facilities.join(",");
+        }
+        axios
+          .get("http://localhost:5500/api/v1/boardings/filter-boarding", {
+            params,
+          })
+          .then((res) => {
+            const newData = res.data?.data || [];
+            // Only update if data has actually changed
+            if (JSON.stringify(newData) !== JSON.stringify(boardings)) {
+              setBoardings(newData);
+            }
+          })
+          .catch(console.error);
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [type, facilities, boardings, loading]);
+
   return (
     <div className="min-h-screen bg-[#fdfde3]">
       <Navbar />

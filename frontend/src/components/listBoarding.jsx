@@ -65,6 +65,10 @@ const ListBoarding = () => {
 
       if (response.data.success) {
         setBoardings((prev) => prev.filter((b) => b._id !== id));
+        
+        // Dispatch event to notify other components
+        const event = new Event("boardingDeleted");
+        window.dispatchEvent(event);
       }
     } catch (error) {
       console.log("Error deleting boarding:", error);
@@ -143,6 +147,10 @@ const ListBoarding = () => {
         setRemovedImages([]);
         fetchBoarding(); // Refresh the list
         alert('Boarding updated successfully!');
+        
+        // Dispatch event to notify other components
+        const event = new Event("boardingUpdated");
+        window.dispatchEvent(event);
       }
     } catch (error) {
       console.error("Error updating boarding:", error);
