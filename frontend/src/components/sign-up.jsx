@@ -238,7 +238,7 @@ function SignUp() {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+           alignItems: "center",
           justifyContent: "space-between",
           marginBottom: "0.5rem",
           position: "relative",
@@ -510,25 +510,25 @@ function SignUp() {
                   value=""
                   style={{ backgroundColor: "#ffffff", color: "#999999" }}
                 >
-                  🏠 Select Property Type
+                  Select Property Type
                 </option>
                 <option
                   value="homestay"
                   style={{ backgroundColor: "#ffffff", color: "#333333" }}
                 >
-                  🏡 HomeStay
+                  HomeStay
                 </option>
                 <option
                   value="annex"
                   style={{ backgroundColor: "#ffffff", color: "#333333" }}
                 >
-                  🏘️ Annex
+                  Annex
                 </option>
                 <option
                   value="hostel"
                   style={{ backgroundColor: "#ffffff", color: "#333333" }}
                 >
-                  🏢 Hostel
+                  Hostel
                 </option>
               </select>
             </div>
