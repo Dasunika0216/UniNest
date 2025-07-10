@@ -20,6 +20,21 @@ const AddBoarding = () => {
   const [uploading, setUploading] = useState(false);
 
   const toggleForm = () => {
+    if (showForm) {
+      // Reset form when closing
+      setFormData({
+        address: "",
+        gender: "",
+        cost: "",
+        availableCount: "",
+        facilities: [],
+        description: "",
+        images: [],
+      });
+      setImageFiles([]);
+      setType("");
+      setStep(1);
+    }
     setShowForm(!showForm);
   };
 
@@ -34,6 +49,7 @@ const AddBoarding = () => {
       description: "",
       images: [],
     });
+    setImageFiles([]);
   };
 
   const handleChange = (e) => {
@@ -42,13 +58,12 @@ const AddBoarding = () => {
       const validImages = Array.from(files).filter((file) =>
         file.type.startsWith("image/")
       );
-      setImageFiles(validImages); // Save all selected image files
+      setImageFiles((prev) => [...prev, ...validImages]);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  // Upload each image to Cloudinary and return the URL
   const uploadImagesToCloudinary = async () => {
     setUploading(true);
     const uploadedUrls = [];
@@ -63,7 +78,7 @@ const AddBoarding = () => {
           "https://api.cloudinary.com/v1_1/dnykpks6n/image/upload",
           data
         );
-        uploadedUrls.push(res.data.secure_url); // Save each image URL
+        uploadedUrls.push(res.data.secure_url);
       } catch (err) {
         console.error("Image upload failed:", err);
         toast.error("Image upload failed. Please try again.");
@@ -72,7 +87,7 @@ const AddBoarding = () => {
       }
     }
     setUploading(false);
-    return uploadedUrls; // Return all image URLs
+    return uploadedUrls;
   };
 
   const facilityOptions = [
@@ -104,7 +119,6 @@ const AddBoarding = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Token:", localStorage.getItem("token"));
 
     const data = new FormData();
     data.append("type", type);
@@ -115,11 +129,10 @@ const AddBoarding = () => {
     data.append("description", formData.description);
     formData.facilities.forEach((f) => data.append("facilities", f));
 
-    // Handle image uploads to Cloudinary
     if (imageFiles.length > 0) {
       const imageUrls = await uploadImagesToCloudinary();
       if (imageUrls) {
-        imageUrls.forEach((url) => data.append("images[]", url)); // ✅
+        imageUrls.forEach((url) => data.append("images[]", url));
       } else {
         toast.error("Image upload failed. Please try again.");
         return;
@@ -142,14 +155,11 @@ const AddBoarding = () => {
         }
       );
 
-      console.log(response.data);
-
       if (response.data.success) {
         toast.success("Boarding place added successfully!");
         setShowForm(false);
         setType("");
-
-        console.log("📢 Dispatching 'boardingAdded' event");
+        setImageFiles([]);
 
         const event = new Event("boardingAdded");
         window.dispatchEvent(event);
@@ -157,7 +167,6 @@ const AddBoarding = () => {
     } catch (error) {
       console.error("Error adding boarding:", error);
       if (error.response) {
-        console.error("Backend responded with:", error.response.data);
         toast.error(error.response.data.message || "Failed to add boarding.");
       } else {
         toast.error("Failed to add boarding. Please try again.");
@@ -174,7 +183,7 @@ const AddBoarding = () => {
           backgroundColor: isHovered ? "#c5ab6f" : "#d4bf95",
           color: "black",
           border: "none",
-          borderRadius: "8px",
+          borderRadius: "9999px",
           cursor: "pointer",
           fontSize: "1rem",
           marginBottom: "1rem",
@@ -362,7 +371,7 @@ const AddBoarding = () => {
                         backgroundColor: type ? "#d4bf95" : "#e0e0e0",
                         color: type ? "#222" : "#888",
                         border: "none",
-                        borderRadius: "16px",
+                        borderRadius: "9999px",
                         fontWeight: 700,
                         fontSize: "1.18rem",
                         cursor: type ? "pointer" : "not-allowed",
@@ -385,7 +394,7 @@ const AddBoarding = () => {
                         backgroundColor: "#bdc3c7",
                         color: "#2c3e50",
                         border: "none",
-                        borderRadius: "16px",
+                        borderRadius: "9999px",
                         fontWeight: 700,
                         fontSize: "1.18rem",
                         cursor: "pointer",
@@ -486,7 +495,7 @@ const AddBoarding = () => {
                       backgroundColor: "#bdc3c7",
                       color: "#2c3e50",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
                       cursor: "pointer",
@@ -506,7 +515,7 @@ const AddBoarding = () => {
                       backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount ? "#d4bf95" : "#e0e0e0",
                       color: formData.gender && formData.address && formData.cost && formData.availableCount ? "#222" : "#888",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
                       cursor: formData.gender && formData.address && formData.cost && formData.availableCount ? "pointer" : "not-allowed",
@@ -606,7 +615,7 @@ const AddBoarding = () => {
                       backgroundColor: "#bdc3c7",
                       color: "#2c3e50",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
                       cursor: "pointer",
@@ -625,7 +634,7 @@ const AddBoarding = () => {
                       backgroundColor: "#d4bf95",
                       color: "#222",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
                       cursor: "pointer",
@@ -720,7 +729,7 @@ const AddBoarding = () => {
                       backgroundColor: "#bdc3c7",
                       color: "#2c3e50",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
                       cursor: "pointer",
@@ -733,22 +742,34 @@ const AddBoarding = () => {
                   </button>
                   <button
                     type="submit"
-                    disabled={!(formData.description && imageFiles.length > 0)}
+                    disabled={uploading || !(formData.description && imageFiles.length > 0)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: formData.description && imageFiles.length > 0 ? "#d4bf95" : "#e0e0e0",
-                      color: formData.description && imageFiles.length > 0 ? "#222" : "#888",
+                      backgroundColor: uploading
+                        ? "#e0e0e0"
+                        : formData.description && imageFiles.length > 0
+                        ? "#d4bf95"
+                        : "#e0e0e0",
+                      color: uploading
+                        ? "#888"
+                        : formData.description && imageFiles.length > 0
+                        ? "#222"
+                        : "#888",
                       border: "none",
-                      borderRadius: "16px",
+                      borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
-                      cursor: formData.description && imageFiles.length > 0 ? "pointer" : "not-allowed",
+                      cursor: uploading
+                        ? "not-allowed"
+                        : formData.description && imageFiles.length > 0
+                        ? "pointer"
+                        : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
                       boxShadow: formData.description && imageFiles.length > 0 ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
                     }}
                   >
-                    Submit
+                    {uploading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </>
