@@ -748,8 +748,8 @@ const ListBoarding = () => {
           <div
             style={{
               position: 'relative',
-              maxWidth: '98vw',
-              maxHeight: '98vh',
+              maxWidth: '90vw',
+              maxHeight: '90vh',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center'
@@ -794,8 +794,8 @@ const ListBoarding = () => {
               src={imageViewer.images[imageViewer.currentIndex]}
               alt={`Image ${imageViewer.currentIndex + 1}`}
               style={{
-                maxWidth: '98vw',
-                maxHeight: '95vh',
+                maxWidth: '90vw',
+                maxHeight: '80vh',
                 objectFit: 'contain',
                 borderRadius: '8px',
                 boxShadow: '0 15px 40px rgba(0,0,0,0.4)'
