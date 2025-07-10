@@ -102,6 +102,19 @@ const ListBoarding = () => {
     }
   };
 
+  const predefinedFacilities = [
+    "WiFi",
+    "Parking",
+    "Laundry",
+    "Air Conditioning",
+    "Kitchen",
+    "Gym",
+    "Swimming Pool",
+    "Pet Friendly",
+    "Security",
+    "Hot Water"
+  ];
+
   return (
     <div className="boarding-container">
       <h2 className="boarding-heading">Your Boarding List</h2>
@@ -141,13 +154,65 @@ const ListBoarding = () => {
                     onChange={handleEditChange}
                     placeholder="Description"
                   />
-                  <input
-                    className="boarding-input"
-                    name="facilities"
-                    value={editData.facilities}
-                    onChange={handleEditChange}
-                    placeholder="Facilities"
-                  />
+                  {/* Facilities Dropdown and Tags (no Add button, add on select) */}
+                  <div style={{ marginBottom: '10px' }}>
+                    <select
+                      className="boarding-input"
+                      value=""
+                      onChange={e => {
+                        const value = e.target.value;
+                        if (value && !(editData.facilities || []).includes(value)) {
+                          setEditData(prev => ({
+                            ...prev,
+                            facilities: [...(prev.facilities || []), value]
+                          }));
+                        }
+                        // Reset dropdown
+                        e.target.value = '';
+                      }}
+                    >
+                      <option value="">Select a facility</option>
+                      {predefinedFacilities
+                        .filter(fac => !(editData.facilities || []).includes(fac))
+                        .map(fac => (
+                          <option key={fac} value={fac}>{fac}</option>
+                        ))}
+                    </select>
+                    {/* Show selected facilities as tags with remove option */}
+                    <div style={{ marginTop: "8px" }}>
+                      {(editData.facilities || []).map(fac => (
+                        <span
+                          key={fac}
+                          style={{
+                            display: "inline-block",
+                            background: "#eee",
+                            borderRadius: "8px",
+                            padding: "4px 10px",
+                            margin: "0 6px 6px 0"
+                          }}
+                        >
+                          {fac}
+                          <button
+                            style={{
+                              marginLeft: "6px",
+                              background: "none",
+                              border: "none",
+                              color: "#e74c3c",
+                              cursor: "pointer"
+                            }}
+                            onClick={() => {
+                              setEditData(prev => ({
+                                ...prev,
+                                facilities: (prev.facilities || []).filter(f => f !== fac)
+                              }));
+                            }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                   <button
                     className="boarding-btn btn-save"
                     onClick={() => handleEditSubmit(boarding._id)}
@@ -178,8 +243,8 @@ const ListBoarding = () => {
                     <strong>📝 Description:</strong> {boarding.description}
                   </p>
                   <p>
-                    <strong>🧰 Facilities:</strong>{" "}
-                    {boarding.facilities.join(", ")}
+                    <strong>Facilities:</strong>{" "}
+                    {(boarding.facilities || []).join(", ")}
                   </p>
                   <button
                     className="boarding-btn btn-edit"
