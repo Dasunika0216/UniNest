@@ -182,7 +182,7 @@ const updateBoarding = async (req, res) => {
         updatedImages = updatedImages.filter(img => !removedImages.includes(img));
       }
       
-      // Add new images if specified
+      // Add new images if specified (these should be Cloudinary URLs from frontend)
       if (newImages && Array.isArray(newImages)) {
         updatedImages.push(...newImages);
       }
