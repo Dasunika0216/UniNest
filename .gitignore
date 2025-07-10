@@ -1,0 +1,19 @@
+# # Node modules
+# node_modules/
+
+# # Environment variables
+# .env*
+# !.env.example  # (optional - keep a template)
+
+# # Logs
+# logs/
+# *.log
+
+# # OS files
+# .DS_Store
+# Thumbs.db
+
+# # Build outputs
+# dist/
+# build/
+

@@ -233,6 +233,9 @@ const ListBoarding = () => {
                     <strong>🏠 Address:</strong> {boarding.address}
                   </p>
                   <p>
+                    <strong>🚻 Gender:</strong> For {boarding.gender}
+                  </p>
+                  <p>
                     <strong>💰 Cost:</strong> Rs. {boarding.cost}
                   </p>
                   <p>
@@ -243,8 +246,8 @@ const ListBoarding = () => {
                     <strong>📝 Description:</strong> {boarding.description}
                   </p>
                   <p>
-                    <strong>Facilities:</strong>{" "}
-                    {(boarding.facilities || []).join(", ")}
+                    <strong>🧰 Facilities:</strong>{" "}
+                    {boarding.facilities && boarding.facilities.length > 0 ? boarding.facilities.join(", ") : "Not Given"}
                   </p>
                   <button
                     className="boarding-btn btn-edit"
@@ -253,13 +256,13 @@ const ListBoarding = () => {
                       setEditData(boarding);
                     }}
                   >
-                    ✏️ Edit
+                     Edit
                   </button>
                   <button
                     className="boarding-btn btn-delete"
                     onClick={() => handleDelete(boarding._id)}
                   >
-                    ❌ Delete
+                     Delete
                   </button>
                 </>
               )}

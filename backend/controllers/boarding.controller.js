@@ -31,7 +31,7 @@ const addBoarding = async (req, res) => {
     const hostId = decoded.id;
 
     // Destructuring the request body for boarding details
-    const { address, cost, type, availableCount, description, facilities } =
+    const { address, gender, cost, type, availableCount, description, facilities } =
       req.body;
 
     // Handle images from the request body (as URLs)
@@ -51,6 +51,7 @@ const addBoarding = async (req, res) => {
     const boardingDetails = {
       hostId,
       address,
+      gender,
       cost,
       type,
       availableCount,
