@@ -49,6 +49,7 @@ const signUp = async (req, res, next) => {
       [
         {
           username,
+          role: "user",
           email,
           password: hashedPassword,
           fullName,
@@ -105,17 +106,17 @@ const signIn = async (req, res, next) => {
       return res.json({ success: false, message: "User not found!" });
     }
 
-    // Check if the host is approved
-    if (host.status !== "approved") {
-      return res.json({ success: false, message: "Host not approved yet!" });
-    }
-
-    // Check if the host is rejected
-    if (host.status === "rejected") {
-      return res.json({
-        success: false,
-        message: "Host application was rejected!",
-      });
+    // If not admin, check approval status
+    if (host.role !== "admin") {
+      if (host.status !== "approved") {
+        return res.json({ success: false, message: "Host not approved yet!" });
+      }
+      if (host.status === "rejected") {
+        return res.json({
+          success: false,
+          message: "Host application was rejected!",
+        });
+      }
     }
 
     // Check if the password is correct
