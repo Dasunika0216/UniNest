@@ -27,6 +27,7 @@ function SignIn() {
         localStorage.setItem("token", res.data.data.token);
         toast.success("Sign-in successful!");
         setMessage("Sign-in successful!");
+        localStorage.setItem("user", JSON.stringify(res.data.data.host));
       } else {
         toast.error(res.data.message);
       }
@@ -43,7 +44,13 @@ function SignIn() {
 
   useEffect(() => {
     if (token) {
-      navigate("/host-profile");
+      // Get the user/host object from localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/host-profile");
+      }
     }
   }, [token]);
 

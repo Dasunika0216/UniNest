@@ -11,6 +11,11 @@ const hostSchema = new mongoose.Schema(
       minLength: [3, "Username must be at least 3 characters long"],
       maxLength: [30, "Username must be at most 30 characters long"],
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     email: {
       type: String,
       required: [true, "User email is required"],
