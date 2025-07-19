@@ -31,7 +31,6 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
 
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-
       </Routes>
       <ToastContainer
         position="top-right"
