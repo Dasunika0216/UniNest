@@ -49,98 +49,30 @@ const HostProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfde3]">
+    <div className="min-h-screen bg-linen">
       <Navbar />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          padding: "3rem 2rem",
-          fontFamily: "Segoe UI, sans-serif",
-        }}
-      >
+      <div className="flex flex-col md:flex-row items-start justify-center px-4 md:px-12 py-12 font-sans">
         {/* Left - Profile Info */}
-        <div
-          style={{
-            flex: 1,
-            paddingRight: "2rem",
-            textAlign: "center",
-          }}
-        >
+        <div className="flex-1 max-w-xs md:max-w-sm text-center mb-10 md:mb-0 md:mr-12">
           <img
             src="https://i.pravatar.cc/200?img=12"
             alt="Host Avatar"
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              objectFit: "cover",
-              marginBottom: "1rem",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            }}
+            className="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mx-auto mb-4 shadow-lg border-4 border-cream"
           />
-          <h3 style={{ margin: "0.5rem 0", color: "#2c3e50" }}>
-            {name || "Your Name"}
-          </h3>
-          <p style={{ color: "#7f8c8d" }}>{email || "your@email.com"}</p>
+          <h3 className="mb-1 text-xl font-bold text-black">{name || "Your Name"}</h3>
+          <p className="text-black/70 mb-4">{email || "your@email.com"}</p>
 
           {localStorage.getItem("token") ? (
             <>
               <button
                 onClick={handleSignOut}
-                style={{
-                  marginTop: "1rem",
-                  padding: "0.6rem 1.2rem",
-                  backgroundColor: "#e74c3c",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  transition:
-                    "background-color 0.3s, transform 0.3s, box-shadow 0.3s",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#c0392b"; // Darker red
-                  e.target.style.transform = "scale(1.05)"; // Slight scaling effect
-                  e.target.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.2)"; // Slightly larger shadow
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#e74c3c"; // Original red color
-                  e.target.style.transform = "scale(1)"; // Reset to normal size
-                  e.target.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.1)"; // Reset shadow
-                }}
+                className="mt-2 px-6 py-2 bg-sand text-black rounded-lg font-semibold shadow hover:bg-latte hover:text-black transition mb-2 w-full"
               >
                 Sign Out
               </button>
               <button
                 onClick={() => navigate("/")}
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: "0.75rem",
-                  padding: "0.6rem 1.2rem",
-                  backgroundColor: "#22c55e",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  transition:
-                    "background-color 0.3s, transform 0.3s, box-shadow 0.3s",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#16a34a"; // Darker green
-                  e.target.style.transform = "scale(1.05)";
-                  e.target.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.2)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#22c55e";
-                  e.target.style.transform = "scale(1)";
-                  e.target.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.1)";
-                }}
+                className="mt-2 px-6 py-2 bg-latte text-black rounded-lg font-semibold shadow hover:bg-sand hover:text-black transition w-full"
               >
                 Go to Home Page
               </button>
@@ -148,29 +80,7 @@ const HostProfile = () => {
           ) : (
             <button
               onClick={() => navigate("/sign-in")}
-              style={{
-                marginTop: "1rem",
-                padding: "0.6rem 1.2rem",
-                backgroundColor: "#2ecc71",
-                color: "#fff",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "1rem",
-                transition:
-                  "background-color 0.3s, transform 0.3s, box-shadow 0.3s",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#27ae60"; // Darker green
-                e.target.style.transform = "scale(1.05)"; // Slight scaling effect
-                e.target.style.boxShadow = "0px 6px 12px rgba(0, 0, 0, 0.2)"; // Slightly larger shadow
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#2ecc71"; // Original green color
-                e.target.style.transform = "scale(1)"; // Reset to normal size
-                e.target.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.1)"; // Reset shadow
-              }}
+              className="mt-2 px-6 py-2 bg-sand text-black rounded-lg font-semibold shadow hover:bg-latte hover:text-black transition w-full"
             >
               Sign In
             </button>
@@ -178,109 +88,36 @@ const HostProfile = () => {
         </div>
 
         {/* Divider */}
-        <div
-          style={{
-            width: "2px",
-            backgroundColor: "#ccc",
-            height: "100vh",
-            margin: "0 2rem",
-          }}
-        ></div>
+        <div className="hidden md:block w-px bg-latte h-[32rem] mx-8"></div>
 
         {/* Right - AddBoarding */}
-        <div style={{ flex: 2 }}>
-          <h2 style={{ marginBottom: "1rem", color: "#333" }}>
-            Your Boarding Details
-          </h2>
-          <AddBoarding />
-          <ListBoarding />
+        <div className="flex-2 w-full md:w-2/3">
+          <h2 className="mb-4 text-2xl font-bold text-black">Your Boarding Details</h2>
+          <div className="bg-cream rounded-xl shadow p-6 mb-6">
+            <AddBoarding />
+          </div>
+          <div className="bg-cream rounded-xl shadow p-6">
+            <ListBoarding />
+          </div>
         </div>
       </div>
 
       {/* Sign Out Confirmation Modal */}
       {showSignOutPrompt && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#fff",
-              padding: "2rem",
-              borderRadius: "10px",
-              width: "300px",
-              textAlign: "center",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            }}
-          >
-            <h3 style={{ marginBottom: "1rem", color: "#333" }}>Sign Out?</h3>
-            <p style={{ marginBottom: "1.5rem", color: "#555" }}>
-              Are you sure you want to sign out?
-            </p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "1rem",
-                marginTop: "1rem",
-              }}
-            >
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-cream p-6 rounded-lg shadow-lg w-80 text-center border border-latte">
+            <h3 className="mb-4 text-lg font-semibold text-black">Sign Out?</h3>
+            <p className="mb-6 text-black/70">Are you sure you want to sign out?</p>
+            <div className="flex justify-between gap-4 mt-4">
               <button
                 onClick={confirmSignOut}
-                style={{
-                  padding: "0.5rem 1rem",
-                  backgroundColor: "#e74c3c",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  flex: 1,
-                  fontWeight: "bold",
-                  transition: "background-color 0.3s ease, transform 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#c0392b";
-                  e.target.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#e74c3c";
-                  e.target.style.transform = "scale(1)";
-                }}
+                className="flex-1 px-4 py-2 bg-sand text-black rounded hover:bg-latte hover:text-black font-bold transition border border-latte"
               >
                 Yes
               </button>
-
               <button
                 onClick={() => setShowSignOutPrompt(false)}
-                style={{
-                  padding: "0.5rem 1rem",
-                  backgroundColor: "#bdc3c7",
-                  color: "#2c3e50",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  flex: 1,
-                  fontWeight: "bold",
-                  transition: "background-color 0.3s ease, transform 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#95a5a6";
-                  e.target.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#bdc3c7";
-                  e.target.style.transform = "scale(1)";
-                }}
+                className="flex-1 px-4 py-2 bg-latte text-black rounded hover:bg-sand hover:text-black font-bold transition border border-sand"
               >
                 No
               </button>

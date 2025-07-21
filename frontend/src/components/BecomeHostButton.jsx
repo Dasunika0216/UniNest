@@ -29,7 +29,7 @@ const BecomeHostButton = () => {
   return (
     <div className="flex gap-3 items-center">
       <button
-        className="bg-amber-600 text-white font-semibold px-6 py-2 rounded shadow hover:bg-amber-700 transition-colors duration-200"
+        className="bg-navy text-white font-semibold px-6 py-2 rounded border-4 border-white shadow-lg mx-2 hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200 border-navy transition"
         onClick={handleAddBoarding}
       >
         Add Boarding Place
@@ -37,25 +37,25 @@ const BecomeHostButton = () => {
       {token && (
         <>
           <button
-            className="bg-red-500 text-white font-semibold px-6 py-2 rounded shadow hover:bg-red-600 transition-colors duration-200"
+            className="bg-navy text-white font-semibold px-6 py-2 rounded shadow border-2 border-ash hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
             onClick={handleSignOut}
           >
             Sign Out
           </button>
           {showSignOutPrompt && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">Sign Out?</h3>
-                <p className="mb-4 text-gray-600">Are you sure you want to sign out?</p>
+              <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center border border-ash">
+                <h3 className="text-lg font-semibold mb-2 text-navy">Sign Out?</h3>
+                <p className="mb-4 text-ash">Are you sure you want to sign out?</p>
                 <div className="flex justify-between gap-4 mt-4">
                   <button
-                    className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 font-bold"
+                    className="flex-1 bg-navy text-white py-2 rounded border-2 border-navy hover:bg-white hover:text-navy hover:border-navy font-bold transition-colors duration-200"
                     onClick={confirmSignOut}
                   >
                     Yes
                   </button>
                   <button
-                    className="flex-1 bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 font-bold"
+                    className="flex-1 bg-ash text-navy py-2 rounded border-2 border-ash hover:bg-white hover:text-navy hover:border-navy font-bold transition-colors duration-200"
                     onClick={() => setShowSignOutPrompt(false)}
                   >
                     No
