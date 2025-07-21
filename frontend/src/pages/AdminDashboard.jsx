@@ -24,7 +24,7 @@ const AdminDashboard = () => {
       }
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/admin/statistics",
+        "http://localhost:5500/api/v1/auth/admin/statistics",
         {
           method: "GET",
           headers: {
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/v1/hosts", {
+      const response = await fetch("http://localhost:5500/api/v1/hosts", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
       }
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/hosts/pending",
+        "http://localhost:5500/api/v1/hosts/pending",
         {
           method: "GET",
           headers: {
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/api/v1/hosts/${hostId}/status`,
+        `http://localhost:5500/api/v1/hosts/${hostId}/status`,
         {
           method: "PUT",
           headers: {
