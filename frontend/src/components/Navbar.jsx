@@ -39,13 +39,13 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[#E8D7CC] px-6 py-4">
+      <nav className="bg-navy px-6 py-4 shadow-md">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="text-2xl font-bold text-gray-800">
+          <div className="text-2xl font-bold text-white">
             <button
               onClick={() => navigate(isAdminDashboard ? "/admin-dashboard" : "/")}
-              className="hover:text-gray-600"
+              className="hover:text-ash transition"
             >
               UNINEST
             </button>
@@ -56,25 +56,19 @@ const Navbar = () => {
             <div className="flex space-x-8">
               <button
                 onClick={() => navigate("/")}
-                className={`text-gray-700 hover:text-gray-900 font-medium ${
-                  isActive("/") ? "text-gray-900 font-semibold" : ""
-                }`}
+                className={`text-white hover:text-ash font-medium transition ${isActive("/") ? "underline underline-offset-8 decoration-2 decoration-white" : ""}`}
               >
                 Home
               </button>
               <button
                 onClick={() => navigate("/about")}
-                className={`text-gray-700 hover:text-gray-900 font-medium ${
-                  isActive("/about") ? "text-gray-900 font-semibold" : ""
-                }`}
+                className={`text-white hover:text-ash font-medium transition ${isActive("/about") ? "underline underline-offset-8 decoration-2 decoration-white" : ""}`}
               >
                 About
               </button>
               <button
                 onClick={() => navigate("/contact")}
-                className={`text-gray-700 hover:text-gray-900 font-medium ${
-                  isActive("/contact") ? "text-gray-900 font-semibold" : ""
-                }`}
+                className={`text-white hover:text-ash font-medium transition ${isActive("/contact") ? "underline underline-offset-8 decoration-2 decoration-white" : ""}`}
               >
                 Contact Us
               </button>
@@ -87,7 +81,7 @@ const Navbar = () => {
               token && (
                 <button
                   onClick={handleSignOut}
-                  className="bg-red-500 text-white font-medium px-6 py-2 rounded-full hover:bg-red-600 transition-colors duration-200"
+                  className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
                 >
                   Sign Out
                 </button>
@@ -97,14 +91,14 @@ const Navbar = () => {
                 <>
                   <button
                     onClick={handleAddBoarding}
-                    className="bg-gray-800 text-white font-medium px-6 py-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
+                    className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
                   >
                     Add boarding
                   </button>
                   {token && (
                     <button
                       onClick={handleSignOut}
-                      className="bg-red-500 text-white font-medium px-6 py-2 rounded-full hover:bg-red-600 transition-colors duration-200"
+                      className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
                     >
                       Sign Out
                     </button>
@@ -119,23 +113,23 @@ const Navbar = () => {
       {/* Sign Out Confirmation Modal */}
       {showSignOutPrompt && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-            <h3 className="text-lg font-semibold mb-2 text-gray-800">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center border border-ash">
+            <h3 className="text-lg font-semibold mb-2 text-navy">
               Sign Out?
             </h3>
-            <p className="mb-4 text-gray-600">
+            <p className="mb-4 text-ash">
               Are you sure you want to sign out?
             </p>
             <div className="flex justify-between gap-4 mt-4">
               <button
                 onClick={cancelSignOut}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
+                className="bg-ash text-navy px-4 py-2 rounded border-2 border-ash hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmSignOut}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-200"
+                className="bg-navy text-white px-4 py-2 rounded border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
               >
                 Sign Out
               </button>
