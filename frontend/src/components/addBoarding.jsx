@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import GoogleMapPicker from "./GoogleMapPicker"; // Import the GoogleMapPicker component
 
 const AddBoarding = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -15,6 +17,8 @@ const AddBoarding = () => {
     facilities: [],
     description: "",
     images: [],
+    lat: null,
+    lng: null,
   });
   const [imageFiles, setImageFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -30,6 +34,8 @@ const AddBoarding = () => {
         facilities: [],
         description: "",
         images: [],
+        lat: null,
+        lng: null,
       });
       setImageFiles([]);
       setType("");
@@ -48,6 +54,8 @@ const AddBoarding = () => {
       facilities: [],
       description: "",
       images: [],
+      lat: null,
+      lng: null,
     });
     setImageFiles([]);
   };
@@ -128,6 +136,8 @@ const AddBoarding = () => {
     data.append("availableCount", formData.availableCount);
     data.append("description", formData.description);
     formData.facilities.forEach((f) => data.append("facilities", f));
+    data.append("lat", formData.lat);
+    data.append("lng", formData.lng);
 
     if (imageFiles.length > 0) {
       const imageUrls = await uploadImagesToCloudinary();
@@ -430,6 +440,14 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 />
+                {/* Google Map Picker */}
+                <div style={{ height: 300, marginBottom: 16 }}>
+                  <GoogleMapPicker
+                    lat={formData.lat}
+                    lng={formData.lng}
+                    setLatLng={(lat, lng) => setFormData(prev => ({ ...prev, lat, lng }))}
+                  />
+                </div>
                  <select
                   name="gender"
                   value={formData.gender}
@@ -816,3 +834,4 @@ const cancelButtonStyle = {
 };
 
 export default AddBoarding;
+
