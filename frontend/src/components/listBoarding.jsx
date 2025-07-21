@@ -579,6 +579,28 @@ const ListBoarding = () => {
                       <strong>🧰 Facilities:</strong>{" "}
                       {getFacilitiesDisplay(boarding.facilities)}
                     </p>
+                    {boarding.lat && boarding.lng && (
+                      <a
+                        href={`https://www.google.com/maps?q=${boarding.lat},${boarding.lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-block',
+                          margin: '10px 0',
+                          padding: '8px 16px',
+                          background: '#4285F4',
+                          color: '#fff',
+                          borderRadius: '6px',
+                          textDecoration: 'none',
+                          fontWeight: 600,
+                          fontSize: '1rem',
+                          boxShadow: '0 2px 6px rgba(66,133,244,0.13)',
+                          transition: 'background 0.2s',
+                        }}
+                      >
+                        📍 View on Google Maps
+                      </a>
+                    )}
                     <button
                       className="boarding-btn btn-edit"
                       onClick={() => {
