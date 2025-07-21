@@ -11,7 +11,7 @@ function SignUp() {
     password: "",
     confirmPassword: "",
     fullName: "",
-    phone: "",
+    phone: "+94", // Set default to +94
     boardingAddressForApproval: "",
     city: "",
     postalCode: "",
@@ -55,8 +55,8 @@ function SignUp() {
   };
 
   const validatePhone = (phone) => {
-    const phoneRegex = /^07\d{8}$/;
-    return phoneRegex.test(phone.replace(/[\s\-()]/g, ""));
+    // Accepts +94 followed by 7XXXXXXXX (no leading 0 after +94)
+    return /^\+947\d{8}$/.test(phone);
   };
 
   const validateStep = (step) => {
@@ -87,7 +87,7 @@ function SignUp() {
       if (!formData.phone) newErrors.phone = "Phone number is required";
       else if (!validatePhone(formData.phone))
         newErrors.phone =
-          "Please enter a valid Sri Lankan mobile number (07XXXXXXXX)";
+          "Please enter a valid Sri Lankan mobile number (+94 7XXXXXXXX, no leading 0 after +94)";
       if (!formData.city) newErrors.city = "City is required";
       if (!formData.postalCode)
         newErrors.postalCode = "Postal code is required";
@@ -398,18 +398,43 @@ function SignUp() {
             />
             {errors.fullName && <p style={errorStyle}>{errors.fullName}</p>}
 
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number (07XXXXXXXX)"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.phone ? "#e74c3c" : "#ccc",
-              }}
-            />
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+              <span
+                style={{
+                  padding: "0.75rem",
+                  background: "#f0f0f0",
+                  border: errors.phone ? "1px solid #e74c3c" : "1px solid #ccc",
+                  borderRadius: "8px 0 0 8px",
+                  fontSize: "1rem",
+                  borderRight: "none",
+                  color: "#333",
+                }}
+              >
+                +94
+              </span>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone.replace(/^\+94/, "")}
+                onChange={e => {
+                  // Prevent leading 0
+                  let value = e.target.value.replace(/^0+/, "");
+                  setFormData(prev => ({ ...prev, phone: "+94" + value }));
+                }}
+                required
+                style={{
+                  width: "100%",
+                  padding: "0.75rem",
+                  border: errors.phone ? "1px solid #e74c3c" : "1px solid #ccc",
+                  borderRadius: "0 8px 8px 0",
+                  fontSize: "1rem",
+                  outline: "none",
+                  transition: "border 0.3s",
+                  borderLeft: "none",
+                }}
+                placeholder="7XXXXXXXX"
+              />
+            </div>
             {errors.phone && <p style={errorStyle}>{errors.phone}</p>}
 
             <input

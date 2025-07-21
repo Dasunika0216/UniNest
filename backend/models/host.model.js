@@ -42,7 +42,7 @@ const hostSchema = new mongoose.Schema(
       required: [true, "Phone number is required"],
       trim: true,
       match: [
-        /^07\d{8}$/,
+        /^\+947\d{8}$/,
         "Please enter a valid Sri Lankan mobile number (07XXXXXXXX)",
       ],
     },
