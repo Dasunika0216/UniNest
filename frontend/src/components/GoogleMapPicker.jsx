@@ -1,9 +1,9 @@
 import React from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
-const AddBoarding = () => {
+const GoogleMapPicker = () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
   const defaultCenter = { lat: 7.8731, lng: 80.7718 }; // Sri Lanka center
@@ -21,4 +21,4 @@ const AddBoarding = () => {
   );
 };
 
-export default AddBoarding;
+export default GoogleMapPicker;
