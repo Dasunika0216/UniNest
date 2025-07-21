@@ -10,6 +10,9 @@ import hostRouter from './routes/host.routes.js';
 import boardingRouter from './routes/boarding.routes.js';
 import connectToDatabase from './config/mongodb.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const app = express();
 
 app.use(cors({

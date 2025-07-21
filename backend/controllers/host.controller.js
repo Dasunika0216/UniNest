@@ -1,4 +1,5 @@
 import Host from "../models/host.model.js";
+import { sendSMS } from '../config/twilio.js';
 
 export const getAllHosts = async (req, res, next) => {
   try {
@@ -50,6 +51,16 @@ export const updateHostStatus = async (req, res, next) => {
       const error = new Error("Host not found");
       error.statusCode = 404;
       throw error;
+    }
+
+    if (status === 'approved') {
+      try {
+        console.log("Attempting to send SMS to", host.phone);
+        await sendSMS(host.phone, "Congratulations! Your UniNest host account has been approved.");
+        console.log("SMS send attempt finished");
+      } catch (smsError) {
+        console.error('Failed to send SMS:', smsError);
+      }
     }
 
     res.status(200).json({
