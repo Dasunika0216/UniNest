@@ -466,7 +466,6 @@ const AddBoarding = () => {
                   <option value="">Select Gender Preference</option>
                   <option value="Girls">Girls Only</option>
                   <option value="Boys">Boys Only</option>
-                  <option value="Any">Mixed/Any Gender</option>
                 </select>
                 <input
                   type="number"

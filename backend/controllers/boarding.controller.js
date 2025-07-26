@@ -33,6 +33,13 @@ const addBoarding = async (req, res) => {
     // Destructuring the request body for boarding details
     const { address, gender, cost, type, availableCount, description } = req.body;
 
+    // Validate gender - only allow "Girls" or "Boys"
+    if (!gender || (gender !== "Girls" && gender !== "Boys")) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Gender must be either 'Girls' or 'Boys'" });
+    }
+
     // Handle facilities as array
     let facilities = req.body.facilities;
     if (typeof facilities === 'string') {
@@ -157,7 +164,7 @@ const updateBoarding = async (req, res) => {
 
     console.log("Found boarding:", boarding);
 
-    // Update basic fields
+    // Update basic fields (note: gender is not included as it shouldn't be changed)
     const updateData = {};
     if (address !== undefined) updateData.address = address;
     if (cost !== undefined) updateData.cost = cost;

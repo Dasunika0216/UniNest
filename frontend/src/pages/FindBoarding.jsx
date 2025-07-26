@@ -23,10 +23,9 @@ const FindBoarding = () => {
   ];
   const [gender, setGender] = useState("");
   const genderOptions = [
-    { label: "Any", value: "" },
-    { label: "Girls", value: "Girls" },
-    { label: "Boys", value: "Boys" },
-    { label: "Mixed", value: "Any" },
+    { label: "All", value: "" },
+    { label: "Girls Only", value: "Girls" },
+    { label: "Boys Only", value: "Boys" },
   ];
   const [costRange, setCostRange] = useState("");
   const costRangeOptions = [
@@ -186,13 +185,13 @@ const FindBoarding = () => {
         {/* Main content: vertical filter + boardings */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Vertical filter bar - left side */}
-          <div className="w-full lg:w-48 flex-shrink-0 bg-ash p-4 rounded-xl shadow h-fit mb-8 lg:mb-0">
+          <div className="w-full lg:w-64 flex-shrink-0 bg-ash p-6 rounded-xl shadow h-fit mb-8 lg:mb-0">
             {/* Gender Filter */}
             <div className="mb-6">
-              <h3 className="font-semibold mb-3 text-navy">Gender</h3>
-              <div className="flex flex-col gap-2">
+              <h3 className="font-semibold mb-4 text-navy text-base">Gender</h3>
+              <div className="flex flex-col gap-3">
                 {genderOptions.map((option) => (
-                  <label key={option.value} className="flex items-center gap-2 text-navy">
+                  <label key={option.value} className="flex items-center gap-3 text-navy text-sm">
                     <input
                       type="radio"
                       name="gender"
@@ -201,7 +200,7 @@ const FindBoarding = () => {
                       onChange={(e) => setGender(e.target.value)}
                       className="accent-navy"
                     />
-                    {option.label}
+                    <span className="whitespace-nowrap">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -209,10 +208,10 @@ const FindBoarding = () => {
 
             {/* Cost Range Filter */}
             <div className="mb-6">
-              <h3 className="font-semibold mb-3 text-navy">Budget Range</h3>
-              <div className="flex flex-col gap-2">
+              <h3 className="font-semibold mb-4 text-navy text-base">Budget Range</h3>
+              <div className="flex flex-col gap-3">
                 {costRangeOptions.map((option) => (
-                  <label key={option.value} className="flex items-center gap-2 text-navy">
+                  <label key={option.value} className="flex items-center gap-3 text-navy text-sm">
                     <input
                       type="radio"
                       name="costRange"
@@ -221,7 +220,7 @@ const FindBoarding = () => {
                       onChange={(e) => setCostRange(e.target.value)}
                       className="accent-navy"
                     />
-                    {option.label}
+                    <span className="whitespace-nowrap">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -229,17 +228,17 @@ const FindBoarding = () => {
 
             {/* Facilities Filter */}
             <div>
-              <h3 className="font-semibold mb-3 text-navy">Facilities</h3>
-              <div className="flex flex-col gap-2">
+              <h3 className="font-semibold mb-4 text-navy text-base">Facilities</h3>
+              <div className="flex flex-col gap-3">
                 {allFacilities.map((facility) => (
-                  <label key={facility} className="flex items-center gap-2 text-navy">
+                  <label key={facility} className="flex items-center gap-3 text-navy text-sm">
                     <input
                       type="checkbox"
                       checked={facilities.includes(facility)}
                       onChange={() => handleFacilityChange(facility)}
                       className="accent-navy"
                     />
-                    {facility}
+                    <span className="whitespace-nowrap">{facility}</span>
                   </label>
                 ))}
               </div>
@@ -269,7 +268,7 @@ const FindBoarding = () => {
                   <span className="text-sm font-medium text-navy">Active filters:</span>
                   {gender && (
                     <span className="bg-navy text-white text-xs px-2 py-1 rounded">
-                      Gender: {gender === "Any" ? "Mixed" : gender}
+                      Gender: {gender}
                     </span>
                   )}
                   {costRange && (
