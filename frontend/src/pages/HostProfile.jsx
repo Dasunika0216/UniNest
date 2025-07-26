@@ -49,7 +49,7 @@ const HostProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linen">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <div className="flex flex-col md:flex-row items-start justify-center px-4 md:px-12 py-12 font-sans">
         {/* Left - Profile Info */}
@@ -57,22 +57,22 @@ const HostProfile = () => {
           <img
             src="https://i.pravatar.cc/200?img=12"
             alt="Host Avatar"
-            className="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mx-auto mb-4 shadow-lg border-4 border-cream"
+            className="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mx-auto mb-4 shadow-lg border-4 border-ash"
           />
-          <h3 className="mb-1 text-xl font-bold text-black">{name || "Your Name"}</h3>
-          <p className="text-black/70 mb-4">{email || "your@email.com"}</p>
+          <h3 className="mb-1 text-xl font-bold text-navy">{name || "Your Name"}</h3>
+          <p className="text-navy/70 mb-4">{email || "your@email.com"}</p>
 
           {localStorage.getItem("token") ? (
             <>
               <button
                 onClick={handleSignOut}
-                className="mt-2 px-6 py-2 bg-sand text-black rounded-lg font-semibold shadow hover:bg-latte hover:text-black transition mb-2 w-full"
+                className="mt-2 px-6 py-2 bg-ash text-navy rounded-lg font-semibold shadow hover:bg-ash/80 hover:text-navy transition mb-2 w-full"
               >
                 Sign Out
               </button>
               <button
                 onClick={() => navigate("/")}
-                className="mt-2 px-6 py-2 bg-latte text-black rounded-lg font-semibold shadow hover:bg-sand hover:text-black transition w-full"
+                className="mt-2 px-6 py-2 bg-navy text-white rounded-lg font-semibold shadow hover:bg-navy/90 hover:text-white transition w-full"
               >
                 Go to Home Page
               </button>
@@ -80,7 +80,7 @@ const HostProfile = () => {
           ) : (
             <button
               onClick={() => navigate("/sign-in")}
-              className="mt-2 px-6 py-2 bg-sand text-black rounded-lg font-semibold shadow hover:bg-latte hover:text-black transition w-full"
+              className="mt-2 px-6 py-2 bg-ash text-navy rounded-lg font-semibold shadow hover:bg-navy hover:text-white transition w-full"
             >
               Sign In
             </button>
@@ -88,15 +88,15 @@ const HostProfile = () => {
         </div>
 
         {/* Divider */}
-        <div className="hidden md:block w-px bg-latte h-[32rem] mx-8"></div>
+        <div className="hidden md:block w-px bg-ash h-[32rem] mx-8"></div>
 
         {/* Right - AddBoarding */}
         <div className="flex-2 w-full md:w-2/3">
-          <h2 className="mb-4 text-2xl font-bold text-black">Your Boarding Details</h2>
-          <div className="bg-cream rounded-xl shadow p-6 mb-6">
+          <h2 className="mb-4 text-2xl font-bold text-navy">Your Boarding Details</h2>
+          <div className="bg-white rounded-xl shadow p-6 mb-6 border border-ash">
             <AddBoarding />
           </div>
-          <div className="bg-cream rounded-xl shadow p-6">
+          <div className="bg-white rounded-xl shadow p-6 border border-ash">
             <ListBoarding />
           </div>
         </div>
@@ -105,19 +105,19 @@ const HostProfile = () => {
       {/* Sign Out Confirmation Modal */}
       {showSignOutPrompt && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-cream p-6 rounded-lg shadow-lg w-80 text-center border border-latte">
-            <h3 className="mb-4 text-lg font-semibold text-black">Sign Out?</h3>
-            <p className="mb-6 text-black/70">Are you sure you want to sign out?</p>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center border border-ash">
+            <h3 className="mb-4 text-lg font-semibold text-navy">Sign Out?</h3>
+            <p className="mb-6 text-navy/70">Are you sure you want to sign out?</p>
             <div className="flex justify-between gap-4 mt-4">
               <button
                 onClick={confirmSignOut}
-                className="flex-1 px-4 py-2 bg-sand text-black rounded hover:bg-latte hover:text-black font-bold transition border border-latte"
+                className="flex-1 px-4 py-2 bg-ash text-navy rounded hover:bg-ash/80 hover:text-navy font-bold transition border border-ash"
               >
                 Yes
               </button>
               <button
                 onClick={() => setShowSignOutPrompt(false)}
-                className="flex-1 px-4 py-2 bg-latte text-black rounded hover:bg-sand hover:text-black font-bold transition border border-sand"
+                className="flex-1 px-4 py-2 bg-navy text-white rounded hover:bg-navy/90 hover:text-white font-bold transition border border-navy"
               >
                 No
               </button>
