@@ -168,11 +168,19 @@ const ViewBoarding = () => {
         <h2 className="text-2xl font-bold mb-2">{boarding.address}</h2>
         {/* Description */}
         <p className="text-gray-700 mb-4">{boarding.description}</p>
+        {/* Cost */}
+        <div className="mb-2">
+          <span className="font-semibold">Cost:</span> Rs. {boarding.cost.toLocaleString()}/month
+        </div>
         {/* Available Count */}
         <div className="mb-2">
           <span className="font-semibold">Available:</span>{" "}
           {boarding.availableCount}{" "}
           {boarding.availableCount === 1 ? "bed" : "beds"}
+        </div>
+        {/* Gender */}
+        <div className="mb-2">
+          <span className="font-semibold">For:</span> {boarding.gender}
         </div>
         {/* Facilities */}
         {boarding.facilities && boarding.facilities.length > 0 && (

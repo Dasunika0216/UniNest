@@ -242,12 +242,33 @@ const filterBoarding = async (req, res) => {
       filter.facilities = { $all: facilityRegexes };
     }
 
-    //can add more filters if we want
+    //filter by gender if provided
+    if (req.query.gender) {
+      filter.gender = req.query.gender;
+    }
+
+    //filter by cost range if provided
+    if (req.query.minCost || req.query.maxCost) {
+      filter.cost = {};
+      if (req.query.minCost) {
+        const minCost = Number(req.query.minCost);
+        if (!isNaN(minCost)) {
+          filter.cost.$gte = minCost;
+        }
+      }
+      if (req.query.maxCost) {
+        const maxCost = Number(req.query.maxCost);
+        if (!isNaN(maxCost)) {
+          filter.cost.$lte = maxCost;
+        }
+      }
+    }
 
     const boardings = await boardingModel.find(filter);
 
     res.json({ success: true, data: boardings });
   } catch (error) {
+    console.error("Filter error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
