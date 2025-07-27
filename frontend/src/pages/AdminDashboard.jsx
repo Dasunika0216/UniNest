@@ -190,10 +190,10 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fdfde3]">
+      <div className="min-h-screen bg-white">
         <Navbar />
         <div className="flex justify-center items-center min-h-[60vh]">
-          <div className="text-xl text-gray-600">Loading dashboard...</div>
+          <div className="text-xl text-navy/70">Loading dashboard...</div>
         </div>
         <Footer />
       </div>
@@ -202,7 +202,7 @@ const AdminDashboard = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#fdfde3]">
+      <div className="min-h-screen bg-white">
         <Navbar />
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -232,14 +232,14 @@ const AdminDashboard = () => {
   );
 
   const HostCard = ({ host, showActions = false, onApprove, onReject }) => (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+    <div className="bg-white rounded-lg shadow-md p-6 mb-4 border border-ash">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-navy">
             {host.fullName}
           </h3>
-          <p className="text-gray-600">@{host.username}</p>
-          <p className="text-gray-600">{host.email}</p>
+          <p className="text-navy/70">@{host.username}</p>
+          <p className="text-navy/70">{host.email}</p>
         </div>
         <div className="text-right">
           <span
@@ -256,7 +256,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
+      <div className="grid grid-cols-2 gap-4 text-sm text-navy/70 mb-4">
         <div>
           <strong>Property Type:</strong> {host.propertyType}
         </div>
@@ -272,15 +272,15 @@ const AdminDashboard = () => {
       </div>
 
       <div className="mb-4">
-        <strong className="text-sm text-gray-600">Address:</strong>
-        <p className="text-sm text-gray-800">
+        <strong className="text-sm text-navy/70">Address:</strong>
+        <p className="text-sm text-navy">
           {host.boardingAddressForApproval}
         </p>
       </div>
 
       <div className="mb-4">
-        <strong className="text-sm text-gray-600">Description:</strong>
-        <p className="text-sm text-gray-800">{host.description}</p>
+        <strong className="text-sm text-navy/70">Description:</strong>
+        <p className="text-sm text-navy">{host.description}</p>
       </div>
 
       {host.boardingImageForApproval && (
@@ -315,14 +315,14 @@ const AdminDashboard = () => {
   // If showing all hosts
   if (showAllHosts) {
     return (
-      <div className="min-h-screen bg-[#fdfde3]">
+      <div className="min-h-screen bg-white">
         <Navbar />
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">All Hosts</h1>
+            <h1 className="text-3xl font-bold text-navy">All Hosts</h1>
             <button
               onClick={handleBackToDashboard}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              className="bg-ash hover:bg-ash/80 text-navy px-4 py-2 rounded-lg"
             >
               Back to Dashboard
             </button>
@@ -330,11 +330,11 @@ const AdminDashboard = () => {
 
           {hostsLoading ? (
             <div className="text-center py-8">
-              <div className="text-xl text-gray-600">Loading hosts...</div>
+              <div className="text-xl text-navy/70">Loading hosts...</div>
             </div>
           ) : hosts.length === 0 ? (
             <div className="text-center py-8">
-              <div className="text-gray-600">No hosts found.</div>
+              <div className="text-navy/70">No hosts found.</div>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -352,16 +352,16 @@ const AdminDashboard = () => {
   // If showing pending hosts
   if (showPendingHosts) {
     return (
-      <div className="min-h-screen bg-[#fdfde3]">
+      <div className="min-h-screen bg-white">
         <Navbar />
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-3xl font-bold text-navy">
               Pending Host Approvals
             </h1>
             <button
               onClick={handleBackToDashboard}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              className="bg-ash hover:bg-ash/80 text-navy px-4 py-2 rounded-lg"
             >
               Back to Dashboard
             </button>
@@ -369,13 +369,13 @@ const AdminDashboard = () => {
 
           {hostsLoading ? (
             <div className="text-center py-8">
-              <div className="text-xl text-gray-600">
+              <div className="text-xl text-navy/70">
                 Loading pending hosts...
               </div>
             </div>
           ) : pendingHosts.length === 0 ? (
             <div className="text-center py-8">
-              <div className="text-gray-600">No pending host approvals.</div>
+              <div className="text-navy/70">No pending host approvals.</div>
             </div>
           ) : (
             <div className="space-y-6">
@@ -398,20 +398,20 @@ const AdminDashboard = () => {
 
   // Main dashboard view
   return (
-    <div className="min-h-screen bg-[#fdfde3]">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-4xl font-bold text-navy mb-2">
             Admin Dashboard
           </h1>
-          <p className="text-gray-600">
+          <p className="text-navy/70">
             Welcome to the UniNest admin panel. Here's an overview of your
             platform statistics.
           </p>
           {lastUpdated && (
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-navy/50 mt-2">
               Last updated: {lastUpdated}
             </p>
           )}
@@ -419,7 +419,7 @@ const AdminDashboard = () => {
 
         {/* Host Statistics */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-navy mb-4">
             Host Statistics
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -452,10 +452,10 @@ const AdminDashboard = () => {
 
         {/* Approved Boarding Statistics */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-navy mb-4">
             Approved Boarding Statistics
           </h2>
-          <p className="text-gray-600 mb-4 text-sm">
+          <p className="text-navy/70 mb-4 text-sm">
             These are all the approved boarding listings available on the
             platform.
           </p>
@@ -489,21 +489,21 @@ const AdminDashboard = () => {
               value={statistics?.boardings?.total || 0}
               subtitle="All approved listings"
               icon="📊"
-              bgColor="bg-gray-50 border border-gray-200"
-              textColor="text-gray-700"
+              bgColor="bg-ash border border-ash"
+              textColor="text-navy"
             />
           </div>
         </div>
 
         {/* Summary Charts Section */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-navy mb-4">
             Platform Overview
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Boarding Breakdown */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-ash">
+              <h3 className="text-lg font-semibold text-navy mb-4">
                 Boarding Types Distribution
               </h3>
               <div className="space-y-3">
@@ -512,7 +512,7 @@ const AdminDashboard = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-purple-700">🏢 Hostels</span>
                       <div className="flex items-center">
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                        <div className="w-32 bg-ash rounded-full h-2 mr-3">
                           <div
                             className="bg-purple-500 h-2 rounded-full"
                             style={{
@@ -524,7 +524,7 @@ const AdminDashboard = () => {
                             }}
                           ></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-navy/70">
                           {(
                             (statistics.boardings.hostel /
                               statistics.boardings.total) *
@@ -537,7 +537,7 @@ const AdminDashboard = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-indigo-700">🏘️ Annexes</span>
                       <div className="flex items-center">
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                        <div className="w-32 bg-ash rounded-full h-2 mr-3">
                           <div
                             className="bg-indigo-500 h-2 rounded-full"
                             style={{
@@ -549,7 +549,7 @@ const AdminDashboard = () => {
                             }}
                           ></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-navy/70">
                           {(
                             (statistics.boardings.annex /
                               statistics.boardings.total) *
@@ -562,7 +562,7 @@ const AdminDashboard = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-pink-700">🏠 Homestays</span>
                       <div className="flex items-center">
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                        <div className="w-32 bg-ash rounded-full h-2 mr-3">
                           <div
                             className="bg-pink-500 h-2 rounded-full"
                             style={{
@@ -574,7 +574,7 @@ const AdminDashboard = () => {
                             }}
                           ></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-navy/70">
                           {(
                             (statistics.boardings.homestay /
                               statistics.boardings.total) *
@@ -586,7 +586,7 @@ const AdminDashboard = () => {
                     </div>
                   </>
                 ) : (
-                  <div className="text-center text-gray-500 py-8">
+                  <div className="text-center text-navy/50 py-8">
                     No approved boardings yet
                   </div>
                 )}
@@ -594,8 +594,8 @@ const AdminDashboard = () => {
             </div>
 
             {/* Host Status Breakdown */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-ash">
+              <h3 className="text-lg font-semibold text-navy mb-4">
                 Host Status Distribution
               </h3>
               <div className="space-y-3">
@@ -604,7 +604,7 @@ const AdminDashboard = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-green-700">✅ Approved</span>
                       <div className="flex items-center">
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                        <div className="w-32 bg-ash rounded-full h-2 mr-3">
                           <div
                             className="bg-green-500 h-2 rounded-full"
                             style={{
@@ -616,7 +616,7 @@ const AdminDashboard = () => {
                             }}
                           ></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-navy/70">
                           {(
                             (statistics.hosts.approved /
                               statistics.hosts.total) *
@@ -629,7 +629,7 @@ const AdminDashboard = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-yellow-700">⏳ Pending</span>
                       <div className="flex items-center">
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                        <div className="w-32 bg-ash rounded-full h-2 mr-3">
                           <div
                             className="bg-yellow-500 h-2 rounded-full"
                             style={{
@@ -641,7 +641,7 @@ const AdminDashboard = () => {
                             }}
                           ></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-navy/70">
                           {(
                             (statistics.hosts.pending /
                               statistics.hosts.total) *
@@ -653,7 +653,7 @@ const AdminDashboard = () => {
                     </div>
                   </>
                 ) : (
-                  <div className="text-center text-gray-500 py-8">
+                  <div className="text-center text-navy/50 py-8">
                     No registered hosts yet
                   </div>
                 )}
@@ -664,7 +664,7 @@ const AdminDashboard = () => {
 
         {/* Action Buttons */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-navy mb-4">
             Quick Actions
           </h2>
           <div className="flex flex-wrap gap-4">
@@ -676,7 +676,7 @@ const AdminDashboard = () => {
               Review Pending Hosts ({statistics?.hosts?.pending || 0})
             </button>
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center"
+              className="bg-navy hover:bg-navy/90 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center"
               onClick={handleShowAllHosts}
             >
               <span className="mr-2">👥</span>

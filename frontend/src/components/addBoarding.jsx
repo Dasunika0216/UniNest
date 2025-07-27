@@ -319,7 +319,7 @@ const AddBoarding = () => {
                     {[
                       { name: "Annex", img: "/annex.jpg" },
                       { name: "Homestay", img: "/homestay.jpg" },
-                      { name: "Hotel", img: "/hotel.jpg" },
+                      { name: "Hostel", img: "/hotel.jpg" },
                     ].map((option) => {
                       const isSelected = type === option.name;
                       return (
@@ -463,15 +463,14 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 >
-                  <option value="">Select Gender</option>
-                  <option value="Girls">Girls</option>
-                  <option value="Boys">Boys</option>
-                  <option value="Any">Any</option>
+                  <option value="">Select Gender Preference</option>
+                  <option value="Girls">Girls Only</option>
+                  <option value="Boys">Boys Only</option>
                 </select>
                 <input
                   type="number"
                   name="cost"
-                  placeholder={type === "Annex" ? "Cost per annex" : "Cost per bed"}
+                  placeholder={type === "Annex" ? "Cost per month (Rs.)" : "Cost per bed per month (Rs.)"}
                   value={formData.cost}
                   onChange={handleChange}
                   required

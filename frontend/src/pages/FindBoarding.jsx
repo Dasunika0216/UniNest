@@ -21,6 +21,21 @@ const FindBoarding = () => {
     "Kitchen",
     "Study Area",
   ];
+  const [gender, setGender] = useState("");
+  const genderOptions = [
+    { label: "All", value: "" },
+    { label: "Girls Only", value: "Girls" },
+    { label: "Boys Only", value: "Boys" },
+  ];
+  const [costRange, setCostRange] = useState("");
+  const costRangeOptions = [
+    { label: "Any Budget", value: "", min: null, max: null },
+    { label: "Under Rs. 5,000", value: "under-5000", min: 0, max: 4999 },
+    { label: "Rs. 5,000 - 10,000", value: "5000-10000", min: 5000, max: 10000 },
+    { label: "Rs. 10,000 - 15,000", value: "10000-15000", min: 10000, max: 15000 },
+    { label: "Rs. 15,000 - 20,000", value: "15000-20000", min: 15000, max: 20000 },
+    { label: "Above Rs. 20,000", value: "above-20000", min: 20001, max: null },
+  ];
   const [boardings, setBoardings] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -39,13 +54,28 @@ const FindBoarding = () => {
     if (facilities.length > 0) {
       params.facilities = facilities.join(",");
     }
+    if (gender) {
+      params.gender = gender;
+    }
+    if (costRange) {
+      const selectedRange = costRangeOptions.find(option => option.value === costRange);
+      if (selectedRange) {
+        if (selectedRange.min !== null) {
+          params.minCost = selectedRange.min;
+        }
+        if (selectedRange.max !== null) {
+          params.maxCost = selectedRange.max;
+        }
+      }
+    }
+    
     axios
       .get("http://localhost:5500/api/v1/boardings/filter-boarding", {
         params,
       })
       .then((res) => setBoardings(res.data?.data || []))
       .finally(() => setLoading(false));
-  }, [type, facilities]);
+  }, [type, facilities, gender, costRange]);
 
   // Listen for boarding updates
   useEffect(() => {
@@ -54,6 +84,20 @@ const FindBoarding = () => {
       const params = { type };
       if (facilities.length > 0) {
         params.facilities = facilities.join(",");
+      }
+      if (gender) {
+        params.gender = gender;
+      }
+      if (costRange) {
+        const selectedRange = costRangeOptions.find(option => option.value === costRange);
+        if (selectedRange) {
+          if (selectedRange.min !== null) {
+            params.minCost = selectedRange.min;
+          }
+          if (selectedRange.max !== null) {
+            params.maxCost = selectedRange.max;
+          }
+        }
       }
       axios
         .get("http://localhost:5500/api/v1/boardings/filter-boarding", {
@@ -73,7 +117,7 @@ const FindBoarding = () => {
       window.removeEventListener("boardingUpdated", handleBoardingUpdate);
       window.removeEventListener("boardingDeleted", handleBoardingUpdate);
     };
-  }, [type, facilities]);
+  }, [type, facilities, gender, costRange]);
 
   // Periodic refresh every 30 seconds as backup
   useEffect(() => {
@@ -82,6 +126,20 @@ const FindBoarding = () => {
         const params = { type };
         if (facilities.length > 0) {
           params.facilities = facilities.join(",");
+        }
+        if (gender) {
+          params.gender = gender;
+        }
+        if (costRange) {
+          const selectedRange = costRangeOptions.find(option => option.value === costRange);
+          if (selectedRange) {
+            if (selectedRange.min !== null) {
+              params.minCost = selectedRange.min;
+            }
+            if (selectedRange.max !== null) {
+              params.maxCost = selectedRange.max;
+            }
+          }
         }
         axios
           .get("http://localhost:5500/api/v1/boardings/filter-boarding", {
@@ -99,7 +157,7 @@ const FindBoarding = () => {
     }, 30000); // 30 seconds
 
     return () => clearInterval(interval);
-  }, [type, facilities, boardings, loading]);
+  }, [type, facilities, gender, costRange, boardings, loading]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -127,25 +185,106 @@ const FindBoarding = () => {
         {/* Main content: vertical filter + boardings */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Vertical filter bar - left side */}
-          <div className="w-full lg:w-48 flex-shrink-0 bg-ash p-4 rounded-xl shadow h-fit mb-8 lg:mb-0">
-            <h3 className="font-semibold mb-4 text-navy">Facilities</h3>
-            <div className="flex flex-col gap-2">
-              {allFacilities.map((facility) => (
-                <label key={facility} className="flex items-center gap-2 text-navy">
-                  <input
-                    type="checkbox"
-                    checked={facilities.includes(facility)}
-                    onChange={() => handleFacilityChange(facility)}
-                    className="accent-navy"
-                  />
-                  {facility}
-                </label>
-              ))}
+          <div className="w-full lg:w-64 flex-shrink-0 bg-ash p-6 rounded-xl shadow h-fit mb-8 lg:mb-0">
+            {/* Gender Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold mb-4 text-navy text-base">Gender</h3>
+              <div className="flex flex-col gap-3">
+                {genderOptions.map((option) => (
+                  <label key={option.value} className="flex items-center gap-3 text-navy text-sm">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={option.value}
+                      checked={gender === option.value}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="accent-navy"
+                    />
+                    <span className="whitespace-nowrap">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Cost Range Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold mb-4 text-navy text-base">Budget Range</h3>
+              <div className="flex flex-col gap-3">
+                {costRangeOptions.map((option) => (
+                  <label key={option.value} className="flex items-center gap-3 text-navy text-sm">
+                    <input
+                      type="radio"
+                      name="costRange"
+                      value={option.value}
+                      checked={costRange === option.value}
+                      onChange={(e) => setCostRange(e.target.value)}
+                      className="accent-navy"
+                    />
+                    <span className="whitespace-nowrap">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Facilities Filter */}
+            <div>
+              <h3 className="font-semibold mb-4 text-navy text-base">Facilities</h3>
+              <div className="flex flex-col gap-3">
+                {allFacilities.map((facility) => (
+                  <label key={facility} className="flex items-center gap-3 text-navy text-sm">
+                    <input
+                      type="checkbox"
+                      checked={facilities.includes(facility)}
+                      onChange={() => handleFacilityChange(facility)}
+                      className="accent-navy"
+                    />
+                    <span className="whitespace-nowrap">{facility}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Clear Filters Button */}
+            <div className="mt-6">
+              <button
+                onClick={() => {
+                  setGender("");
+                  setCostRange("");
+                  setFacilities([]);
+                }}
+                className="w-full bg-navy/10 text-navy py-2 px-4 rounded-md hover:bg-navy/20 transition-colors duration-200 text-sm font-medium"
+              >
+                Clear All Filters
+              </button>
             </div>
           </div>
 
           {/* Boardings grid */}
           <div className="flex-1">
+            {/* Applied Filters Summary */}
+            {(gender || costRange || facilities.length > 0) && (
+              <div className="mb-4 p-3 bg-navy/5 rounded-lg">
+                <div className="flex flex-wrap gap-2 items-center">
+                  <span className="text-sm font-medium text-navy">Active filters:</span>
+                  {gender && (
+                    <span className="bg-navy text-white text-xs px-2 py-1 rounded">
+                      Gender: {gender}
+                    </span>
+                  )}
+                  {costRange && (
+                    <span className="bg-navy text-white text-xs px-2 py-1 rounded">
+                      {costRangeOptions.find(option => option.value === costRange)?.label}
+                    </span>
+                  )}
+                  {facilities.length > 0 && (
+                    <span className="bg-navy text-white text-xs px-2 py-1 rounded">
+                      {facilities.length} Facilities
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {loading ? (
                 <div className="flex justify-center items-center p-8 col-span-full">
@@ -233,12 +372,22 @@ const FindBoarding = () => {
                       </p>
 
                       {/* Available Count */}
-                      <div className="flex items-center mb-3">
+                      <div className="flex items-center mb-2">
                         <span className="text-sm text-ash">
                           Available: {" "}
                         </span>
                         <span className="text-sm font-semibold text-navy ml-1">
                           {boarding.availableCount} {boarding.availableCount === 1 ? "bed" : "beds"}
+                        </span>
+                      </div>
+
+                      {/* Gender */}
+                      <div className="flex items-center mb-3">
+                        <span className="text-sm text-ash">
+                          For: {" "}
+                        </span>
+                        <span className="text-sm font-semibold text-navy ml-1">
+                          {boarding.gender}
                         </span>
                       </div>
 

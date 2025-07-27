@@ -456,7 +456,8 @@ const ListBoarding = () => {
                             key={fac}
                             style={{
                               display: "inline-block",
-                              background: "#eee",
+                              background: "#B0B3B8",
+                              color: "#000957",
                               borderRadius: "8px",
                               padding: "4px 10px",
                               margin: "0 6px 6px 0",
@@ -606,20 +607,22 @@ const ListBoarding = () => {
         .boarding-container {
           padding: 2rem;
           font-family: 'Segoe UI', sans-serif;
-          color: #333;
+          color: #000957;
         }
 
         .boarding-heading {
           text-align: center;
           font-size: 2rem;
           margin-bottom: 2rem;
-          color: #222;
+          color: #000957;
+          font-weight: bold;
         }
 
         .boarding-empty {
           text-align: center;
           font-size: 1.1rem;
-          color: #888;
+          color: #000957;
+          opacity: 0.7;
         }
 
         .boarding-grid {
@@ -629,7 +632,7 @@ const ListBoarding = () => {
         }
 
         .boarding-card {
-          border: 1px solid #eee;
+          border: 1px solid #B0B3B8;
           border-radius: 12px;
           padding: 1.5rem;
           background-color: #fff;
@@ -645,7 +648,7 @@ const ListBoarding = () => {
         .boarding-type {
           font-size: 1.25rem;
           font-weight: 600;
-          color: #a17f1a;
+          color: #000957;
           margin-bottom: 0.5rem;
         }
 
@@ -669,15 +672,16 @@ const ListBoarding = () => {
           padding: 8px 12px;
           margin-bottom: 10px;
           border-radius: 8px;
-          border: 1px solid #ccc;
+          border: 1px solid #B0B3B8;
           font-size: 0.95rem;
           transition: border-color 0.2s ease;
+          color: #000957;
         }
 
         .boarding-input:focus {
           outline: none;
-          border-color: #f1c40f;
-          box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+          border-color: #000957;
+          box-shadow: 0 0 0 2px rgba(0, 9, 87, 0.2);
         }
 
         .boarding-input[required] {
@@ -695,12 +699,12 @@ const ListBoarding = () => {
         }
 
         .btn-edit {
-          background-color: #f1c40f;
+          background-color: #000957;
           color: #fff;
         }
 
         .btn-edit:hover {
-          background-color: #d4ac0d;
+          background-color: rgba(0, 9, 87, 0.9);
           transform: translateY(-1px);
         }
 
@@ -715,12 +719,12 @@ const ListBoarding = () => {
         }
 
         .btn-cancel {
-          background-color: #95a5a6;
-          color: #fff;
+          background-color: #B0B3B8;
+          color: #000957;
         }
 
         .btn-cancel:hover {
-          background-color: #7f8c8d;
+          background-color: rgba(176, 179, 184, 0.8);
           transform: translateY(-1px);
         }
 
