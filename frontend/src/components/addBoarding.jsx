@@ -441,13 +441,13 @@ const AddBoarding = () => {
                   }}
                 />
                 {/* Google Map Picker */}
-                <div style={{ height: 300, marginBottom: 16 }}>
+                {/* <div style={{ height: 300, marginBottom: 16 }}>
                   <GoogleMapPicker
                     lat={formData.lat}
                     lng={formData.lng}
                     setLatLng={(lat, lng) => setFormData(prev => ({ ...prev, lat, lng }))}
                   />
-                </div>
+                </div> */}
                  <select
                   name="gender"
                   value={formData.gender}
