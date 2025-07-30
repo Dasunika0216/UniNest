@@ -5,14 +5,14 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-[#E8D7CC] mt-auto">
+    <footer className="bg-navy mt-auto">
       <div className="container mx-auto px-6 py-8">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">UNINEST</h3>
-            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+            <h3 className="text-2xl font-bold text-white mb-4">UNINEST</h3>
+            <p className="text-ash text-sm leading-relaxed mb-4">
               Connecting university students with safe, affordable, and
               comfortable boarding accommodations across Sri Lanka.
             </p>
@@ -20,7 +20,7 @@ const Footer = () => {
               {/* Social Media Icons */}
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-ash hover:text-white transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -32,7 +32,7 @@ const Footer = () => {
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-ash hover:text-white transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -44,7 +44,7 @@ const Footer = () => {
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-ash hover:text-white transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -59,14 +59,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">
+            <h4 className="text-lg font-semibold text-white mb-4">
               Quick Links
             </h4>
             <ul className="space-y-2">
               <li>
                 <button
                   onClick={() => navigate("/")}
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Find Boarding
                 </button>
@@ -74,7 +74,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/host-profile")}
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Become a Host
                 </button>
@@ -82,7 +82,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/about")}
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   About Us
                 </button>
@@ -90,7 +90,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/contact")}
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Contact
                 </button>
@@ -100,14 +100,14 @@ const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">
+            <h4 className="text-lg font-semibold text-white mb-4">
               Support
             </h4>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Help Center
                 </a>
@@ -115,7 +115,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Safety Guidelines
                 </a>
@@ -123,7 +123,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Terms of Service
                 </a>
@@ -131,7 +131,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                  className="text-ash hover:text-white transition-colors text-sm"
                 >
                   Privacy Policy
                 </a>
@@ -141,11 +141,11 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">
+            <h4 className="text-lg font-semibold text-white mb-4">
               Contact
             </h4>
             <div className="space-y-2">
-              <div className="flex items-center text-gray-600 text-sm">
+              <div className="flex items-center text-ash text-sm">
                 <svg
                   className="w-4 h-4 mr-2"
                   fill="none"
@@ -161,7 +161,7 @@ const Footer = () => {
                 </svg>
                 support@uninest.com
               </div>
-              <div className="flex items-center text-gray-600 text-sm">
+              <div className="flex items-center text-ash text-sm">
                 <svg
                   className="w-4 h-4 mr-2"
                   fill="none"
@@ -177,7 +177,7 @@ const Footer = () => {
                 </svg>
                 +94 11 234 5678
               </div>
-              <div className="flex items-start text-gray-600 text-sm">
+              <div className="flex items-start text-ash text-sm">
                 <svg
                   className="w-4 h-4 mr-2 mt-0.5"
                   fill="none"
@@ -208,27 +208,27 @@ const Footer = () => {
         </div>
 
         {/* Bottom Border */}
-        <div className="border-t border-gray-300 mt-8 pt-6">
+        <div className="border-t border-ash mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm">
+            <p className="text-ash text-sm">
               © 2025 UniNest. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                className="text-ash hover:text-white transition-colors text-sm"
               >
                 Privacy
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                className="text-ash hover:text-white transition-colors text-sm"
               >
                 Terms
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                className="text-ash hover:text-white transition-colors text-sm"
               >
                 Cookies
               </a>

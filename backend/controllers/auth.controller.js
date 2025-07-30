@@ -176,12 +176,15 @@ const fetchHostData = async (req, res) => {
 // Admin statistics endpoint
 const getAdminStatistics = async (req, res) => {
   try {
-    
+    // console.log("Admin statistics endpoint called");
+    // console.log("Request headers:", req.headers);
+    // console.log("Request body userId:", req.body.userId);
+
     // Get the user ID from the middleware
     const userId = req.body.userId;
 
     if (!userId) {
-      console.log("No userId found in request body");
+      // console.log("No userId found in request body");
       return res.status(401).json({
         success: false,
         message: "User ID not found. Please login again.",
@@ -190,10 +193,10 @@ const getAdminStatistics = async (req, res) => {
 
     // Verify that the user is an admin
     const user = await Host.findById(userId);
-    console.log(
-      "User found:",
-      user ? { id: user._id, role: user.role, status: user.status } : "null"
-    );
+    // console.log(
+    //   "User found:",
+    //   user ? { id: user._id, role: user.role, status: user.status } : "null"
+    // );
 
     if (!user) {
       return res.status(404).json({
@@ -220,15 +223,15 @@ const getAdminStatistics = async (req, res) => {
 
     // Debug: Check what boardings exist in the database
     const allBoardings = await boardingModel.find({}).limit(10);
-    console.log("All boardings in database:", allBoardings.length);
-    console.log(
-      "Sample boarding data:",
-      allBoardings.length > 0 ? allBoardings[0] : "No boardings found"
-    );
+    // console.log("All boardings in database:", allBoardings.length);
+    // console.log(
+    //   "Sample boarding data:",
+    //   allBoardings.length > 0 ? allBoardings[0] : "No boardings found"
+    // );
 
     // Debug: Check distinct types in boarding collection
     const distinctTypes = await boardingModel.distinct("type");
-    console.log("Distinct boarding types in DB:", distinctTypes);
+    // console.log("Distinct boarding types in DB:", distinctTypes);
 
     // Get approved boardings count by type
     // All boardings in the boarding collection are already approved boardings
@@ -243,11 +246,11 @@ const getAdminStatistics = async (req, res) => {
       type: "Homestay",
     });
 
-    console.log("Boarding counts:", {
-      approvedHostels,
-      approvedAnnexes,
-      approvedHomestays,
-    });
+    // console.log("Boarding counts:", {
+    //   approvedHostels,
+    //   approvedAnnexes,
+    //   approvedHomestays,
+    // });
 
     const totalApprovedBoardings =
       approvedHostels + approvedAnnexes + approvedHomestays;
@@ -282,7 +285,7 @@ const getAdminStatistics = async (req, res) => {
 const checkUserRole = async (req, res) => {
   try {
     const userId = req.body.userId;
-    console.log("Checking user role for userId:", userId);
+    // console.log("Checking user role for userId:", userId);
 
     if (!userId) {
       return res.json({
@@ -321,7 +324,7 @@ const checkUserRole = async (req, res) => {
 const testAuth = async (req, res) => {
   try {
     const userId = req.body.userId;
-    console.log("Test auth - userId:", userId);
+    // console.log("Test auth - userId:", userId);
 
     if (!userId) {
       return res.json({

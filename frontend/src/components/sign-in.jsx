@@ -55,111 +55,48 @@ function SignIn() {
   }, [token]);
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "7rem auto",
-        padding: "2rem",
-        backgroundColor: "#d4bf95",
-        borderRadius: "16px",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-        fontFamily: "Segoe UI, sans-serif",
-        transition: "all 0.3s ease-in-out",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          color: "#2d2d2d",
-          marginBottom: "1.5rem",
-        }}
-      >
-        Hello, Glad to see you again!
-      </h2>
-      <form onSubmit={handleSignIn}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            marginBottom: "1rem",
-            padding: "0.75rem",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            fontSize: "1rem",
-            transition: "border 0.3s",
-            outline: "none",
-          }}
-          onFocus={(e) => (e.target.style.border = "1px solid #222")}
-          onBlur={(e) => (e.target.style.border = "1px solid #ccc")}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            marginBottom: "1rem",
-            padding: "0.75rem",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            fontSize: "1rem",
-            transition: "border 0.3s",
-            outline: "none",
-          }}
-          onFocus={(e) => (e.target.style.border = "1px solid #222")}
-          onBlur={(e) => (e.target.style.border = "1px solid #ccc")}
-        />
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "0.75rem",
-            backgroundColor: "#222",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "background-color 0.3s",
-          }}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = "#444")}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = "#222")}
-        >
-          Sign In
-        </button>
-      </form>
-      {message && (
-        <p style={{ textAlign: "center", marginTop: "1rem", color: "#e74c3c" }}>
-          {message}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy via-ash to-white">
+      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-2xl font-sans transition-all border border-ash">
+        <h2 className="text-center text-2xl font-bold text-navy mb-6">
+          Hello, Glad to see you again!
+        </h2>
+        <form onSubmit={handleSignIn}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full mb-4 px-4 py-3 border border-ash rounded-lg text-base focus:outline-none focus:border-navy bg-white placeholder-ash text-navy transition"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full mb-4 px-4 py-3 border border-ash rounded-lg text-base focus:outline-none focus:border-navy bg-white placeholder-ash text-navy transition"
+          />
+          <button
+            type="submit"
+            className="w-full py-3 bg-navy text-white rounded-lg text-base font-bold cursor-pointer border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition"
+          >
+            Sign In
+          </button>
+        </form>
+        {message && (
+          <p className="text-center mt-4 text-red-500">{message}</p>
+        )}
+        <p className="text-center mt-6 text-sm text-navy">
+          Don't have an account?{' '}
+          <Link
+            to="/sign-up"
+            className="text-navy underline font-medium transition hover:text-black"
+          >
+            Sign up here
+          </Link>
         </p>
-      )}
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: "1.5rem",
-          fontSize: "0.95rem",
-        }}
-      >
-        Don't have an account?{" "}
-        <Link
-          to="/sign-up"
-          style={{
-            color: "#222",
-            textDecoration: "underline",
-            fontWeight: "500",
-            transition: "color 0.3s ease",
-          }}
-        >
-          Sign up here
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }

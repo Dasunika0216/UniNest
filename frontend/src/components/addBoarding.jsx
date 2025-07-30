@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import GoogleMapPicker from "./GoogleMapPicker"; // Import the GoogleMapPicker component
 
 const AddBoarding = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -15,6 +17,8 @@ const AddBoarding = () => {
     facilities: [],
     description: "",
     images: [],
+    lat: null,
+    lng: null,
   });
   const [imageFiles, setImageFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -30,6 +34,8 @@ const AddBoarding = () => {
         facilities: [],
         description: "",
         images: [],
+        lat: null,
+        lng: null,
       });
       setImageFiles([]);
       setType("");
@@ -48,6 +54,8 @@ const AddBoarding = () => {
       facilities: [],
       description: "",
       images: [],
+      lat: null,
+      lng: null,
     });
     setImageFiles([]);
   };
@@ -128,6 +136,8 @@ const AddBoarding = () => {
     data.append("availableCount", formData.availableCount);
     data.append("description", formData.description);
     formData.facilities.forEach((f) => data.append("facilities", f));
+    data.append("lat", formData.lat);
+    data.append("lng", formData.lng);
 
     if (imageFiles.length > 0) {
       const imageUrls = await uploadImagesToCloudinary();
@@ -309,7 +319,7 @@ const AddBoarding = () => {
                     {[
                       { name: "Annex", img: "/annex.jpg" },
                       { name: "Homestay", img: "/homestay.jpg" },
-                      { name: "Hotel", img: "/hotel.jpg" },
+                      { name: "Hostel", img: "/hotel.jpg" },
                     ].map((option) => {
                       const isSelected = type === option.name;
                       return (
@@ -430,6 +440,14 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 />
+                {/* Google Map Picker */}
+                <div style={{ height: 300, marginBottom: 16 }}>
+                  <GoogleMapPicker
+                    lat={formData.lat}
+                    lng={formData.lng}
+                    setLatLng={(lat, lng) => setFormData(prev => ({ ...prev, lat, lng }))}
+                  />
+                </div>
                  <select
                   name="gender"
                   value={formData.gender}
@@ -445,15 +463,14 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 >
-                  <option value="">Select Gender</option>
-                  <option value="Girls">Girls</option>
-                  <option value="Boys">Boys</option>
-                  <option value="Any">Any</option>
+                  <option value="">Select Gender Preference</option>
+                  <option value="Girls">Girls Only</option>
+                  <option value="Boys">Boys Only</option>
                 </select>
                 <input
                   type="number"
                   name="cost"
-                  placeholder={type === "Annex" ? "Cost per annex" : "Cost per bed"}
+                  placeholder={type === "Annex" ? "Cost per month (Rs.)" : "Cost per bed per month (Rs.)"}
                   value={formData.cost}
                   onChange={handleChange}
                   required
@@ -816,3 +833,4 @@ const cancelButtonStyle = {
 };
 
 export default AddBoarding;
+

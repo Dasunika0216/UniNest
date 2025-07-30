@@ -31,41 +31,41 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfde3]">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+          <h1 className="text-4xl font-bold text-navy mb-8 text-center">
             Contact Us
           </h1>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Contact Information */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            <div className="bg-ash rounded-lg shadow-lg p-8">
+              <h2 className="text-2xl font-semibold text-navy mb-6">
                 Get in Touch
               </h2>
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
+                  <h3 className="text-lg font-medium text-navy mb-2">
                     Email
                   </h3>
-                  <p className="text-gray-600">support@uninest.com</p>
+                  <p className="text-navy/70">support@uninest.com</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
+                  <h3 className="text-lg font-medium text-navy mb-2">
                     Phone
                   </h3>
-                  <p className="text-gray-600">+94 11 234 5678</p>
+                  <p className="text-navy/70">+94 11 234 5678</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
+                  <h3 className="text-lg font-medium text-navy mb-2">
                     Address
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-navy/70">
                     123 University Lane
                     <br />
                     Colombo 00700
@@ -75,10 +75,10 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
+                  <h3 className="text-lg font-medium text-navy mb-2">
                     Business Hours
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-navy/70">
                     Monday - Friday: 9:00 AM - 6:00 PM
                     <br />
                     Saturday: 9:00 AM - 2:00 PM
@@ -90,8 +90,8 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            <div className="bg-white rounded-lg shadow-lg p-8 border border-ash">
+              <h2 className="text-2xl font-semibold text-navy mb-6">
                 Send us a Message
               </h2>
 
@@ -99,7 +99,7 @@ const Contact = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-navy mb-1"
                   >
                     Full Name
                   </label>
@@ -110,14 +110,14 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-ash rounded-md focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy text-navy"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-navy mb-1"
                   >
                     Email Address
                   </label>
@@ -128,14 +128,14 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-ash rounded-md focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy text-navy"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-navy mb-1"
                   >
                     Subject
                   </label>
@@ -146,14 +146,14 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-ash rounded-md focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy text-navy"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-navy mb-1"
                   >
                     Message
                   </label>
@@ -164,13 +164,13 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-ash rounded-md focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy text-navy"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gray-800 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-200"
+                  className="w-full bg-navy text-white font-medium py-2 px-4 rounded-md hover:bg-navy/90 transition-colors duration-200"
                 >
                   Send Message
                 </button>
