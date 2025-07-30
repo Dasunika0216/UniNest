@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import GoogleMapPicker from "./GoogleMapPicker";
 
 const ListBoarding = () => {
   const [boardings, setBoardings] = useState([]);
@@ -7,6 +8,7 @@ const ListBoarding = () => {
   const [editData, setEditData] = useState({});
   const [newImages, setNewImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
+  const [editLocation, setEditLocation] = useState({ lat: null, lng: null });
   const [imageViewer, setImageViewer] = useState({
     isOpen: false,
     currentIndex: 0,
@@ -80,6 +82,11 @@ const ListBoarding = () => {
     setEditData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleLocationChange = (lat, lng) => {
+    setEditLocation({ lat, lng });
+    setEditData((prev) => ({ ...prev, lat, lng }));
+  };
+
   const handleEditSubmit = async (id) => {
     // Basic validation
     if (!editData.address || !editData.cost || !editData.availableCount) {
@@ -119,6 +126,8 @@ const ListBoarding = () => {
       availableCount: editData.availableCount || '',
       description: editData.description || '',
       facilities: editData.facilities || [],
+      lat: editData.lat || null,
+      lng: editData.lng || null,
       removedImages: removedImages,
       newImages: uploadedImageUrls
     };
@@ -307,6 +316,18 @@ const ListBoarding = () => {
                       rows="3"
                       style={{ resize: 'vertical' }}
                     />
+                    
+                    {/* Location Map Picker */}
+                    <div style={{ marginBottom: '15px' }}>
+                      <h4 style={{ marginBottom: '10px', color: '#333' }}>📍 Location</h4>
+                      <div style={{ height: 250 }}>
+                        <GoogleMapPicker
+                          lat={editData.lat}
+                          lng={editData.lng}
+                          setLatLng={handleLocationChange}
+                        />
+                      </div>
+                    </div>
                     
                     {/* Image Management Section */}
                     <div style={{ marginBottom: '15px' }}>
@@ -580,15 +601,28 @@ const ListBoarding = () => {
                       <strong>🧰 Facilities:</strong>{" "}
                       {getFacilitiesDisplay(boarding.facilities)}
                     </p>
-                    <button
-                      className="boarding-btn btn-edit"
-                      onClick={() => {
-                        setEditingId(boarding._id);
-                        setEditData(boarding);
-                      }}
-                    >
-                       Edit
-                    </button>
+                    <p>
+                      <strong>📍 Location:</strong>{" "}
+                      {boarding.lat && boarding.lng ? (
+                        <span style={{ color: "#27ae60", fontWeight: "600" }}>
+                          Available ({boarding.lat.toFixed(4)}, {boarding.lng.toFixed(4)})
+                        </span>
+                      ) : (
+                        <span style={{ color: "#e74c3c", fontWeight: "600" }}>
+                          Not set
+                        </span>
+                      )}
+                    </p>
+                                          <button
+                        className="boarding-btn btn-edit"
+                        onClick={() => {
+                          setEditingId(boarding._id);
+                          setEditData(boarding);
+                          setEditLocation({ lat: boarding.lat, lng: boarding.lng });
+                        }}
+                      >
+                         Edit
+                      </button>
                     <button
                       className="boarding-btn btn-delete"
                       onClick={() => handleDelete(boarding._id)}

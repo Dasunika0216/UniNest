@@ -157,7 +157,7 @@ const deleteBoarding = async (req, res) => {
 const updateBoarding = async (req, res) => {
   try {
     const { id } = req.params;
-    const { address, cost, type, availableCount, description, facilities, removedImages, newImages } = req.body;
+    const { address, cost, type, availableCount, description, facilities, removedImages, newImages, lat, lng } = req.body;
 
     console.log("Update request for ID:", id);
     console.log("Request body:", req.body);
@@ -187,6 +187,10 @@ const updateBoarding = async (req, res) => {
         updateData.facilities = facilities;
       }
     }
+    
+    // Handle location updates
+    if (lat !== undefined) updateData.lat = Number(lat);
+    if (lng !== undefined) updateData.lng = Number(lng);
 
     // Handle image updates - only if boarding has images or we're adding new ones
     if (boarding.images || (newImages && newImages.length > 0)) {
