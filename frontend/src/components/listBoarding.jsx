@@ -17,6 +17,8 @@ const ListBoarding = () => {
   });
   const [imageFileInput, setImageFileInput] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [pendingLocation, setPendingLocation] = useState(null);
 
   const fetchBoarding = async () => {
     try {
@@ -82,9 +84,22 @@ const ListBoarding = () => {
     setEditData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const openLocationModal = () => {
+    setPendingLocation(editData.lat && editData.lng ? { lat: editData.lat, lng: editData.lng } : null);
+    setShowLocationModal(true);
+  };
   const handleLocationChange = (lat, lng) => {
-    setEditLocation({ lat, lng });
-    setEditData((prev) => ({ ...prev, lat, lng }));
+    setPendingLocation({ lat, lng });
+  };
+  const confirmLocation = () => {
+    if (pendingLocation) {
+      setEditLocation(pendingLocation);
+      setEditData((prev) => ({ ...prev, lat: pendingLocation.lat, lng: pendingLocation.lng }));
+    }
+    setShowLocationModal(false);
+  };
+  const cancelLocation = () => {
+    setShowLocationModal(false);
   };
 
   const handleEditSubmit = async (id) => {
@@ -317,17 +332,127 @@ const ListBoarding = () => {
                       style={{ resize: 'vertical' }}
                     />
                     
-                    {/* Location Map Picker */}
+                    {/* Location Edit Button */}
                     <div style={{ marginBottom: '15px' }}>
                       <h4 style={{ marginBottom: '10px', color: '#333' }}>📍 Location</h4>
-                      <div style={{ height: 250 }}>
-                        <GoogleMapPicker
-                          lat={editData.lat}
-                          lng={editData.lng}
-                          setLatLng={handleLocationChange}
-                        />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <span>
+                          {editData.lat && editData.lng
+                            ? `Selected: ${Number(editData.lat).toFixed(5)}, ${Number(editData.lng).toFixed(5)}`
+                            : 'No location set'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={openLocationModal}
+                          style={{
+                            padding: '0.5rem 1.2rem',
+                            backgroundColor: '#e74c3c',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            fontSize: '0.95rem',
+                          }}
+                        >
+                          Edit Location
+                        </button>
                       </div>
                     </div>
+                    {/* Fullscreen Location Modal */}
+                    {showLocationModal && (
+                      <div style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(0,0,0,0.7)',
+                        zIndex: 9999,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <div style={{
+                          background: 'white',
+                          borderRadius: '18px',
+                          padding: '2rem',
+                          maxWidth: '700px',
+                          width: '95vw',
+                          maxHeight: '90vh',
+                          overflow: 'auto',
+                          position: 'relative',
+                          boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}>
+                          <button
+                            onClick={cancelLocation}
+                            style={{
+                              position: 'absolute',
+                              top: 10,
+                              right: 10,
+                              background: '#e74c3c',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '50%',
+                              width: 36,
+                              height: 36,
+                              fontSize: 22,
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              zIndex: 2,
+                            }}
+                            aria-label="Close"
+                          >
+                            ×
+                          </button>
+                          <h2 style={{ textAlign: 'center', marginBottom: '1rem', color: '#e74c3c' }}>Pick Boarding Location</h2>
+                          <GoogleMapPicker
+                            lat={pendingLocation?.lat}
+                            lng={pendingLocation?.lng}
+                            setLatLng={handleLocationChange}
+                          />
+                          <div style={{ textAlign: 'center', marginTop: '1rem', color: '#888' }}>
+                            Click on the map to select a new location. The red marker shows your pick.
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '2rem' }}>
+                            <button
+                              onClick={confirmLocation}
+                              style={{
+                                padding: '0.7rem 2.2rem',
+                                backgroundColor: '#27ae60',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontWeight: 700,
+                                fontSize: '1.1rem',
+                                cursor: pendingLocation ? 'pointer' : 'not-allowed',
+                                opacity: pendingLocation ? 1 : 0.6,
+                              }}
+                              disabled={!pendingLocation}
+                            >
+                              Confirm Location
+                            </button>
+                            <button
+                              onClick={cancelLocation}
+                              style={{
+                                padding: '0.7rem 2.2rem',
+                                backgroundColor: '#bdc3c7',
+                                color: '#2c3e50',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontWeight: 700,
+                                fontSize: '1.1rem',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Image Management Section */}
                     <div style={{ marginBottom: '15px' }}>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 // Remove 'places' from libraries since we don't need search
 const libraries = [];
@@ -197,7 +197,10 @@ const GoogleMapPicker = ({ lat, lng, setLatLng }) => {
           clickableIcons: false,
         }}
       >
-        {/* Marker is now handled by AdvancedMarkerElement in useEffect */}
+        {/* Show the real Google Maps marker at the selected position */}
+        {isLoaded && selectedPosition && (
+          <Marker position={selectedPosition} />
+        )}
       </GoogleMap>
 
       {/* Selected Location Display */}
