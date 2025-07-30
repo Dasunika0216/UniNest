@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 const boardingSchema = new mongoose.Schema({
   hostId: { type: String, required: true },
   address: { type: String, required: true },
+  lat: { type: Number, required: true },   // Latitude
+  lng: { type: Number, required: true },   // Longitude
   gender: { 
     type: String, 
     required: true, 
