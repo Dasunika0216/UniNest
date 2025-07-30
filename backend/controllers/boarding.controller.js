@@ -33,6 +33,12 @@ const addBoarding = async (req, res) => {
     // Destructuring the request body for boarding details
     const { address, gender, cost, type, availableCount, description } = req.body;
 
+    // --- ADD THIS: extract and convert lat/lng ---
+    let lat = req.body.lat;
+    let lng = req.body.lng;
+    if (lat !== undefined) lat = Number(lat);
+    if (lng !== undefined) lng = Number(lng);
+
     // Validate gender - only allow "Girls" or "Boys"
     if (!gender || (gender !== "Girls" && gender !== "Boys")) {
       return res
@@ -72,6 +78,8 @@ const addBoarding = async (req, res) => {
       description,
       facilities,
       images,
+      lat,   // <-- ADD THIS
+      lng,   // <-- ADD THIS
     };
 
     // Create and save the new boarding instance to the database

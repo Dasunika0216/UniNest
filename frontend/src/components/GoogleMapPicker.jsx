@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useRef } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 
 // Remove 'places' from libraries since we don't need search
 const libraries = [];
@@ -26,6 +26,7 @@ const GoogleMapPicker = ({ lat, lng, setLatLng }) => {
   );
 
   const mapRef = useRef(null);
+  const markerRef = useRef(null);
 
   // Handle map click to pick exact location
   const onMapClick = useCallback(
@@ -64,6 +65,36 @@ const GoogleMapPicker = ({ lat, lng, setLatLng }) => {
       alert("Geolocation is not supported by this browser.");
     }
   };
+
+  // Use AdvancedMarkerElement instead of Marker
+  useEffect(() => {
+    if (
+      isLoaded &&
+      window.google &&
+      window.google.maps &&
+      window.google.maps.marker &&
+      mapRef.current
+    ) {
+      // Remove previous marker if exists
+      if (markerRef.current) {
+        markerRef.current.map = null;
+        markerRef.current = null;
+      }
+      // Create new AdvancedMarkerElement
+      markerRef.current = new window.google.maps.marker.AdvancedMarkerElement({
+        map: mapRef.current,
+        position: selectedPosition,
+        title: "Click to set exact location",
+      });
+    }
+    // Cleanup on unmount
+    return () => {
+      if (markerRef.current) {
+        markerRef.current.map = null;
+        markerRef.current = null;
+      }
+    };
+  }, [isLoaded, selectedPosition]);
 
   if (loadError) {
     return (
@@ -166,11 +197,7 @@ const GoogleMapPicker = ({ lat, lng, setLatLng }) => {
           clickableIcons: false,
         }}
       >
-        <Marker
-          position={selectedPosition}
-          animation={window.google?.maps?.Animation?.DROP}
-          title="Click to set exact location"
-        />
+        {/* Marker is now handled by AdvancedMarkerElement in useEffect */}
       </GoogleMap>
 
       {/* Selected Location Display */}
