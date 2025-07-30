@@ -176,10 +176,7 @@ const fetchHostData = async (req, res) => {
 // Admin statistics endpoint
 const getAdminStatistics = async (req, res) => {
   try {
-    console.log("Admin statistics endpoint called");
-    console.log("Request headers:", req.headers);
-    console.log("Request body userId:", req.body.userId);
-
+    
     // Get the user ID from the middleware
     const userId = req.body.userId;
 
