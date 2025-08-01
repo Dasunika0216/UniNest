@@ -478,12 +478,12 @@ const AddBoarding = () => {
                     style={{
                       padding: "0.8rem",
                       borderRadius: "8px",
-                      border: "1px solid #ccc",
+                      border: "1px solid #B0B3B8",
                       fontSize: "1rem",
                       outline: "none",
                       width: "100%",
-                      backgroundColor: "#f8f9fa",
-                      color: "#495057",
+                      backgroundColor: "#B0B3B8",
+                      color: "#000957",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
@@ -491,8 +491,8 @@ const AddBoarding = () => {
                       gap: "0.5rem",
                       transition: "all 0.2s"
                     }}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#e9ecef")}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#f8f9fa")}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#9ca3af")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#B0B3B8")}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -503,11 +503,11 @@ const AddBoarding = () => {
                     <div style={{
                       marginTop: "0.5rem",
                       padding: "0.5rem",
-                      backgroundColor: "#d4edda",
-                      border: "1px solid #c3e6cb",
+                      backgroundColor: "#000957",
+                      border: "1px solid #000957",
                       borderRadius: "4px",
                       fontSize: "0.8rem",
-                      color: "#155724"
+                      color: "white"
                     }}>
                       ✅ Location set: {formData.lat.toFixed(6)}, {formData.lng.toFixed(6)}
                     </div>
@@ -893,7 +893,7 @@ const AddBoarding = () => {
                 border: "none",
                 fontSize: "1.5rem",
                 cursor: "pointer",
-                color: "#666",
+                color: "#B0B3B8",
                 width: "30px",
                 height: "30px",
                 display: "flex",
@@ -914,7 +914,7 @@ const AddBoarding = () => {
                 margin: 0, 
                 fontSize: "1.5rem", 
                 fontWeight: "600", 
-                color: "#333",
+                color: "#000957",
                 marginBottom: "0.5rem"
               }}>
                 Select Location on Map
@@ -922,7 +922,7 @@ const AddBoarding = () => {
               <p style={{ 
                 margin: 0, 
                 fontSize: "0.9rem", 
-                color: "#666" 
+                color: "#B0B3B8" 
               }}>
                 Click anywhere on the map to set your boarding location
               </p>
@@ -952,8 +952,8 @@ const AddBoarding = () => {
                 onClick={closeMapModal}
                 style={{
                   padding: "0.75rem 1.5rem",
-                  backgroundColor: "#6c757d",
-                  color: "white",
+                  backgroundColor: "#B0B3B8",
+                  color: "#000957",
                   border: "none",
                   borderRadius: "6px",
                   cursor: "pointer",
@@ -961,8 +961,8 @@ const AddBoarding = () => {
                   fontWeight: "500",
                   transition: "background-color 0.2s"
                 }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = "#5a6268")}
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "#6c757d")}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = "#9ca3af")}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "#B0B3B8")}
               >
                 Cancel
               </button>
@@ -971,7 +971,7 @@ const AddBoarding = () => {
                 disabled={!tempLocation.lat || !tempLocation.lng}
                 style={{
                   padding: "0.75rem 1.5rem",
-                  backgroundColor: tempLocation.lat && tempLocation.lng ? "#28a745" : "#6c757d",
+                  backgroundColor: tempLocation.lat && tempLocation.lng ? "#000957" : "#B0B3B8",
                   color: "white",
                   border: "none",
                   borderRadius: "6px",
@@ -982,12 +982,12 @@ const AddBoarding = () => {
                 }}
                 onMouseEnter={(e) => {
                   if (tempLocation.lat && tempLocation.lng) {
-                    e.target.style.backgroundColor = "#218838";
+                    e.target.style.backgroundColor = "#001a4d";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (tempLocation.lat && tempLocation.lng) {
-                    e.target.style.backgroundColor = "#28a745";
+                    e.target.style.backgroundColor = "#000957";
                   }
                 }}
               >
