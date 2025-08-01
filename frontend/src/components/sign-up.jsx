@@ -239,23 +239,23 @@ function SignUp() {
         {[1, 2, 3, 4].map((step, index) => (
           <React.Fragment key={step}>
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold z-10 relative transition-all shadow ${currentStep >= step ? 'bg-sand text-white' : 'bg-latte text-black'}`}
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold z-10 relative transition-all shadow ${currentStep >= step ? 'bg-navy text-white' : 'bg-ash text-navy'}`}
             >
               {currentStep > step ? "✓" : step}
             </div>
             {index < 3 && (
               <div
-                className={`flex-1 h-1 mx-2 rounded ${currentStep > step ? 'bg-sand' : 'bg-latte'}`}
+                className={`flex-1 h-1 mx-2 rounded ${currentStep > step ? 'bg-navy' : 'bg-ash'}`}
               />
             )}
           </React.Fragment>
         ))}
       </div>
-      <div className="flex justify-between text-xs font-medium text-black">
-        <span className={currentStep >= 1 ? "text-black" : "text-latte"}>Account</span>
-        <span className={currentStep >= 2 ? "text-black" : "text-latte"}>Contact</span>
-        <span className={currentStep >= 3 ? "text-black" : "text-latte"}>Property</span>
-        <span className={currentStep >= 4 ? "text-black" : "text-latte"}>Upload</span>
+      <div className="flex justify-between text-xs font-medium text-navy">
+        <span className={currentStep >= 1 ? "text-navy" : "text-ash"}>Account</span>
+        <span className={currentStep >= 2 ? "text-navy" : "text-ash"}>Contact</span>
+        <span className={currentStep >= 3 ? "text-navy" : "text-ash"}>Property</span>
+        <span className={currentStep >= 4 ? "text-navy" : "text-ash"}>Upload</span>
       </div>
     </div>
   );
@@ -266,7 +266,7 @@ function SignUp() {
       case 1:
         return (
           <>
-            <h3 className="mb-4 text-lg font-semibold text-black">Account Information</h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Account Information</h3>
             <input
               type="text"
               name="username"
@@ -274,7 +274,7 @@ function SignUp() {
               value={formData.username}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.username ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.username ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.username && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.username}</p>}
 
@@ -285,7 +285,7 @@ function SignUp() {
               value={formData.email}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.email ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.email ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.email && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.email}</p>}
 
@@ -296,7 +296,7 @@ function SignUp() {
               value={formData.password}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.password ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.password ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.password && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.password}</p>}
 
@@ -307,7 +307,7 @@ function SignUp() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.confirmPassword ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.confirmPassword ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.confirmPassword && (
               <p className="text-red-500 text-xs mb-2 -mt-3">{errors.confirmPassword}</p>
@@ -317,7 +317,7 @@ function SignUp() {
       case 2:
         return (
           <>
-            <h3 className="mb-4 text-lg font-semibold text-black">Contact Information</h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Contact Information</h3>
             <input
               type="text"
               name="fullName"
@@ -325,12 +325,12 @@ function SignUp() {
               value={formData.fullName}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.fullName ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.fullName ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.fullName && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.fullName}</p>}
 
             <div className="flex items-center mb-4">
-              <span className={`px-4 py-3 bg-cream border ${errors.phone ? 'border-red-500' : 'border-latte'} rounded-l-lg text-base text-black`}>+94</span>
+              <span className={`px-4 py-3 bg-ash border ${errors.phone ? 'border-red-500' : 'border-ash'} rounded-l-lg text-base text-navy`}>+94</span>
               <input
                 type="tel"
                 name="phone"
@@ -340,7 +340,7 @@ function SignUp() {
                   setFormData(prev => ({ ...prev, phone: "+94" + value }));
                 }}
                 required
-                className={`w-full px-4 py-3 border rounded-r-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none border-l-0 ${errors.phone ? 'border-red-500' : 'border-latte'}`}
+                className={`w-full px-4 py-3 border rounded-r-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none border-l-0 ${errors.phone ? 'border-red-500' : 'border-ash'}`}
                 placeholder="7XXXXXXXX"
               />
             </div>
@@ -353,7 +353,7 @@ function SignUp() {
               value={formData.city}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.city ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.city ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.city && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.city}</p>}
 
@@ -364,7 +364,7 @@ function SignUp() {
               value={formData.postalCode}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.postalCode ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.postalCode ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.postalCode && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.postalCode}</p>}
           </>
@@ -372,7 +372,7 @@ function SignUp() {
       case 3:
         return (
           <>
-            <h3 className="mb-4 text-lg font-semibold text-black">Property Details</h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Property Details</h3>
             <input
               type="text"
               name="boardingAddressForApproval"
@@ -380,7 +380,7 @@ function SignUp() {
               value={formData.boardingAddressForApproval}
               onChange={handleChange}
               required
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none ${errors.boardingAddressForApproval ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.boardingAddressForApproval ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.boardingAddressForApproval && (
               <p className="text-red-500 text-xs mb-2 -mt-3">{errors.boardingAddressForApproval}</p>
@@ -392,14 +392,14 @@ function SignUp() {
                 value={formData.propertyType}
                 onChange={handleChange}
                 required
-                className={`w-full px-4 py-3 border rounded-lg text-base bg-linen text-black transition focus:outline-none appearance-none ${errors.propertyType ? 'border-red-500' : 'border-latte'}`}
+                className={`w-full px-4 py-3 border rounded-lg text-base bg-white text-navy transition focus:outline-none appearance-none ${errors.propertyType ? 'border-red-500' : 'border-ash'}`}
               >
-                <option value="" className="bg-white text-black">Select Property Type</option>
-                <option value="homestay" className="bg-white text-black">HomeStay</option>
-                <option value="annex" className="bg-white text-black">Annex</option>
-                <option value="hostel" className="bg-white text-black">Hostel</option>
+                <option value="" className="bg-white text-navy">Select Property Type</option>
+                <option value="homestay" className="bg-white text-navy">HomeStay</option>
+                <option value="annex" className="bg-white text-navy">Annex</option>
+                <option value="hostel" className="bg-white text-navy">Hostel</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-navy">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </div>
             </div>
@@ -414,7 +414,7 @@ function SignUp() {
               onChange={handleChange}
               required
               rows="4"
-              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-linen placeholder-black/70 text-black transition focus:outline-none resize-vertical ${errors.description ? 'border-red-500' : 'border-latte'}`}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none resize-vertical ${errors.description ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.description && (
               <p className="text-red-500 text-xs mb-2 -mt-3">{errors.description}</p>
@@ -424,7 +424,7 @@ function SignUp() {
       case 4:
         return (
           <>
-            <h3 className="mb-4 text-lg font-semibold text-black">Property Image</h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Property Image</h3>
             <div className="relative mb-4">
               <input
                 type="file"
@@ -436,21 +436,21 @@ function SignUp() {
               />
               <label
                 htmlFor="file-upload"
-                className={`w-full flex flex-col items-center justify-center min-h-[100px] px-4 py-6 border-2 rounded-lg cursor-pointer transition-all text-black bg-cream border-dashed ${errors.image ? 'border-red-500' : 'border-latte'} text-center`}
+                className={`w-full flex flex-col items-center justify-center min-h-[100px] px-4 py-6 border-2 rounded-lg cursor-pointer transition-all text-navy bg-ash border-dashed ${errors.image ? 'border-red-500' : 'border-ash'} text-center`}
               >
                 <div className="text-2xl mb-2">📁</div>
                 <div className="font-medium mb-1">{imageFile ? "Change Image" : "Choose Property Image"}</div>
-                <div className="text-xs text-black/60">Click here or drag and drop your image</div>
+                <div className="text-xs text-navy/60">Click here or drag and drop your image</div>
               </label>
             </div>
             {errors.image && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.image}</p>}
             {imageFile && (
               <div className="mb-4">
-                <p className="text-sm text-black">Selected: {imageFile.name}</p>
+                <p className="text-sm text-navy">Selected: {imageFile.name}</p>
               </div>
             )}
             {uploading && (
-              <p className="mb-4 text-black">Uploading image...</p>
+              <p className="mb-4 text-navy">Uploading image...</p>
             )}
           </>
         );
@@ -460,9 +460,9 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sand via-latte to-linen">
-      <div className="w-full max-w-lg p-8 bg-cream rounded-2xl shadow-2xl font-sans transition-all border border-latte">
-        <h2 className="text-center text-2xl font-bold text-black mb-6">Host Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-2xl font-sans transition-all border border-ash">
+        <h2 className="text-center text-2xl font-bold text-navy mb-6">Host Sign Up</h2>
         <ProgressIndicator />
         <form onSubmit={handleSignUp}>
           {renderStepContent()}
@@ -472,7 +472,7 @@ function SignUp() {
                 type="button"
                 onClick={handlePrevious}
                 disabled={isSubmitted}
-                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${isSubmitted ? 'bg-latte text-black cursor-not-allowed opacity-60' : 'bg-latte text-black hover:bg-sand hover:text-white cursor-pointer'}`}
+                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${isSubmitted ? 'bg-ash text-navy cursor-not-allowed opacity-60' : 'bg-ash text-navy hover:bg-navy hover:text-white cursor-pointer'}`}
               >
                 Previous
               </button>
@@ -481,7 +481,7 @@ function SignUp() {
               <button
                 type="button"
                 onClick={handleNext}
-                className={`w-full py-3 rounded-lg text-base font-bold transition bg-sand text-white hover:bg-latte hover:text-black ${currentStep > 1 ? 'ml-2 w-[48%]' : ''}`}
+                className={`w-full py-3 rounded-lg text-base font-bold transition bg-navy text-white hover:bg-ash hover:text-navy ${currentStep > 1 ? 'ml-2 w-[48%]' : ''}`}
               >
                 Next
               </button>
@@ -489,7 +489,7 @@ function SignUp() {
               <button
                 type="submit"
                 disabled={uploading || isSubmitted}
-                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${uploading || isSubmitted ? 'bg-latte text-black cursor-not-allowed opacity-60' : 'bg-sand text-white hover:bg-latte hover:text-black cursor-pointer ml-2'}`}
+                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${uploading || isSubmitted ? 'bg-ash text-navy cursor-not-allowed opacity-60' : 'bg-navy text-white hover:bg-ash hover:text-navy cursor-pointer ml-2'}`}
               >
                 {uploading
                   ? "Uploading..."
@@ -503,11 +503,11 @@ function SignUp() {
         {message && (
           <p className={`text-center mt-4 text-sm ${message.includes('successful') ? 'text-green-600' : 'text-red-500'}`}>{message}</p>
         )}
-        <p className="text-center mt-6 text-sm text-black">
+        <p className="text-center mt-6 text-sm text-navy">
           Already have an account?{' '}
           <Link
             to="/sign-in"
-            className="text-black underline font-medium transition"
+            className="text-navy underline font-medium transition"
           >
             Sign in here
           </Link>
