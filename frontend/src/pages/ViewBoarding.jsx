@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ViewBoardingMap from "../components/ViewBoardingMap";
 
 const ViewBoarding = () => {
   const location = useLocation();
@@ -166,6 +167,14 @@ const ViewBoarding = () => {
 
         {/* Address */}
         <h2 className="text-2xl font-bold mb-2">{boarding.address}</h2>
+        
+        {/* Map Component */}
+        <ViewBoardingMap 
+          lat={boarding.lat} 
+          lng={boarding.lng} 
+          address={boarding.address} 
+        />
+        
         {/* Description */}
         <p className="text-gray-700 mb-4">{boarding.description}</p>
         {/* Cost */}
