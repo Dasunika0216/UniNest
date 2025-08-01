@@ -592,19 +592,19 @@ const AddBoarding = () => {
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    disabled={!(formData.gender && formData.address && formData.cost && formData.availableCount)}
+                    disabled={!(formData.gender && formData.address && formData.cost && formData.availableCount && formData.lat && formData.lng)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount ? "#000957" : "#B0B3B8",
+                      backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount && formData.lat && formData.lng ? "#000957" : "#B0B3B8",
                       color: "#ffffff",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
                       fontSize: "1.18rem",
-                      cursor: formData.gender && formData.address && formData.cost && formData.availableCount ? "pointer" : "not-allowed",
+                      cursor: formData.gender && formData.address && formData.cost && formData.availableCount && formData.lat && formData.lng ? "pointer" : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
-                      boxShadow: formData.gender && formData.address && formData.cost && formData.availableCount ? "0 2px 12px rgba(0,9,87,0.2)" : "none",
+                      boxShadow: formData.gender && formData.address && formData.cost && formData.availableCount && formData.lat && formData.lng ? "0 2px 12px rgba(0,9,87,0.2)" : "none",
                     }}
                   >
                     Next
