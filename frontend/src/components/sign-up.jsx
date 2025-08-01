@@ -460,7 +460,7 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy via-ash to-white">
       <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-2xl font-sans transition-all border border-ash">
         <h2 className="text-center text-2xl font-bold text-navy mb-6">Host Sign Up</h2>
         <ProgressIndicator />
@@ -472,7 +472,7 @@ function SignUp() {
                 type="button"
                 onClick={handlePrevious}
                 disabled={isSubmitted}
-                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${isSubmitted ? 'bg-ash text-navy cursor-not-allowed opacity-60' : 'bg-ash text-navy hover:bg-navy hover:text-white cursor-pointer'}`}
+                className={`w-[48%] py-3 rounded-lg text-base font-bold transition bg-white text-navy border-2 border-navy hover:bg-navy hover:text-white cursor-pointer ${isSubmitted ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 Previous
               </button>
@@ -481,7 +481,7 @@ function SignUp() {
               <button
                 type="button"
                 onClick={handleNext}
-                className={`w-full py-3 rounded-lg text-base font-bold transition bg-navy text-white hover:bg-ash hover:text-navy ${currentStep > 1 ? 'ml-2 w-[48%]' : ''}`}
+                className="w-full py-3 bg-navy text-white rounded-lg text-base font-bold cursor-pointer border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition ml-2"
               >
                 Next
               </button>
@@ -489,7 +489,7 @@ function SignUp() {
               <button
                 type="submit"
                 disabled={uploading || isSubmitted}
-                className={`w-[48%] py-3 rounded-lg text-base font-bold transition ${uploading || isSubmitted ? 'bg-ash text-navy cursor-not-allowed opacity-60' : 'bg-navy text-white hover:bg-ash hover:text-navy cursor-pointer ml-2'}`}
+                className={`w-full py-3 bg-navy text-white rounded-lg text-base font-bold cursor-pointer border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition ml-2 ${uploading || isSubmitted ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 {uploading
                   ? "Uploading..."
