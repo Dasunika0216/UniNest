@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import BoardingMapView from "../components/BoardingMapView";
 
 const FindBoarding = () => {
   const [type, setType] = useState("Annex");
@@ -261,6 +262,9 @@ const FindBoarding = () => {
 
           {/* Boardings grid */}
           <div className="flex-1">
+            {/* Map View */}
+            <BoardingMapView boardings={boardings} />
+            
             {/* Applied Filters Summary */}
             {(gender || costRange || facilities.length > 0) && (
               <div className="mb-4 p-3 bg-navy/5 rounded-lg">
@@ -390,6 +394,18 @@ const FindBoarding = () => {
                           {boarding.gender}
                         </span>
                       </div>
+
+                      {/* Location Indicator */}
+                      {boarding.lat && boarding.lng && (
+                        <div className="flex items-center mb-3">
+                          <span className="text-sm text-ash">
+                            📍 Location: {" "}
+                          </span>
+                          <span className="text-sm font-semibold text-green-600 ml-1">
+                            Available
+                          </span>
+                        </div>
+                      )}
 
                       {/* Facilities */}
                       {boarding.facilities &&

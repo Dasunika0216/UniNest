@@ -287,15 +287,17 @@ const AddBoarding = () => {
               className="responsive-modal"
             style={{
                 background: "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)",
-                padding: "2.8rem 2.8rem 2.2rem 2.8rem",
+                padding: "2rem 2rem 1.5rem 2rem", // Reduced bottom padding
                 width: "99%",
-                maxWidth: "1100px",
+                maxWidth: "1000px", // Reduced from 1100px
+                maxHeight: "90vh", // Add max height
+                overflowY: "auto", // Add scrolling
               display: "flex",
               flexDirection: "column",
-              gap: "1.2rem",
+              gap: "1rem", // Reduced gap
                 boxShadow: "0 12px 48px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.08)",
                 border: "1.5px solid #f3e7c9",
-                borderRadius: "38px",
+                borderRadius: "24px", // Reduced radius
                 fontFamily: "'Segoe UI', Arial, sans-serif",
             }}
           >
