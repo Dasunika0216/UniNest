@@ -76,9 +76,9 @@ const ViewBoarding = () => {
 
   if (!boarding) {
     return (
-      <div className="min-h-screen bg-[#fdfde3]">
+      <div className="min-h-screen bg-white">
         <Navbar />
-        <div className="p-8 text-center text-gray-500">
+        <div className="p-8 text-center text-ash">
           No boarding details found.
         </div>
         <Footer />
@@ -93,115 +93,111 @@ const ViewBoarding = () => {
   const extraCount = images.length - 3;
 
   return (
-    <div className="min-h-screen bg-[#fdfde3]">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <div className="p-8 max-w-5xl mx-auto">
-        {/* Images display */}
-        {images.length === 0 ? (
-          <div className="flex justify-center mb-6">
-            <div className="relative w-full max-w-2xl aspect-[4/3] rounded overflow-hidden bg-gray-200">
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
-                No Image
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-4 mb-6">
-            {/* Main large image */}
-            <div className="relative flex-1 min-w-0 aspect-[4/3] rounded overflow-hidden bg-gray-200 cursor-pointer">
-              <img
-                src={mainImage}
-                alt="Main Boarding"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                onClick={() =>
-                  openImageViewer(
-                    images,
-                    `${boarding.type} - ${boarding.address}`
-                  )
-                }
-              />
-            </div>
-
-            {/* Side images and plus sign */}
-            <div className="grid grid-cols-1 gap-2 w-48 min-w-48">
-              {sideImages.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-square rounded overflow-hidden bg-gray-200 cursor-pointer"
-                >
-                  <img
-                    src={img}
-                    alt={`Boarding ${idx + 2}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    onClick={() =>
-                      openImageViewer(
-                        images,
-                        `${boarding.type} - ${boarding.address}`
-                      )
-                    }
-                  />
-                </div>
-              ))}
-
-              {/* Plus sign for more images */}
-              {extraCount > 0 && (
-                <div
-                  className="relative aspect-square rounded overflow-hidden bg-gray-200 cursor-pointer border-2 border-dashed border-gray-400 hover:border-gray-600 transition-colors duration-300"
+      <div className="p-4 md:p-8 max-w-5xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl border border-ash p-4 md:p-8 flex flex-col lg:flex-row gap-8">
+          {/* Images Section */}
+          <div className="flex-1 flex flex-col gap-4">
+            {/* Main Image */}
+            <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-ash flex items-center justify-center cursor-pointer group">
+              {images.length > 0 ? (
+                <img
+                  src={mainImage}
+                  alt="Main Boarding"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   onClick={() =>
                     openImageViewer(
                       images,
                       `${boarding.type} - ${boarding.address}`
                     )
                   }
-                >
-                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 hover:text-gray-800">
-                    <div className="text-3xl font-bold mb-1">+</div>
-                    <div className="text-sm font-medium">{extraCount}</div>
-                    <div className="text-xs text-gray-500">More</div>
-                  </div>
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center w-full h-full text-ash/60">
+                  <svg className="mx-auto h-16 w-16 text-ash/30 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  <span className="text-base">No Image</span>
                 </div>
               )}
             </div>
+            {/* Thumbnails */}
+            {images.length > 1 && (
+              <div className="flex gap-2 mt-2">
+                {images.slice(0, 4).map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-20 h-16 rounded-lg overflow-hidden border-2 ${idx === 0 ? 'border-navy' : 'border-ash'} cursor-pointer hover:border-navy transition`}
+                    onClick={() =>
+                      openImageViewer(
+                        images,
+                        `${boarding.type} - ${boarding.address}`
+                      )
+                    }
+                  >
+                    <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+                {images.length > 4 && (
+                  <div className="w-20 h-16 rounded-lg overflow-hidden border-2 border-ash flex items-center justify-center text-navy bg-ash cursor-pointer hover:border-navy transition font-bold text-lg"
+                    onClick={() =>
+                      openImageViewer(
+                        images,
+                        `${boarding.type} - ${boarding.address}`
+                      )
+                    }
+                  >+{images.length - 4}</div>
+                )}
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Address */}
-        <h2 className="text-2xl font-bold mb-2">{boarding.address}</h2>
-        
-        {/* Map Component */}
-        <ViewBoardingMap 
-          lat={boarding.lat} 
-          lng={boarding.lng} 
-          address={boarding.address} 
-        />
-        
-        {/* Description */}
-        <p className="text-gray-700 mb-4">{boarding.description}</p>
-        {/* Cost */}
-        <div className="mb-2">
-          <span className="font-semibold">Cost:</span> Rs. {boarding.cost.toLocaleString()}/month
-        </div>
-        {/* Available Count */}
-        <div className="mb-2">
-          <span className="font-semibold">Available:</span>{" "}
-          {boarding.availableCount}{" "}
-          {boarding.availableCount === 1 ? "bed" : "beds"}
-        </div>
-        {/* Gender */}
-        <div className="mb-2">
-          <span className="font-semibold">For:</span> {boarding.gender}
-        </div>
-        {/* Facilities */}
-        {boarding.facilities && boarding.facilities.length > 0 && (
-          <div className="mb-2">
-            <span className="font-semibold">Facilities:</span>
-            <ul className="list-disc list-inside ml-4">
-              {boarding.facilities.map((facility, idx) => (
-                <li key={idx}>{facility}</li>
-              ))}
-            </ul>
+          {/* Details Section */}
+          <div className="flex-1 flex flex-col gap-4">
+            {/* Type badge and address */}
+            <div className="flex items-center gap-3 mb-2">
+              <span className="bg-navy text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow">{boarding.type}</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy break-words">{boarding.address}</h2>
+            </div>
+            {/* Cost, Available, Gender */}
+            <div className="flex flex-wrap gap-4 mb-2">
+              <div className="flex items-center gap-2 bg-ash/30 px-3 py-2 rounded-lg">
+                <span className="font-semibold text-navy">Cost:</span>
+                <span className="text-navy">Rs. {boarding.cost.toLocaleString()}/month</span>
+              </div>
+              <div className="flex items-center gap-2 bg-ash/30 px-3 py-2 rounded-lg">
+                <span className="font-semibold text-navy">Available:</span>
+                <span className="text-navy">{boarding.availableCount} {boarding.availableCount === 1 ? 'bed' : 'beds'}</span>
+              </div>
+              <div className="flex items-center gap-2 bg-ash/30 px-3 py-2 rounded-lg">
+                <span className="font-semibold text-navy">For:</span>
+                <span className="text-navy">{boarding.gender}</span>
+              </div>
+            </div>
+            {/* Facilities */}
+            {boarding.facilities && boarding.facilities.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {boarding.facilities.map((facility, idx) => (
+                  <span key={idx} className="bg-navy/10 text-navy px-3 py-1 rounded-full text-xs font-medium shadow-sm">{facility}</span>
+                ))}
+              </div>
+            )}
+            {/* Description */}
+            <div className="bg-ash/20 rounded-xl p-4 text-navy text-base shadow-inner">
+              {boarding.description}
+            </div>
           </div>
-        )}
+        </div>
+        {/* Map Section */}
+        <div className="mt-8">
+          <div className="bg-white rounded-2xl shadow border border-ash p-4">
+            <h3 className="text-lg font-semibold text-navy mb-2">Location</h3>
+            <ViewBoardingMap 
+              lat={boarding.lat} 
+              lng={boarding.lng} 
+              address={boarding.address} 
+            />
+          </div>
+        </div>
       </div>
       <Footer />
 
@@ -374,7 +370,7 @@ const ViewBoarding = () => {
                       cursor: "pointer",
                       border:
                         index === imageViewer.currentIndex
-                          ? "2px solid #3498db"
+                          ? "2px solid #000957"
                           : "2px solid transparent",
                       opacity: index === imageViewer.currentIndex ? 1 : 0.7,
                     }}
