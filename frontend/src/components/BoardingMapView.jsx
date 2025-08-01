@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const libraries = [];
 const mapContainerStyle = {
@@ -121,23 +121,13 @@ const BoardingMapView = ({ boardings }) => {
                 clickableIcons: false,
               }}
             >
-              {/* Render markers for each boarding */}
-              {validBoardings.map((boarding, index) => (
-                <div
+              {/* Render proper Google Maps markers for each boarding */}
+              {validBoardings.map((boarding) => (
+                <Marker
                   key={boarding._id}
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: "#e74c3c",
-                    border: "2px solid white",
-                    borderRadius: "50%",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
-                    zIndex: 1,
-                    cursor: "pointer"
+                  position={{
+                    lat: parseFloat(boarding.lat),
+                    lng: parseFloat(boarding.lng)
                   }}
                   title={`${boarding.type} - ${boarding.address} - Rs. ${boarding.cost}/month`}
                 />

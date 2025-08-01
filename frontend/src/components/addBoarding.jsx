@@ -7,6 +7,8 @@ import GoogleMapPicker from "./GoogleMapPicker"; // Import the GoogleMapPicker c
 const AddBoarding = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [tempLocation, setTempLocation] = useState({ lat: null, lng: null });
   const [type, setType] = useState("");
   const [step, setStep] = useState(1); // 1: type select, 2: form
   const [formData, setFormData] = useState({
@@ -40,6 +42,8 @@ const AddBoarding = () => {
       setImageFiles([]);
       setType("");
       setStep(1);
+      setShowMapModal(false);
+      setTempLocation({ lat: null, lng: null });
     }
     setShowForm(!showForm);
   };
@@ -58,6 +62,8 @@ const AddBoarding = () => {
       lng: null,
     });
     setImageFiles([]);
+    setShowMapModal(false);
+    setTempLocation({ lat: null, lng: null });
   };
 
   const handleChange = (e) => {
@@ -70,6 +76,28 @@ const AddBoarding = () => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const openMapModal = () => {
+    setTempLocation({ lat: formData.lat, lng: formData.lng });
+    setShowMapModal(true);
+  };
+
+  const closeMapModal = () => {
+    setShowMapModal(false);
+    setTempLocation({ lat: null, lng: null });
+  };
+
+  const confirmLocation = () => {
+    if (tempLocation.lat && tempLocation.lng) {
+      setFormData(prev => ({ ...prev, lat: tempLocation.lat, lng: tempLocation.lng }));
+      toast.success("Location set successfully!");
+    }
+    setShowMapModal(false);
+  };
+
+  const handleLocationChange = (lat, lng) => {
+    setTempLocation({ lat, lng });
   };
 
   const uploadImagesToCloudinary = async () => {
@@ -442,13 +470,48 @@ const AddBoarding = () => {
                     marginBottom: "1.2rem",
                   }}
                 />
-                {/* Google Map Picker */}
-                <div style={{ height: 300, marginBottom: 16 }}>
-                  <GoogleMapPicker
-                    lat={formData.lat}
-                    lng={formData.lng}
-                    setLatLng={(lat, lng) => setFormData(prev => ({ ...prev, lat, lng }))}
-                  />
+                {/* Location Selection */}
+                <div style={{ marginBottom: "1.2rem" }}>
+                  <button
+                    type="button"
+                    onClick={openMapModal}
+                    style={{
+                      padding: "0.8rem",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      fontSize: "1rem",
+                      outline: "none",
+                      width: "100%",
+                      backgroundColor: "#f8f9fa",
+                      color: "#495057",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#e9ecef")}
+                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#f8f9fa")}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    {formData.lat && formData.lng ? "Change Location on Map" : "Set Location on Map"}
+                  </button>
+                  {formData.lat && formData.lng && (
+                    <div style={{
+                      marginTop: "0.5rem",
+                      padding: "0.5rem",
+                      backgroundColor: "#d4edda",
+                      border: "1px solid #c3e6cb",
+                      borderRadius: "4px",
+                      fontSize: "0.8rem",
+                      color: "#155724"
+                    }}>
+                      ✅ Location set: {formData.lat.toFixed(6)}, {formData.lng.toFixed(6)}
+                    </div>
+                  )}
                 </div>
                 
                  <select
@@ -793,6 +856,146 @@ const AddBoarding = () => {
           </form>
         </div>
         </>
+      )}
+
+      {/* Map Selection Modal */}
+      {showMapModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999 // <-- ensure this is very high
+        }}>
+          <div style={{
+            backgroundColor: "white",
+            borderRadius: "12px",
+            padding: "2rem",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            width: "600px",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
+            position: "relative"
+          }}>
+            {/* Close button */}
+            <button
+              onClick={closeMapModal}
+              style={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+                background: "none",
+                border: "none",
+                fontSize: "1.5rem",
+                cursor: "pointer",
+                color: "#666",
+                width: "30px",
+                height: "30px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                transition: "background-color 0.2s"
+              }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#f0f0f0")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+            >
+              ×
+            </button>
+
+            {/* Modal Header */}
+            <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+              <h2 style={{ 
+                margin: 0, 
+                fontSize: "1.5rem", 
+                fontWeight: "600", 
+                color: "#333",
+                marginBottom: "0.5rem"
+              }}>
+                Select Location on Map
+              </h2>
+              <p style={{ 
+                margin: 0, 
+                fontSize: "0.9rem", 
+                color: "#666" 
+              }}>
+                Click anywhere on the map to set your boarding location
+              </p>
+            </div>
+
+            {/* Map Container */}
+            <div style={{ 
+              height: "400px", 
+              marginBottom: "1.5rem",
+              borderRadius: "8px",
+              overflow: "hidden"
+            }}>
+              <GoogleMapPicker
+                lat={tempLocation.lat}
+                lng={tempLocation.lng}
+                setLatLng={handleLocationChange}
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ 
+              display: "flex", 
+              justifyContent: "center", 
+              gap: "1rem" 
+            }}>
+              <button
+                onClick={closeMapModal}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  backgroundColor: "#6c757d",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: "500",
+                  transition: "background-color 0.2s"
+                }}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = "#5a6268")}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = "#6c757d")}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmLocation}
+                disabled={!tempLocation.lat || !tempLocation.lng}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  backgroundColor: tempLocation.lat && tempLocation.lng ? "#28a745" : "#6c757d",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: tempLocation.lat && tempLocation.lng ? "pointer" : "not-allowed",
+                  fontSize: "0.9rem",
+                  fontWeight: "500",
+                  transition: "background-color 0.2s"
+                }}
+                onMouseEnter={(e) => {
+                  if (tempLocation.lat && tempLocation.lng) {
+                    e.target.style.backgroundColor = "#218838";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (tempLocation.lat && tempLocation.lng) {
+                    e.target.style.backgroundColor = "#28a745";
+                  }
+                }}
+              >
+                Confirm Location
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
