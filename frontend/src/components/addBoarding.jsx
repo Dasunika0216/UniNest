@@ -190,8 +190,8 @@ const AddBoarding = () => {
         onClick={toggleForm}
         style={{
           padding: "0.6rem 1.2rem",
-          backgroundColor: isHovered ? "#c5ab6f" : "#d4bf95",
-          color: "black",
+          backgroundColor: "#000957", // Always navy blue
+          color: "#ffffff",
           border: "none",
           borderRadius: "9999px",
           cursor: "pointer",
@@ -200,8 +200,8 @@ const AddBoarding = () => {
           transition:
             "background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
           boxShadow: isHovered
-            ? "0px 4px 12px rgba(0, 0, 0, 0.2)"
-            : "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            ? "0px 4px 12px rgba(0, 9, 87, 0.3)"
+            : "0px 4px 8px rgba(0, 9, 87, 0.2)",
           transform: isHovered ? "scale(1.05)" : "scale(1)",
         }}
         onMouseEnter={() => setIsHovered(true)}
@@ -220,8 +220,8 @@ const AddBoarding = () => {
                 padding: 1.1rem 0.3rem 1.1rem 0.3rem !important;
                 border-radius: 18px !important;
                 margin: 1.2rem !important;
-                box-shadow: 0 6px 32px 0 rgba(180,160,80,0.13), 0 1px 4px 0 rgba(0,0,0,0.10) !important;
-                background: linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%) !important;
+                box-shadow: 0 6px 32px 0 rgba(0,9,87,0.15), 0 1px 4px 0 rgba(0,0,0,0.10) !important;
+                background: linear-gradient(135deg, #ffffff 0%, #f7f8fa 100%) !important;
               }
               .responsive-card-row {
                 flex-direction: column !important;
@@ -234,9 +234,9 @@ const AddBoarding = () => {
                 min-height: 120px !important;
                 padding: 0.8rem 0.5rem 0.8rem 0.5rem !important;
                 border-radius: 22px !important;
-                box-shadow: 0 2px 12px rgba(180,160,80,0.10), 0 1px 4px rgba(0,0,0,0.08) !important;
+                box-shadow: 0 2px 12px rgba(0,9,87,0.12), 0 1px 4px rgba(0,0,0,0.08) !important;
                 margin-bottom: 0.7rem !important;
-                border: 1.5px solid #e0e0e0 !important;
+                border: 1.5px solid #B0B3B8 !important;
               }
               .responsive-card-row img {
                 width: 60px !important;
@@ -273,7 +273,7 @@ const AddBoarding = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-              backgroundColor: "rgba(220, 220, 220, 0.25)",
+              backgroundColor: "rgba(176, 179, 184, 0.25)",
               backdropFilter: "blur(6px)",
               WebkitBackdropFilter: "blur(6px)",
             display: "flex",
@@ -286,7 +286,7 @@ const AddBoarding = () => {
             onSubmit={handleSubmit}
               className="responsive-modal"
             style={{
-                background: "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)",
+                background: "linear-gradient(135deg, #ffffff 0%, #f7f8fa 100%)",
                 padding: "2rem 2rem 1.5rem 2rem", // Reduced bottom padding
                 width: "99%",
                 maxWidth: "1000px", // Reduced from 1100px
@@ -295,15 +295,15 @@ const AddBoarding = () => {
               display: "flex",
               flexDirection: "column",
               gap: "1rem", // Reduced gap
-                boxShadow: "0 12px 48px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.08)",
-                border: "1.5px solid #f3e7c9",
+                boxShadow: "0 12px 48px 0 rgba(0,9,87,0.2), 0 2px 8px 0 rgba(0,0,0,0.08)",
+                border: "1.5px solid #B0B3B8",
                 borderRadius: "24px", // Reduced radius
                 fontFamily: "'Segoe UI', Arial, sans-serif",
             }}
           >
               {step === 1 && (
                 <>
-                  <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
+                  <h2 style={{ textAlign: "center", color: "#000957", fontWeight: 700, fontSize: "2rem", letterSpacing: "-1px" }}>
                     What kind of place will you host?
             </h2>
 
@@ -334,16 +334,16 @@ const AddBoarding = () => {
                             minWidth: "210px",
                             maxWidth: "250px",
                             minHeight: "320px",
-                            background: isSelected ? "#fdf7ea" : "#f7f8fa",
-                            border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
+                            background: isSelected ? "#f0f2f5" : "#f7f8fa",
+                            border: isSelected ? "3px solid #000957" : "2px solid #B0B3B8",
                             borderRadius: "22px",
-                            color: "#222",
+                            color: "#000957",
                             fontWeight: 700,
                             fontSize: "1.18rem",
-                            boxShadow: isSelected ? "0 8px 32px rgba(212,191,149,0.13)" : "0 2px 12px rgba(0,0,0,0.06)",
+                            boxShadow: isSelected ? "0 8px 32px rgba(0,9,87,0.15)" : "0 2px 12px rgba(0,0,0,0.06)",
                             cursor: "pointer",
                             transition: "all 0.22s cubic-bezier(.4,2,.6,1)",
-                            outline: isSelected ? "2px solid #d4bf95" : "none",
+                            outline: isSelected ? "2px solid #000957" : "none",
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
@@ -360,7 +360,7 @@ const AddBoarding = () => {
                             if (!isSelected) e.currentTarget.style.transform = "scale(1)";
                           }}
                         >
-                          <img src={option.img} alt={option.name} style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "50%", boxShadow: "0 4px 18px rgba(0,0,0,0.13)", marginBottom: "0.7rem", border: isSelected ? "3px solid #d4bf95" : "2px solid #e0e0e0", background: "#fff" }} />
+                          <img src={option.img} alt={option.name} style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "50%", boxShadow: "0 4px 18px rgba(0,0,0,0.13)", marginBottom: "0.7rem", border: isSelected ? "3px solid #000957" : "2px solid #B0B3B8", background: "#ffffff" }} />
                           <span style={{ fontWeight: 700, fontSize: "1.18rem", letterSpacing: "-0.5px" }}>{option.name}</span>
                         </button>
                       );
@@ -380,8 +380,8 @@ const AddBoarding = () => {
                       onClick={() => setStep(2)}
                       style={{
                         padding: "0.9rem 3.2rem",
-                        backgroundColor: type ? "#d4bf95" : "#e0e0e0",
-                        color: type ? "#222" : "#888",
+                        backgroundColor: type ? "#000957" : "#B0B3B8",
+                        color: "#ffffff",
                         border: "none",
                         borderRadius: "9999px",
                         fontWeight: 700,
@@ -389,7 +389,7 @@ const AddBoarding = () => {
                         cursor: type ? "pointer" : "not-allowed",
                         transition: "all 0.2s",
                         minWidth: "180px",
-                        boxShadow: type ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
+                        boxShadow: type ? "0 2px 12px rgba(0,9,87,0.2)" : "none",
                       }}
                     >
                       Next
@@ -403,8 +403,8 @@ const AddBoarding = () => {
                       }}
                       style={{
                         padding: "0.9rem 3.2rem",
-                        backgroundColor: "#bdc3c7",
-                        color: "#2c3e50",
+                        backgroundColor: "#B0B3B8",
+                        color: "#000957",
                         border: "none",
                         borderRadius: "9999px",
                         fontWeight: 700,
@@ -422,7 +422,7 @@ const AddBoarding = () => {
               )}
               {step === 2 && (
               <>
-                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                <h2 style={{ textAlign: "center", color: "#000957", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
                   Enter Boarding Details
                 </h2>
                 <input
@@ -435,7 +435,7 @@ const AddBoarding = () => {
                   style={{
                     padding: "0.8rem",
                     borderRadius: "8px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #B0B3B8",
                     fontSize: "1rem",
                     outline: "none",
                     width: "100%",
@@ -443,13 +443,14 @@ const AddBoarding = () => {
                   }}
                 />
                 {/* Google Map Picker */}
-                {/* <div style={{ height: 300, marginBottom: 16 }}>
+                <div style={{ height: 300, marginBottom: 16 }}>
                   <GoogleMapPicker
                     lat={formData.lat}
                     lng={formData.lng}
                     setLatLng={(lat, lng) => setFormData(prev => ({ ...prev, lat, lng }))}
                   />
-                </div> */}
+                </div>
+                
                  <select
                   name="gender"
                   value={formData.gender}
@@ -458,7 +459,7 @@ const AddBoarding = () => {
                   style={{
                     padding: "0.8rem",
                     borderRadius: "8px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #B0B3B8",
                     fontSize: "1rem",
                     outline: "none",
                     width: "100%",
@@ -480,7 +481,7 @@ const AddBoarding = () => {
                   style={{
                     padding: "0.8rem",
                     borderRadius: "8px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #B0B3B8",
                     fontSize: "1rem",
                     outline: "none",
                     width: "100%",
@@ -498,7 +499,7 @@ const AddBoarding = () => {
                   style={{
                     padding: "0.8rem",
                     borderRadius: "8px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #B0B3B8",
                     fontSize: "1rem",
                     outline: "none",
                     width: "100%",
@@ -511,8 +512,8 @@ const AddBoarding = () => {
                     onClick={() => setStep(1)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: "#bdc3c7",
-                      color: "#2c3e50",
+                      backgroundColor: "#B0B3B8",
+                      color: "#000957",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -531,8 +532,8 @@ const AddBoarding = () => {
                     disabled={!(formData.gender && formData.address && formData.cost && formData.availableCount)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount ? "#d4bf95" : "#e0e0e0",
-                      color: formData.gender && formData.address && formData.cost && formData.availableCount ? "#222" : "#888",
+                      backgroundColor: formData.gender && formData.address && formData.cost && formData.availableCount ? "#000957" : "#B0B3B8",
+                      color: "#ffffff",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -540,7 +541,7 @@ const AddBoarding = () => {
                       cursor: formData.gender && formData.address && formData.cost && formData.availableCount ? "pointer" : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
-                      boxShadow: formData.gender && formData.address && formData.cost && formData.availableCount ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
+                      boxShadow: formData.gender && formData.address && formData.cost && formData.availableCount ? "0 2px 12px rgba(0,9,87,0.2)" : "none",
                     }}
                   >
                     Next
@@ -550,7 +551,7 @@ const AddBoarding = () => {
             )}
             {step === 3 && (
               <>
-                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                <h2 style={{ textAlign: "center", color: "#000957", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
                   Add facilities available at your place
                 </h2>
                 <div
@@ -580,16 +581,16 @@ const AddBoarding = () => {
                           justifyContent: "center",
                           padding: "1.5rem 0.7rem 1.1rem 0.7rem",
                           borderRadius: "22px",
-                          border: selected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
+                          border: selected ? "3px solid #000957" : "2px solid #B0B3B8",
                           background: selected
-                            ? "linear-gradient(135deg, #fffbe6 0%, #f7f8fa 100%)"
-                            : "linear-gradient(135deg, #f7f8fa 0%, #fff 100%)",
+                            ? "linear-gradient(135deg, #f0f2f5 0%, #ffffff 100%)"
+                            : "linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%)",
                           boxShadow: selected
-                            ? "0 8px 32px 0 rgba(180,160,80,0.13), 0 2px 8px 0 rgba(0,0,0,0.08)"
+                            ? "0 8px 32px 0 rgba(0,9,87,0.15), 0 2px 8px 0 rgba(0,0,0,0.08)"
                             : "0 2px 8px 0 rgba(0,0,0,0.06)",
                           cursor: "pointer",
                           transition: "all 0.22s cubic-bezier(.4,2,.6,1)",
-                          outline: selected ? "2px solid #d4bf95" : "none",
+                          outline: selected ? "2px solid #000957" : "none",
                           minHeight: "220px",
                           minWidth: "140px",
                           maxWidth: "210px",
@@ -597,12 +598,12 @@ const AddBoarding = () => {
                         }}
                         onMouseEnter={e => {
                           e.currentTarget.style.transform = "scale(1.07)";
-                          e.currentTarget.style.boxShadow = "0 12px 32px 0 rgba(180,160,80,0.18), 0 2px 8px 0 rgba(0,0,0,0.10)";
+                          e.currentTarget.style.boxShadow = "0 12px 32px 0 rgba(0,9,87,0.2), 0 2px 8px 0 rgba(0,0,0,0.10)";
                         }}
                         onMouseLeave={e => {
                           e.currentTarget.style.transform = "scale(1)";
                           e.currentTarget.style.boxShadow = selected
-                            ? "0 8px 32px 0 rgba(180,160,80,0.13), 0 2px 8px 0 rgba(0,0,0,0.08)"
+                            ? "0 8px 32px 0 rgba(0,9,87,0.15), 0 2px 8px 0 rgba(0,0,0,0.08)"
                             : "0 2px 8px 0 rgba(0,0,0,0.06)";
                         }}
                       >
@@ -615,12 +616,12 @@ const AddBoarding = () => {
                             objectFit: "cover",
                             borderRadius: "18px",
                             marginBottom: "0.9rem",
-                            border: selected ? "3px solid #d4bf95" : "2px solid #e0e0e0",
-                            background: "#fff",
-                            boxShadow: selected ? "0 2px 12px #d4bf95" : "0 1px 4px rgba(0,0,0,0.07)",
+                            border: selected ? "3px solid #000957" : "2px solid #B0B3B8",
+                            background: "#ffffff",
+                            boxShadow: selected ? "0 2px 12px rgba(0,9,87,0.2)" : "0 1px 4px rgba(0,0,0,0.07)",
                           }}
                         />
-                        <span style={{ fontWeight: 600, fontSize: "1.13rem", color: selected ? "#bfae7f" : "#222", marginTop: "0.3rem" }}>{facility.label}</span>
+                        <span style={{ fontWeight: 600, fontSize: "1.13rem", color: selected ? "#000957" : "#000957", marginTop: "0.3rem" }}>{facility.label}</span>
                       </button>
                     );
                   })}
@@ -631,8 +632,8 @@ const AddBoarding = () => {
                     onClick={() => setStep(2)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: "#bdc3c7",
-                      color: "#2c3e50",
+                      backgroundColor: "#B0B3B8",
+                      color: "#000957",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -650,8 +651,8 @@ const AddBoarding = () => {
                     onClick={() => setStep(4)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: "#d4bf95",
-                      color: "#222",
+                      backgroundColor: "#000957",
+                      color: "#ffffff",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -659,7 +660,7 @@ const AddBoarding = () => {
                       cursor: "pointer",
                       transition: "all 0.2s",
                       minWidth: "180px",
-                      boxShadow: "0 2px 12px rgba(212,191,149,0.13)",
+                      boxShadow: "0 2px 12px rgba(0,9,87,0.2)",
                     }}
                   >
                     Next
@@ -669,7 +670,7 @@ const AddBoarding = () => {
             )}
             {step === 4 && (
               <>
-                <h2 style={{ textAlign: "center", color: "#333", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
+                <h2 style={{ textAlign: "center", color: "#000957", fontWeight: 700, fontSize: "1.3rem", letterSpacing: "-1px", marginBottom: "1.2rem" }}>
                   Add a description and images
                 </h2>
                 <textarea
@@ -682,7 +683,7 @@ const AddBoarding = () => {
                   style={{
                     padding: "0.9rem",
                     borderRadius: "10px",
-                    border: "1px solid #ccc",
+                    border: "1px solid #B0B3B8",
                     fontSize: "1.08rem",
                     outline: "none",
                     width: "100%",
@@ -745,8 +746,8 @@ const AddBoarding = () => {
                     onClick={() => setStep(3)}
                     style={{
                       padding: "0.9rem 3.2rem",
-                      backgroundColor: "#bdc3c7",
-                      color: "#2c3e50",
+                      backgroundColor: "#B0B3B8",
+                      color: "#000957",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -765,15 +766,11 @@ const AddBoarding = () => {
                     style={{
                       padding: "0.9rem 3.2rem",
                       backgroundColor: uploading
-                        ? "#e0e0e0"
+                        ? "#B0B3B8"
                         : formData.description && imageFiles.length > 0
-                        ? "#d4bf95"
-                        : "#e0e0e0",
-                      color: uploading
-                        ? "#888"
-                        : formData.description && imageFiles.length > 0
-                        ? "#222"
-                        : "#888",
+                        ? "#000957"
+                        : "#B0B3B8",
+                      color: "#ffffff",
                       border: "none",
                       borderRadius: "9999px",
                       fontWeight: 700,
@@ -785,7 +782,7 @@ const AddBoarding = () => {
                         : "not-allowed",
                       transition: "all 0.2s",
                       minWidth: "180px",
-                      boxShadow: formData.description && imageFiles.length > 0 ? "0 2px 12px rgba(212,191,149,0.13)" : "none",
+                      boxShadow: formData.description && imageFiles.length > 0 ? "0 2px 12px rgba(0,9,87,0.2)" : "none",
                     }}
                   >
                     {uploading ? "Submitting..." : "Submit"}
@@ -804,7 +801,7 @@ const AddBoarding = () => {
 const inputStyle = {
   padding: "0.8rem",
   borderRadius: "8px",
-  border: "1px solid #ccc",
+  border: "1px solid #B0B3B8",
   fontSize: "1rem",
   outline: "none",
   width: "100%",
@@ -812,8 +809,8 @@ const inputStyle = {
 
 const submitButtonStyle = {
   padding: "0.6rem 1.2rem",
-  backgroundColor: "#d4bf95",
-  color: "#000",
+  backgroundColor: "#000957",
+  color: "#ffffff",
   border: "none",
   borderRadius: "8px",
   cursor: "pointer",
@@ -824,8 +821,8 @@ const submitButtonStyle = {
 
 const cancelButtonStyle = {
   padding: "0.6rem 1.2rem",
-  backgroundColor: "#bdc3c7",
-  color: "#2c3e50",
+  backgroundColor: "#B0B3B8",
+  color: "#000957",
   border: "none",
   borderRadius: "8px",
   cursor: "pointer",
