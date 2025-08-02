@@ -33,6 +33,19 @@ const addBoarding = async (req, res) => {
     // Destructuring the request body for boarding details
     const { address, gender, cost, type, availableCount, description } = req.body;
 
+    // --- ADD THIS: extract and convert lat/lng ---
+    let lat = req.body.lat;
+    let lng = req.body.lng;
+    if (lat !== undefined) lat = Number(lat);
+    if (lng !== undefined) lng = Number(lng);
+
+    // Validate gender - only allow "Girls" or "Boys"
+    if (!gender || (gender !== "Girls" && gender !== "Boys")) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Gender must be either 'Girls' or 'Boys'" });
+    }
+
     // Handle facilities as array
     let facilities = req.body.facilities;
     if (typeof facilities === 'string') {
@@ -65,6 +78,8 @@ const addBoarding = async (req, res) => {
       description,
       facilities,
       images,
+      lat,   // <-- ADD THIS
+      lng,   // <-- ADD THIS
     };
 
     // Create and save the new boarding instance to the database
@@ -142,7 +157,7 @@ const deleteBoarding = async (req, res) => {
 const updateBoarding = async (req, res) => {
   try {
     const { id } = req.params;
-    const { address, cost, type, availableCount, description, facilities, removedImages, newImages } = req.body;
+    const { address, cost, type, availableCount, description, facilities, removedImages, newImages, lat, lng } = req.body;
 
     console.log("Update request for ID:", id);
     console.log("Request body:", req.body);
@@ -157,7 +172,7 @@ const updateBoarding = async (req, res) => {
 
     console.log("Found boarding:", boarding);
 
-    // Update basic fields
+    // Update basic fields (note: gender is not included as it shouldn't be changed)
     const updateData = {};
     if (address !== undefined) updateData.address = address;
     if (cost !== undefined) updateData.cost = cost;
@@ -172,6 +187,10 @@ const updateBoarding = async (req, res) => {
         updateData.facilities = facilities;
       }
     }
+    
+    // Handle location updates
+    if (lat !== undefined) updateData.lat = Number(lat);
+    if (lng !== undefined) updateData.lng = Number(lng);
 
     // Handle image updates - only if boarding has images or we're adding new ones
     if (boarding.images || (newImages && newImages.length > 0)) {
@@ -242,12 +261,33 @@ const filterBoarding = async (req, res) => {
       filter.facilities = { $all: facilityRegexes };
     }
 
-    //can add more filters if we want
+    //filter by gender if provided
+    if (req.query.gender) {
+      filter.gender = req.query.gender;
+    }
+
+    //filter by cost range if provided
+    if (req.query.minCost || req.query.maxCost) {
+      filter.cost = {};
+      if (req.query.minCost) {
+        const minCost = Number(req.query.minCost);
+        if (!isNaN(minCost)) {
+          filter.cost.$gte = minCost;
+        }
+      }
+      if (req.query.maxCost) {
+        const maxCost = Number(req.query.maxCost);
+        if (!isNaN(maxCost)) {
+          filter.cost.$lte = maxCost;
+        }
+      }
+    }
 
     const boardings = await boardingModel.find(filter);
 
     res.json({ success: true, data: boardings });
   } catch (error) {
+    console.error("Filter error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };

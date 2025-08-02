@@ -16,6 +16,8 @@ import ViewBoarding from "./pages/ViewBoarding.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+
 const App = () => {
   return (
     <Router>
@@ -27,6 +29,8 @@ const App = () => {
         <Route path="/view-boarding" element={<ViewBoarding />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
       <ToastContainer
         position="top-right"

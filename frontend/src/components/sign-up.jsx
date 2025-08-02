@@ -11,7 +11,7 @@ function SignUp() {
     password: "",
     confirmPassword: "",
     fullName: "",
-    phone: "",
+    phone: "+94", // Set default to +94
     boardingAddressForApproval: "",
     city: "",
     postalCode: "",
@@ -55,8 +55,8 @@ function SignUp() {
   };
 
   const validatePhone = (phone) => {
-    const phoneRegex = /^07\d{8}$/;
-    return phoneRegex.test(phone.replace(/[\s\-()]/g, ""));
+    // Accepts +94 followed by 7XXXXXXXX (no leading 0 after +94)
+    return /^\+947\d{8}$/.test(phone);
   };
 
   const validateStep = (step) => {
@@ -87,7 +87,7 @@ function SignUp() {
       if (!formData.phone) newErrors.phone = "Phone number is required";
       else if (!validatePhone(formData.phone))
         newErrors.phone =
-          "Please enter a valid Sri Lankan mobile number (07XXXXXXXX)";
+          "Please enter a valid Sri Lankan mobile number (+94 7XXXXXXXX, no leading 0 after +94)";
       if (!formData.city) newErrors.city = "City is required";
       if (!formData.postalCode)
         newErrors.postalCode = "Postal code is required";
@@ -234,77 +234,28 @@ function SignUp() {
 
   // Progress indicator component
   const ProgressIndicator = () => (
-    <div style={{ marginBottom: "2rem" }}>
-      <div
-        style={{
-          display: "flex",
-           alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "0.5rem",
-          position: "relative",
-        }}
-      >
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-2 relative">
         {[1, 2, 3, 4].map((step, index) => (
           <React.Fragment key={step}>
             <div
-              style={{
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                backgroundColor: currentStep >= step ? "#222" : "#ccc",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.9rem",
-                fontWeight: "bold",
-                zIndex: 2,
-                position: "relative",
-                transition: "all 0.3s ease",
-                boxShadow:
-                  currentStep >= step
-                    ? "0 2px 8px rgba(34, 34, 34, 0.3)"
-                    : "none",
-              }}
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold z-10 relative transition-all shadow ${currentStep >= step ? 'bg-navy text-white' : 'bg-ash text-navy'}`}
             >
               {currentStep > step ? "✓" : step}
             </div>
             {index < 3 && (
               <div
-                style={{
-                  flex: 1,
-                  height: "3px",
-                  backgroundColor: currentStep > step + 1 ? "#222" : "#e0e0e0",
-                  margin: "0 10px",
-                  borderRadius: "2px",
-                  transition: "background-color 0.3s ease",
-                }}
+                className={`flex-1 h-1 mx-2 rounded ${currentStep > step ? 'bg-navy' : 'bg-ash'}`}
               />
             )}
           </React.Fragment>
         ))}
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          fontSize: "0.8rem",
-          color: "#666",
-          fontWeight: "500",
-        }}
-      >
-        <span style={{ color: currentStep >= 1 ? "#222" : "#666" }}>
-          Account
-        </span>
-        <span style={{ color: currentStep >= 2 ? "#222" : "#666" }}>
-          Contact
-        </span>
-        <span style={{ color: currentStep >= 3 ? "#222" : "#666" }}>
-          Property
-        </span>
-        <span style={{ color: currentStep >= 4 ? "#222" : "#666" }}>
-          Upload
-        </span>
+      <div className="flex justify-between text-xs font-medium text-navy">
+        <span className={currentStep >= 1 ? "text-navy" : "text-ash"}>Account</span>
+        <span className={currentStep >= 2 ? "text-navy" : "text-ash"}>Contact</span>
+        <span className={currentStep >= 3 ? "text-navy" : "text-ash"}>Property</span>
+        <span className={currentStep >= 4 ? "text-navy" : "text-ash"}>Upload</span>
       </div>
     </div>
   );
@@ -315,9 +266,7 @@ function SignUp() {
       case 1:
         return (
           <>
-            <h3 style={{ marginBottom: "1rem", color: "#2d2d2d" }}>
-              Account Information
-            </h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Account Information</h3>
             <input
               type="text"
               name="username"
@@ -325,12 +274,9 @@ function SignUp() {
               value={formData.username}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.username ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.username ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.username && <p style={errorStyle}>{errors.username}</p>}
+            {errors.username && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.username}</p>}
 
             <input
               type="email"
@@ -339,12 +285,9 @@ function SignUp() {
               value={formData.email}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.email ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.email ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.email && <p style={errorStyle}>{errors.email}</p>}
+            {errors.email && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.email}</p>}
 
             <input
               type="password"
@@ -353,12 +296,9 @@ function SignUp() {
               value={formData.password}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.password ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.password ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.password && <p style={errorStyle}>{errors.password}</p>}
+            {errors.password && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.password}</p>}
 
             <input
               type="password"
@@ -367,23 +307,17 @@ function SignUp() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.confirmPassword ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.confirmPassword ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.confirmPassword && (
-              <p style={errorStyle}>{errors.confirmPassword}</p>
+              <p className="text-red-500 text-xs mb-2 -mt-3">{errors.confirmPassword}</p>
             )}
           </>
         );
-
       case 2:
         return (
           <>
-            <h3 style={{ marginBottom: "1rem", color: "#2d2d2d" }}>
-              Contact Information
-            </h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Contact Information</h3>
             <input
               type="text"
               name="fullName"
@@ -391,26 +325,26 @@ function SignUp() {
               value={formData.fullName}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.fullName ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.fullName ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.fullName && <p style={errorStyle}>{errors.fullName}</p>}
+            {errors.fullName && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.fullName}</p>}
 
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number (07XXXXXXXX)"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.phone ? "#e74c3c" : "#ccc",
-              }}
-            />
-            {errors.phone && <p style={errorStyle}>{errors.phone}</p>}
+            <div className="flex items-center mb-4">
+              <span className={`px-4 py-3 bg-ash border ${errors.phone ? 'border-red-500' : 'border-ash'} rounded-l-lg text-base text-navy`}>+94</span>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone.replace(/^\+94/, "")}
+                onChange={e => {
+                  let value = e.target.value.replace(/^0+/, "");
+                  setFormData(prev => ({ ...prev, phone: "+94" + value }));
+                }}
+                required
+                className={`w-full px-4 py-3 border rounded-r-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none border-l-0 ${errors.phone ? 'border-red-500' : 'border-ash'}`}
+                placeholder="7XXXXXXXX"
+              />
+            </div>
+            {errors.phone && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.phone}</p>}
 
             <input
               type="text"
@@ -419,12 +353,9 @@ function SignUp() {
               value={formData.city}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.city ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.city ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.city && <p style={errorStyle}>{errors.city}</p>}
+            {errors.city && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.city}</p>}
 
             <input
               type="text"
@@ -433,21 +364,15 @@ function SignUp() {
               value={formData.postalCode}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.postalCode ? "#e74c3c" : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.postalCode ? 'border-red-500' : 'border-ash'}`}
             />
-            {errors.postalCode && <p style={errorStyle}>{errors.postalCode}</p>}
+            {errors.postalCode && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.postalCode}</p>}
           </>
         );
-
       case 3:
         return (
           <>
-            <h3 style={{ marginBottom: "1rem", color: "#2d2d2d" }}>
-              Property Details
-            </h3>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Property Details</h3>
             <input
               type="text"
               name="boardingAddressForApproval"
@@ -455,85 +380,31 @@ function SignUp() {
               value={formData.boardingAddressForApproval}
               onChange={handleChange}
               required
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.boardingAddressForApproval
-                  ? "#e74c3c"
-                  : "#ccc",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none ${errors.boardingAddressForApproval ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.boardingAddressForApproval && (
-              <p style={errorStyle}>{errors.boardingAddressForApproval}</p>
+              <p className="text-red-500 text-xs mb-2 -mt-3">{errors.boardingAddressForApproval}</p>
             )}
 
-            <div style={{ position: "relative", marginBottom: "1rem" }}>
+            <div className="relative mb-4">
               <select
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleChange}
                 required
-                style={{
-                  ...sharedInputStyle,
-                  borderColor: errors.propertyType ? "#e74c3c" : "#ddd",
-                  backgroundColor: "#ffffff",
-                  color: formData.propertyType ? "#333333" : "#999",
-                  appearance: "none",
-                  WebkitAppearance: "none",
-                  MozAppearance: "none",
-                  backgroundImage:
-                    'url(\'data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"><path fill="%23666" d="M6 8L0 2h12z"/></svg>\')',
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 1rem center",
-                  backgroundSize: "12px 8px",
-                  paddingRight: "3rem",
-                  cursor: "pointer",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  border: `2px solid ${
-                    errors.propertyType ? "#e74c3c" : "#ddd"
-                  }`,
-                  borderRadius: "8px",
-                  fontWeight: "500",
-                  transition: "all 0.3s ease",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "#222";
-                  e.target.style.boxShadow = "0 0 0 3px rgba(34, 34, 34, 0.1)";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = errors.propertyType
-                    ? "#e74c3c"
-                    : "#ddd";
-                  e.target.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
-                }}
+                className={`w-full px-4 py-3 border rounded-lg text-base bg-white text-navy transition focus:outline-none appearance-none ${errors.propertyType ? 'border-red-500' : 'border-ash'}`}
               >
-                <option
-                  value=""
-                  style={{ backgroundColor: "#ffffff", color: "#999999" }}
-                >
-                  Select Property Type
-                </option>
-                <option
-                  value="homestay"
-                  style={{ backgroundColor: "#ffffff", color: "#333333" }}
-                >
-                  HomeStay
-                </option>
-                <option
-                  value="annex"
-                  style={{ backgroundColor: "#ffffff", color: "#333333" }}
-                >
-                  Annex
-                </option>
-                <option
-                  value="hostel"
-                  style={{ backgroundColor: "#ffffff", color: "#333333" }}
-                >
-                  Hostel
-                </option>
+                <option value="" className="bg-white text-navy">Select Property Type</option>
+                <option value="homestay" className="bg-white text-navy">HomeStay</option>
+                <option value="annex" className="bg-white text-navy">Annex</option>
+                <option value="hostel" className="bg-white text-navy">Hostel</option>
               </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-navy">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </div>
             </div>
             {errors.propertyType && (
-              <p style={errorStyle}>{errors.propertyType}</p>
+              <p className="text-red-500 text-xs mb-2 -mt-3">{errors.propertyType}</p>
             )}
 
             <textarea
@@ -543,282 +414,105 @@ function SignUp() {
               onChange={handleChange}
               required
               rows="4"
-              style={{
-                ...sharedInputStyle,
-                borderColor: errors.description ? "#e74c3c" : "#ccc",
-                resize: "vertical",
-              }}
+              className={`w-full mb-4 px-4 py-3 border rounded-lg text-base bg-white placeholder-ash text-navy transition focus:outline-none resize-vertical ${errors.description ? 'border-red-500' : 'border-ash'}`}
             />
             {errors.description && (
-              <p style={errorStyle}>{errors.description}</p>
+              <p className="text-red-500 text-xs mb-2 -mt-3">{errors.description}</p>
             )}
           </>
         );
-
       case 4:
         return (
           <>
-            <h3 style={{ marginBottom: "1rem", color: "#2d2d2d" }}>
-              Property Image
-            </h3>
-
-            <div style={{ position: "relative", marginBottom: "1rem" }}>
+            <h3 className="mb-4 text-lg font-semibold text-navy">Property Image</h3>
+            <div className="relative mb-4">
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
                 required
-                style={{
-                  position: "absolute",
-                  opacity: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
-                }}
+                className="absolute opacity-0 w-full h-full cursor-pointer"
                 id="file-upload"
               />
               <label
                 htmlFor="file-upload"
-                style={{
-                  ...sharedInputStyle,
-                  borderColor: errors.image ? "#e74c3c" : "#ccc",
-                  backgroundColor: "#f8f9fa",
-                  border: `2px dashed ${errors.image ? "#e74c3c" : "#ccc"}`,
-                  textAlign: "center",
-                  cursor: "pointer",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: "100px",
-                  transition: "all 0.3s ease",
-                  color: "#666",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#f0f1f2";
-                  e.target.style.borderColor = "#999";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#f8f9fa";
-                  e.target.style.borderColor = errors.image
-                    ? "#e74c3c"
-                    : "#ccc";
-                }}
+                className={`w-full flex flex-col items-center justify-center min-h-[100px] px-4 py-6 border-2 rounded-lg cursor-pointer transition-all text-navy bg-ash border-dashed ${errors.image ? 'border-red-500' : 'border-ash'} text-center`}
               >
-                <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
-                  📁
-                </div>
-                <div style={{ fontWeight: "500", marginBottom: "0.25rem" }}>
-                  {imageFile ? "Change Image" : "Choose Property Image"}
-                </div>
-                <div style={{ fontSize: "0.8rem", color: "#999" }}>
-                  Click here or drag and drop your image
-                </div>
+                <div className="text-2xl mb-2">📁</div>
+                <div className="font-medium mb-1">{imageFile ? "Change Image" : "Choose Property Image"}</div>
+                <div className="text-xs text-navy/60">Click here or drag and drop your image</div>
               </label>
             </div>
-            {errors.image && <p style={errorStyle}>{errors.image}</p>}
-
+            {errors.image && <p className="text-red-500 text-xs mb-2 -mt-3">{errors.image}</p>}
             {imageFile && (
-              <div style={{ marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.9rem", color: "#666" }}>
-                  Selected: {imageFile.name}
-                </p>
+              <div className="mb-4">
+                <p className="text-sm text-navy">Selected: {imageFile.name}</p>
               </div>
             )}
-
             {uploading && (
-              <p style={{ marginBottom: "1rem", color: "#444" }}>
-                Uploading image...
-              </p>
+              <p className="mb-4 text-navy">Uploading image...</p>
             )}
           </>
         );
-
       default:
         return null;
     }
   };
 
-  const sharedInputStyle = {
-    width: "100%",
-    marginBottom: "1rem",
-    padding: "0.75rem",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    fontSize: "1rem",
-    outline: "none",
-    transition: "border 0.3s",
-  };
-
-  const sharedButtonStyle = {
-    width: "100%",
-    padding: "0.75rem",
-    backgroundColor: "#222",
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    fontSize: "1rem",
-    fontWeight: "bold",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  };
-
-  const errorStyle = {
-    color: "#e74c3c",
-    fontSize: "0.8rem",
-    marginTop: "-0.5rem",
-    marginBottom: "0.5rem",
-  };
-
-  const secondaryButtonStyle = {
-    ...sharedButtonStyle,
-    backgroundColor: "#666",
-    marginRight: "0.5rem",
-    width: "48%",
-  };
-
   return (
-    <div
-      style={{
-        maxWidth: "500px",
-        margin: "3rem auto",
-        padding: "2rem",
-        backgroundColor: "#d4bf95",
-        borderRadius: "16px",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-        fontFamily: "Segoe UI, sans-serif",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          color: "#2d2d2d",
-          marginBottom: "1.5rem",
-        }}
-      >
-        Host Sign Up
-      </h2>
-
-      <ProgressIndicator />
-
-      <form onSubmit={handleSignUp}>
-        {renderStepContent()}
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "1.5rem",
-          }}
-        >
-          {currentStep > 1 && (
-            <button
-              type="button"
-              onClick={handlePrevious}
-              disabled={isSubmitted}
-              style={{
-                ...secondaryButtonStyle,
-                backgroundColor: isSubmitted ? "#ccc" : "#666",
-                cursor: isSubmitted ? "not-allowed" : "pointer",
-              }}
-              onMouseEnter={(e) =>
-                !isSubmitted && (e.target.style.backgroundColor = "#888")
-              }
-              onMouseLeave={(e) =>
-                !isSubmitted && (e.target.style.backgroundColor = "#666")
-              }
-            >
-              Previous
-            </button>
-          )}
-
-          {currentStep < 4 ? (
-            <button
-              type="button"
-              onClick={handleNext}
-              style={{
-                ...sharedButtonStyle,
-                width: currentStep > 1 ? "48%" : "100%",
-                marginLeft: currentStep > 1 ? "0.5rem" : "0",
-              }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = "#444")}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "#222")}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              type="submit"
-              disabled={uploading || isSubmitted}
-              style={{
-                ...sharedButtonStyle,
-                width: "48%",
-                marginLeft: "0.5rem",
-                backgroundColor: uploading || isSubmitted ? "#ccc" : "#222",
-                cursor: uploading || isSubmitted ? "not-allowed" : "pointer",
-                opacity: uploading || isSubmitted ? 0.6 : 1,
-              }}
-              onMouseEnter={(e) =>
-                !uploading &&
-                !isSubmitted &&
-                (e.target.style.backgroundColor = "#444")
-              }
-              onMouseLeave={(e) =>
-                !uploading &&
-                !isSubmitted &&
-                (e.target.style.backgroundColor = "#222")
-              }
-              onClick={(e) => {
-                console.log("Button clicked", { isSubmitted, uploading });
-                if (uploading || isSubmitted) {
-                  e.preventDefault();
-                  console.log("Click prevented due to state");
-                }
-              }}
-            >
-              {uploading
-                ? "Uploading..."
-                : isSubmitted
-                ? "Submitted Successfully"
-                : "Complete Sign Up"}
-            </button>
-          )}
-        </div>
-      </form>
-
-      {message && (
-        <p
-          style={{
-            textAlign: "center",
-            marginTop: "1rem",
-            color: message.includes("successful") ? "#27ae60" : "#e74c3c",
-            fontSize: "0.9rem",
-          }}
-        >
-          {message}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy via-ash to-white">
+      <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-2xl font-sans transition-all border border-ash">
+        <h2 className="text-center text-2xl font-bold text-navy mb-6">Host Sign Up</h2>
+        <ProgressIndicator />
+        <form onSubmit={handleSignUp}>
+          {renderStepContent()}
+          <div className="flex justify-between mt-6">
+            {currentStep > 1 && (
+              <button
+                type="button"
+                onClick={handlePrevious}
+                disabled={isSubmitted}
+                className={`w-[48%] py-3 rounded-lg text-base font-bold transition bg-white text-navy border-2 border-navy hover:bg-navy hover:text-white cursor-pointer ${isSubmitted ? 'opacity-60 cursor-not-allowed' : ''}`}
+              >
+                Previous
+              </button>
+            )}
+            {currentStep < 4 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-full py-3 bg-navy text-white rounded-lg text-base font-bold cursor-pointer border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition ml-2"
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={uploading || isSubmitted}
+                className={`w-full py-3 bg-navy text-white rounded-lg text-base font-bold cursor-pointer border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition ml-2 ${uploading || isSubmitted ? 'opacity-60 cursor-not-allowed' : ''}`}
+              >
+                {uploading
+                  ? "Uploading..."
+                  : isSubmitted
+                  ? "Submitted Successfully"
+                  : "Complete Sign Up"}
+              </button>
+            )}
+          </div>
+        </form>
+        {message && (
+          <p className={`text-center mt-4 text-sm ${message.includes('successful') ? 'text-green-600' : 'text-red-500'}`}>{message}</p>
+        )}
+        <p className="text-center mt-6 text-sm text-navy">
+          Already have an account?{' '}
+          <Link
+            to="/sign-in"
+            className="text-navy underline font-medium transition"
+          >
+            Sign in here
+          </Link>
         </p>
-      )}
-
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: "1.5rem",
-          fontSize: "0.95rem",
-        }}
-      >
-        Already have an account?{" "}
-        <Link
-          to="/sign-in"
-          style={{
-            color: "#222",
-            textDecoration: "underline",
-            fontWeight: "500",
-            transition: "color 0.3s ease",
-          }}
-        >
-          Sign in here
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }

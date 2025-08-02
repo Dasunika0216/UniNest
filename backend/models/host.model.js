@@ -11,6 +11,11 @@ const hostSchema = new mongoose.Schema(
       minLength: [3, "Username must be at least 3 characters long"],
       maxLength: [30, "Username must be at most 30 characters long"],
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     email: {
       type: String,
       required: [true, "User email is required"],
@@ -31,12 +36,13 @@ const hostSchema = new mongoose.Schema(
       minLength: [2, "Full name must be at least 2 characters long"],
       maxLength: [100, "Full name must be at most 100 characters long"],
     },
+    
     phone: {
       type: String,
       required: [true, "Phone number is required"],
       trim: true,
       match: [
-        /^07\d{8}$/,
+        /^\+947\d{8}$/,
         "Please enter a valid Sri Lankan mobile number (07XXXXXXXX)",
       ],
     },
