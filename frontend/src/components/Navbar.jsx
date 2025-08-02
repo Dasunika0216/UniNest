@@ -81,7 +81,7 @@ const Navbar = () => {
               token && (
                 <button
                   onClick={handleSignOut}
-                  className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
+                  className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-white hover:bg-white hover:text-navy hover:border-white transition-colors duration-200"
                 >
                   Sign Out
                 </button>
@@ -98,7 +98,7 @@ const Navbar = () => {
                   {token && (
                     <button
                       onClick={handleSignOut}
-                      className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-navy hover:bg-white hover:text-navy hover:border-navy transition-colors duration-200"
+                      className="bg-navy text-white font-medium px-6 py-2 rounded-full border-2 border-white hover:bg-white hover:text-navy hover:border-white transition-colors duration-200"
                     >
                       Sign Out
                     </button>

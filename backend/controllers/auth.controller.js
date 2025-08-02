@@ -361,6 +361,39 @@ const testAuth = async (req, res) => {
   }
 };
 
+export const updateHostProfile = async (req, res) => {
+  try {
+    const token = req.headers.token;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    // Only allow updating certain fields
+    const allowedFields = [
+      "username", "fullName", "email", "phone", "city", "postalCode",
+      "propertyType", "boardingAddressForApproval", "description"
+    ];
+    const updateData = {};
+    allowedFields.forEach(field => {
+      if (req.body[field] !== undefined) updateData[field] = req.body[field];
+    });
+
+    const updatedHost = await Host.findByIdAndUpdate(
+      userId,
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedHost) {
+      return res.json({ success: false, message: "Host not found" });
+    }
+
+    res.json({ success: true, data: updatedHost });
+  } catch (error) {
+    console.error(error);
+    return res.json({ success: false, message: "Server error" });
+  }
+};
+
 export {
   signIn,
   signUp,
