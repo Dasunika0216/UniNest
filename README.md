@@ -145,6 +145,9 @@ UniNest/
 
 #### Add Boarding
 
+**Step 0: Boarding Tpye**
+![Add Boarding - Preview](screenshots/add-boarding-type.png)
+
 **Step 1: Basic Information Form**
 ![Add Boarding - Basic Form](screenshots/add-boarding-form.png)
 *Property listing form with address, cost, and basic details*
@@ -161,9 +164,8 @@ UniNest/
 ![Add Boarding - Facilities](screenshots/add-boarding-facilities.png)
 *Facility selection with predefined options and custom additions*
 
-**Step 5: Preview & Submit**
-![Add Boarding - Preview](screenshots/add-boarding-preview.png)
-*Final preview of the property listing before submission*
+
+
 
 #### Host Profile
 ![Host Profile Dashboard](screenshots/host-profile.png)
@@ -174,6 +176,10 @@ UniNest/
 #### Filter Boarding
 ![Filter Boarding Results](screenshots/filter-boarding.png)
 *Property search and filtering interface with map view and detailed listings*
+
+#### Detailed Boarding View
+![Boarding View Detailed](screenshots/detailed-boarding.png)
+*Property details and map*
 
 ### Admin Features
 
