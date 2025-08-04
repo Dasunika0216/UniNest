@@ -129,6 +129,60 @@ UniNest/
     └── vite.config.js               # Vite configuration
 ```
 
+## 📸 Screenshots
+
+### User Authentication
+
+#### Sign In
+![Sign In Page](screenshots/signin.png)
+*User login interface with email/username and password fields*
+
+#### Sign Up
+![Sign Up Page](screenshots/signup.png)
+*Host registration form with property details for approval*
+
+### Host Features
+
+#### Add Boarding
+
+**Step 1: Basic Information Form**
+![Add Boarding - Basic Form](screenshots/add-boarding-form.png)
+*Property listing form with address, cost, and basic details*
+
+**Step 2: Location Selection**
+![Add Boarding - Location Picker](screenshots/add-boarding-location.png)
+*Interactive Google Maps location picker for precise property placement*
+
+**Step 3: Image Upload**
+![Add Boarding - Image Upload](screenshots/add-boarding-images.png)
+*Multiple image upload interface with drag-and-drop functionality*
+
+**Step 4: Facilities Selection**
+![Add Boarding - Facilities](screenshots/add-boarding-facilities.png)
+*Facility selection with predefined options and custom additions*
+
+**Step 5: Preview & Submit**
+![Add Boarding - Preview](screenshots/add-boarding-preview.png)
+*Final preview of the property listing before submission*
+
+#### Host Profile
+![Host Profile Dashboard](screenshots/host-profile.png)
+*Host dashboard showing property management and profile information*
+
+### Student Features
+
+#### Filter Boarding
+![Filter Boarding Results](screenshots/filter-boarding.png)
+*Property search and filtering interface with map view and detailed listings*
+
+### Admin Features
+
+#### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+*Administrative panel with user management, statistics, and content moderation*
+
+---
+
 ## 🚀 Installation
 
 ### Prerequisites
@@ -263,95 +317,6 @@ npm start
 | PUT    | `/api/v1/boardings/:id`             | Update property          |
 | DELETE | `/api/v1/boardings/:id`             | Delete property          |
 
-### Request/Response Examples
-
-#### Sign Up
-```javascript
-POST /api/v1/auth/sign-up
-Content-Type: application/json
-
-{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "SecurePass123!",
-  "fullName": "John Doe",
-  "phone": "+94712345678",
-  "city": "Colombo",
-  "postalCode": "10000",
-  "boardingAddressForApproval": "123 Main Street, Colombo",
-  "propertyType": "hostel",
-  "description": "Modern hostel with all amenities",
-  "boardingImageForApproval": "https://cloudinary.com/image.jpg"
-}
-```
-
-#### Add Boarding
-```javascript
-POST /api/v1/boardings/add-boarding
-Authorization: Bearer <token>
-Content-Type: multipart/form-data
-
-{
-  "address": "456 University Road, Moratuwa",
-  "lat": 6.7964,
-  "lng": 79.9010,
-  "gender": "Girls",
-  "cost": 15000,
-  "type": "Hostel",
-  "availableCount": 5,
-  "description": "Comfortable accommodation near university",
-  "facilities": ["WiFi", "Parking", "Kitchen"],
-  "images": [File objects]
-}
-```
-
-## 🗄️ Database Schema
-
-### Host Model
-```javascript
-{
-  username: String (unique, required),
-  email: String (unique, required),
-  password: String (hashed, required),
-  fullName: String (required),
-  phone: String (required, +94 format),
-  city: String (required),
-  postalCode: String (required),
-  boardingAddressForApproval: String (required),
-  propertyType: String (enum: ["homestay", "annex", "hostel"]),
-  description: String (required, min: 20 chars),
-  boardingImageForApproval: String (Cloudinary URL),
-  status: String (enum: ["pending", "approved", "rejected"]),
-  role: String (enum: ["user", "admin"]),
-  timestamps: true
-}
-```
-
-### Boarding Model
-```javascript
-{
-  hostId: String (required),
-  address: String (required),
-  lat: Number (required),
-  lng: Number (required),
-  gender: String (enum: ["Girls", "Boys"], required),
-  cost: Number (required),
-  type: String (required),
-  availableCount: Number (required),
-  description: String (required),
-  facilities: [String],
-  images: [String] (Cloudinary URLs),
-  timestamps: true
-}
-```
-
-## 🎨 Color Scheme
-
-The application uses a consistent color palette defined in [`tailwind.config.js`](frontend/tailwind.config.js):
-
-- **Navy**: `#000957` - Primary brand color
-- **White**: `#ffffff` - Background and text
-- **Ash**: `#B0B3B8` - Secondary elements and borders
 
 ## 🔐 Security Features
 
@@ -362,40 +327,9 @@ The application uses a consistent color palette defined in [`tailwind.config.js`
 - **CORS Configuration** - Controlled cross-origin requests
 - **Admin Role Protection** - Separate admin authentication middleware
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow the existing code style and naming conventions
-- Write clear, commented code
-- Test your changes thoroughly
-- Update documentation as needed
-- Ensure all environment variables are documented
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Team
+**Made by Team Runtime_Terror with ❤️ for the university community in Sri Lanka**
 
-- **Frontend Development** - React.js, Tailwind CSS, User Experience
-- **Backend Development** - Node.js, Express.js, Database Design
-- **DevOps & Deployment** - Server Configuration, CI/CD
-
-## 📞 Support
-
-For support and questions:
-
-- **Email**: support@uninest.com
-- **Phone**: +94 11 234 5678
-- **Address**: University of Moratuwa, Bandaranayake Mawatha, Moratuwa 10400
-
----
-
-**Made with ❤️ for the university community in Sri Lanka**
