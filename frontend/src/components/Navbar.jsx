@@ -12,7 +12,7 @@ const Navbar = () => {
     if (token) {
       navigate("/host-profile");
     } else {
-      navigate("/sign-in");
+      navigate("/sign-in")
     }
   };
 
