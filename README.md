@@ -25,8 +25,6 @@ UniNest is a comprehensive platform designed to solve the accommodation challeng
 **For Students:**
 - Wide variety of verified boarding options
 - Advanced search and filtering capabilities
-- Secure and transparent booking process
-- Real-time availability updates
 
 **For Hosts:**
 - Simple property listing process
@@ -36,22 +34,19 @@ UniNest is a comprehensive platform designed to solve the accommodation challeng
 ## ✨ Features
 
 ### Student Features
-- 🔍 **Advanced Search & Filter** - Find accommodations by location, price, type, and amenities
+- 🔍 **Advanced Search & Filter** - Find accommodations by price, type, and amenities
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
 - 🗺️ **Interactive Maps** - View property locations with Google Maps integration
 - 📸 **Property Gallery** - High-quality images with lightbox viewer
-- ⭐ **Verified Listings** - All properties are verified for authenticity
 
 ### Host Features
 - 🏠 **Property Management** - Add, edit, and manage multiple properties
 - 🖼️ **Image Upload** - Cloudinary integration for optimized image storage
 - 📍 **Location Picker** - Interactive map for precise location setting
-- ✅ **Real-time Updates** - Instant availability and pricing updates
 
 ### Admin Features
 - 👥 **User Management** - Approve/reject host applications
 - 📈 **Analytics Dashboard** - Comprehensive platform statistics
-- 🔒 **Content Moderation** - Review and approve property listings
 - 🛡️ **Security Controls** - Monitor platform activity and user behavior
 
 ## 🛠️ Tech Stack
@@ -71,7 +66,6 @@ UniNest is a comprehensive platform designed to solve the accommodation challeng
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
 - **bcryptjs** - Password hashing
-- **Multer** - File upload middleware
 
 ### Third-party Services
 - **Cloudinary** - Image storage and optimization
